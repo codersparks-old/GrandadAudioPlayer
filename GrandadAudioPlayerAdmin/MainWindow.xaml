@@ -1,0 +1,18 @@
+﻿<Window x:Class="GrandadAudioPlayerAdmin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrandadAudioPlayerAdmin"
+        mc:Ignorable="d"
+        Title="Grandad Audio Player Administration" Height="146.795" Width="925" ResizeMode="NoResize"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Grid HorizontalAlignment="Left" Margin="0,0,0,0.5" Width="919">
+        <Label Content="Music Directory:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox Height="23" Margin="139,14,11,0" TextWrapping="Wrap" Text="{Binding FolderPath}" VerticalAlignment="Top" FontSize="16"/>
+        <Button Command="{Binding LoadConfigurationCommand}" Content="Load Configuration" Margin="573,82,0,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <Button Command="{Binding SaveConfigurationCommand}" Content="Save Configuration" Margin="748,82,11,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <Button Command="{Binding OpenFileDialogCommand}" Content="Open File Dialog" Margin="748,46,0,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+
+    </Grid>
+</Window>
