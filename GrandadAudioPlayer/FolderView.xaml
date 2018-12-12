@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="GrandadAudioPlayer.FolderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GrandadAudioPlayer"
+             xmlns:treeView="clr-namespace:GrandadAudioPlayer.Model.TreeView"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding FolderViewModel, Source={StaticResource Locator}}">
+    <Grid>
+        <TreeView ItemsSource="{Binding RootFolder}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type treeView:TreeViewFolder}" ItemsSource="{Binding Children}">
+                    <Label Content="{Binding Name}" FontSize="72"></Label>
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type treeView:TreeViewFile}">
+                    <Label Content="{Binding Name}"></Label>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+    </Grid>
+</UserControl>
