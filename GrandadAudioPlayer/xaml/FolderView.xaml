@@ -10,13 +10,19 @@
     <Grid>
         <TreeView ItemsSource="{Binding RootFolder}">
             <TreeView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue"></SolidColorBrush>
                 <HierarchicalDataTemplate DataType="{x:Type treeView:TreeViewFolder}" ItemsSource="{Binding Children}">
-                    <Label Content="{Binding Name}" FontSize="72"></Label>
+                    <Label Content="{Binding Name}" FontSize="20" FontWeight="Bold"></Label>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type treeView:TreeViewFile}">
-                    <Label Content="{Binding Name}"></Label>
+                    <Label Content="{Binding Name}" FontSize="20"></Label>
                 </DataTemplate>
             </TreeView.Resources>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
 
     </Grid>

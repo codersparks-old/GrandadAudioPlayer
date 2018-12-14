@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:GrandadAudioPlayer"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:TestApp"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -16,7 +16,8 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 
-namespace GrandadAudioPlayer.ViewModel
+
+namespace TestApp.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -43,16 +44,16 @@ namespace GrandadAudioPlayer.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<FolderViewModel>();
-            SimpleIoc.Default.Register<PlaylistViewModel>();
         }
 
-        public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
-
-        public FolderViewModel FolderViewModel => ServiceLocator.Current.GetInstance<FolderViewModel>();
-
-        public PlaylistViewModel PlaylistViewModel => ServiceLocator.Current.GetInstance<PlaylistViewModel>();
-
+        public MainViewModel Main
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+        
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

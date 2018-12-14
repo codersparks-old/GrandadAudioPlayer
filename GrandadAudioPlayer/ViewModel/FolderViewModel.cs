@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using GalaSoft.MvvmLight;
 using GrandadAudioPlayer.Model.TreeView;
 using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayerClassLibrary.Configuration;
+using System.Collections.ObjectModel;
+using CommonServiceLocator;
 
 namespace GrandadAudioPlayer.ViewModel
 {
-    public class FolderViewModel : ViewBase
+    public class FolderViewModel : ViewModelBase
     {
+
         public FolderViewModel()
         {
             this.RootFolder = new ObservableCollection<TreeViewBase>(
                 FolderTreeBuilder.getTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+
         }
 
         public ObservableCollection<TreeViewBase> RootFolder { get; }
+
     }
 }
