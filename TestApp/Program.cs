@@ -11,7 +11,7 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            var list = FolderTreeBuilder.getTreeStructure(@"C:\Users\Coder Sparks\Documents\GapMusic");
+            var list = FolderUtils.GetTreeStructure(@"C:\Users\Coder Sparks\Documents\GapMusic");
 
             foreach (var i in list)
             {

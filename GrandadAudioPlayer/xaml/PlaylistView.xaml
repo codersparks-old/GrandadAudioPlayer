@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GrandadAudioPlayer.xaml"
+             xmlns:playList="clr-namespace:GrandadAudioPlayer.Model.PlayList"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
     <Grid>
-            
+        <ListView ItemsSource="{Binding Playlist}">
+            <ListView.Resources>
+                <DataTemplate DataType="{x:Type playList:PlaylistItem}">
+                    <Label Content="{Binding Name}"></Label>
+                </DataTemplate>
+            </ListView.Resources>
+        </ListView>
     </Grid>
 </UserControl>

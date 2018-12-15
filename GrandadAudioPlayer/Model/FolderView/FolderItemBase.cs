@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.PlayList;
 
-namespace GrandadAudioPlayer.Model.TreeView
+namespace GrandadAudioPlayer.Model.FolderView
 {
-    public abstract class TreeViewBase : ViewModelBase
+    public abstract class FolderItemBase : ViewModelBase
     {
-        public static TreeViewBase SelectedItem { get; set; } = null;
+        public static FolderItemBase SelectedItem { get; set; } = null;
 
         public string Name { get; }
         public string Path { get; }
@@ -36,7 +30,7 @@ namespace GrandadAudioPlayer.Model.TreeView
             }
         }
 
-        protected TreeViewBase(string path)
+        protected FolderItemBase(string path)
         {
             this.Path = path;
             this.Name = System.IO.Path.GetFileName(path);

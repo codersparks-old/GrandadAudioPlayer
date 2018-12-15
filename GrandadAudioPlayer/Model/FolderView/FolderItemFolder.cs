@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace GrandadAudioPlayer.Model.TreeView
+namespace GrandadAudioPlayer.Model.FolderView
 {
-    public class TreeViewFolder : TreeViewBase
+    public class FolderItemFolder : FolderItemBase
     {
-        public List<TreeViewBase> Children { get; } = new List<TreeViewBase>();
+        public List<FolderItemBase> Children { get; } = new List<FolderItemBase>();
 
-        public TreeViewFolder(string name) : base(name)
+        public FolderItemFolder(string name) : base(name)
         {
         }
 

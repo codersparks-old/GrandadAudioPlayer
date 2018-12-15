@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
-using GrandadAudioPlayer.Model.TreeView;
 using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayerClassLibrary.Configuration;
 using System.Collections.ObjectModel;
 using CommonServiceLocator;
+using GrandadAudioPlayer.Model.FolderView;
 
 namespace GrandadAudioPlayer.ViewModel
 {
@@ -12,12 +12,12 @@ namespace GrandadAudioPlayer.ViewModel
 
         public FolderViewModel()
         {
-            this.RootFolder = new ObservableCollection<TreeViewBase>(
-                FolderTreeBuilder.getTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+            this.RootFolder = new ObservableCollection<FolderItemBase>(
+                FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
 
         }
 
-        public ObservableCollection<TreeViewBase> RootFolder { get; }
+        public ObservableCollection<FolderItemBase> RootFolder { get; }
 
     }
 }
