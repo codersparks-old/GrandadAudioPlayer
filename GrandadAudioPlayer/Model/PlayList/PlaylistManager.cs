@@ -22,7 +22,7 @@ namespace GrandadAudioPlayer.Model.PlayList
         private bool _isPlaying = false;
         private LinkedListNode<PlaylistItem> _currentItem = null;
 
-        private Mp3FileReader _mp3FileReader;
+        private MediaFoundationReader _mp3FileReader;
         private WaveOut _waveOut = null;
 
         public string RootFolder
@@ -106,7 +106,16 @@ namespace GrandadAudioPlayer.Model.PlayList
             // Move to the next track (or first if at the end)
             var next = _currentItem.Next;
 
-            this._currentItem = next ?? Playlist.First;
+            if (next == null)
+            {
+                // We have to get first and then call next as it points to before 
+                // the start of the collection
+                _currentItem = Playlist.First;
+            }
+            else
+            {
+                _currentItem = next;
+            }
 
             // If it was playing originally then we play again
             if (wasPlaying)
@@ -130,7 +139,15 @@ namespace GrandadAudioPlayer.Model.PlayList
             // Move to the previous track (or last if at the end)
             var previous = _currentItem.Previous;
 
-            this._currentItem = previous ?? Playlist.Last;
+            if (previous == null)
+            {
+                
+                _currentItem = Playlist.Last;
+            }
+            else
+            {
+                _currentItem = previous;
+            }
 
             // If it was plahing originally then we play again
             if (wasPlaying)
@@ -141,9 +158,19 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         private void _initialisePlayer()
         {
-            this._mp3FileReader = new Mp3FileReader(this.CurrentItem.Path);
+            this._mp3FileReader = new MediaFoundationReader(this.CurrentItem.Path);
             this._waveOut = new WaveOut();
+            this._waveOut.PlaybackStopped += this.OnPlaybackStopped;
             this._waveOut.Init(this._mp3FileReader);
+        }
+
+        private void OnPlaybackStopped(object obj, StoppedEventArgs args)
+        {
+            
+            if (this._isPlaying)
+            {
+                this.NextTrack();
+            }
         }
 
 

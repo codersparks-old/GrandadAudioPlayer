@@ -16,7 +16,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         private readonly PlaylistManager _playlistManager = PlaylistManager.Instance;
 
-        public LinkedList<PlaylistItem> Playlist { get; set; }
+        public ObservableCollection<PlaylistItem> Playlist { get; set; }
 
         public ICommand PlayPauseCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
@@ -39,7 +39,7 @@ namespace GrandadAudioPlayer.ViewModel
         {
             this._playlistManager.RootFolder = message.Content.Path;
             this._playlistManager.ReloadPlaylist();
-            this.Playlist = this._playlistManager.Playlist;
+            this.Playlist = new ObservableCollection<PlaylistItem>(this._playlistManager.Playlist);
             RaisePropertyChanged("Playlist");
         }
 
