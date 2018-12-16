@@ -1,20 +1,35 @@
-﻿using TagLib;
+﻿using GalaSoft.MvvmLight;
+using TagLib;
 
 namespace GrandadAudioPlayer.Model.PlayList
 {
-    public class PlaylistItem
+    public class PlaylistItem : ViewModelBase
     {
+
+        public static PlaylistItem SelectedItem { get; set; } = null;
 
         public string Name { get; private set; }
         public string Path { get; private set; }
-        public File Id3File { get; private set; }
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected == value) return;
+                _isSelected = value;
+                RaisePropertyChanged("IsSelected");
+
+                if (!_isSelected) return;
+            }
+        }
 
         public PlaylistItem(string path)
         {
             this.Path = path;
             this.Name = System.IO.Path.GetFileName(path);
-
-            this.Id3File = File.Create(this.Path);
         }
     }
 }

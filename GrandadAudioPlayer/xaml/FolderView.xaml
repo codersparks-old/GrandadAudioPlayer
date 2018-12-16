@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding FolderViewModel, Source={StaticResource Locator}}">
     <Grid>
-        <TreeView ItemsSource="{Binding RootFolder}">
+        <TreeView ItemsSource="{Binding RootFolder}" BorderBrush="{x:Null}" BorderThickness="0">
             <TreeView.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue"></SolidColorBrush>
                 <HierarchicalDataTemplate DataType="{x:Type folderView:FolderItemFolder}" ItemsSource="{Binding Children}">
