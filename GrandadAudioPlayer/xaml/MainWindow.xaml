@@ -9,7 +9,15 @@
         Title="MainWindow" Height="726.282" Width="1212.179" WindowState="Maximized"
         DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
     <DockPanel>
-        <xaml:UserControl1 DockPanel.Dock="Bottom"></xaml:UserControl1>
+        <Grid Width="auto" Height="Auto" DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <xaml:InformationView Grid.Column="0"></xaml:InformationView>
+            <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
+        </Grid>
+        
         <Grid Width="auto" Height="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

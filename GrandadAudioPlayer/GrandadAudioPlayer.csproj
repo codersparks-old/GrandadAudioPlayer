@@ -98,6 +98,9 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PlaylistViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="xaml\InformationView.xaml.cs">
+      <DependentUpon>InformationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="xaml\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <DependentUpon>ControlsView.xaml</DependentUpon>
     </Compile>
     <Page Include="xaml\FolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="xaml\InformationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

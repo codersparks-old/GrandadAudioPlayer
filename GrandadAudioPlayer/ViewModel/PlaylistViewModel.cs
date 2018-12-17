@@ -56,6 +56,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public void PlaylistUpdate(NotificationMessage<PlaylistMessage> message)
         {
+            this._playlistManager.Stop();
             this._playlistManager.RootFolder = message.Content.Path;
             this._playlistManager.ReloadPlaylist();
             this.Playlist = new ObservableCollection<PlaylistItem>(this._playlistManager.Playlist);

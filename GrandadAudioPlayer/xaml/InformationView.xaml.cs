@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace GrandadAudioPlayer.xaml
 {
     /// <summary>
-    /// Interaction logic for ControlsView.xaml
+    /// Interaction logic for InformationView.xaml
     /// </summary>
-    public partial class ControlsView : UserControl
+    public partial class InformationView : UserControl
     {
-        public ControlsView()
+        public InformationView()
         {
             InitializeComponent();
         }
