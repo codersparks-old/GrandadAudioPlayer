@@ -85,6 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\PlayList\PlaylistItem.cs" />
     <Compile Include="Model\PlayList\PlaylistManager.cs" />
+    <Compile Include="Utils\AttachedBehaviours\ListViewItemBehaviour.cs" />
     <Compile Include="xaml\FolderView.xaml.cs">
       <DependentUpon>FolderView.xaml</DependentUpon>
     </Compile>

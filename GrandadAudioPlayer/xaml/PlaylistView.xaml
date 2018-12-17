@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GrandadAudioPlayer.xaml"
              xmlns:playList="clr-namespace:GrandadAudioPlayer.Model.PlayList"
+             xmlns:listViewItemBehaviour="clr-namespace:GrandadAudioPlayer.Utils.AttachedBehaviours"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
     <Grid>
@@ -17,7 +18,9 @@
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected}"></Setter>
+                    <Setter Property="listViewItemBehaviour:ListViewItemBehaviour.IsBroughtIntoViewWhenSelected"
+                            Value="True" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected}" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
