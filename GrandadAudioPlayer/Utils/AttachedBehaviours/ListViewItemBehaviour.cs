@@ -54,8 +54,7 @@ namespace GrandadAudioPlayer.Utils.AttachedBehaviours
             if (!Object.ReferenceEquals(sender, e.OriginalSource))
                 return;
 
-            ListViewItem item = e.OriginalSource as ListViewItem;
-            if (item != null)
+            if (e.OriginalSource is ListViewItem item)
                 item.BringIntoView();
         }
 

@@ -10,6 +10,7 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public string Name { get; private set; }
         public string Path { get; private set; }
+        public TagLib.Properties Id3Properties { get; private set; }
 
         private bool _isSelected;
 
@@ -30,6 +31,11 @@ namespace GrandadAudioPlayer.Model.PlayList
         {
             this.Path = path;
             this.Name = System.IO.Path.GetFileName(path);
+
+            using (TagLib.File f = TagLib.File.Create(path))
+            {
+                this.Id3Properties = f.Properties;
+            }
         }
     }
 }
