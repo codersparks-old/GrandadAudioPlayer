@@ -20,7 +20,7 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label FontSize="20" Content="Currently Playing: "></Label>
-            <Label FontSize="20" Content="Track name"></Label>
+            <Label FontSize="20" Content="{Binding CurrentItem.Name}"></Label>
         </StackPanel>
     </Grid>
 </UserControl>

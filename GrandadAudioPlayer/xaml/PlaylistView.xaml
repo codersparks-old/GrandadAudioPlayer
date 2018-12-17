@@ -8,8 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
     <Grid>
-        <ListView ItemsSource="{Binding Playlist}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single">
+        <ListView ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentItem, Mode=TwoWay}" BorderBrush="{x:Null}" BorderThickness="0" SelectionMode="Single">
             <ListView.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrush}" Color="LightBlue"></SolidColorBrush>
                 <DataTemplate DataType="{x:Type playList:PlaylistItem}">
                     <Label Content="{Binding Name}" FontSize="20"></Label>
                 </DataTemplate>

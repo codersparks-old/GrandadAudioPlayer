@@ -23,7 +23,19 @@ namespace GrandadAudioPlayer.ViewModel
         public ICommand NextCommand { get; private set; }
         public ICommand PreviousCommand { get; private set; }
 
-        
+        private PlaylistItem _currentItem = null;
+        public PlaylistItem CurrentItem
+        {
+            get => _currentItem;
+            set
+            {
+                this._currentItem = value;
+                RaisePropertyChanged("CurrentItem");
+                this._playlistManager.CurrentItem = this._currentItem;
+            }
+        }
+
+
 
         public PlaylistViewModel()
         {
@@ -32,7 +44,14 @@ namespace GrandadAudioPlayer.ViewModel
             this.StopCommand = new RelayCommand(StopMethod);
             this.NextCommand = new RelayCommand(NextMethod);
             this.PreviousCommand = new RelayCommand(PreviousMethod);
-            
+
+            this._playlistManager.OnTrackChanged += this.OnTrackUpdated;
+
+        }
+
+        public void OnTrackUpdated(object source, PlaylistEventArgs e)
+        {
+            this.CurrentItem = e.PlaylistItem;
         }
 
         public void PlaylistUpdate(NotificationMessage<PlaylistMessage> message)
