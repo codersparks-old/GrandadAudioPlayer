@@ -26,15 +26,14 @@ namespace GrandadAudioPlayer.Model.PlayList
     {
         private static ILog logger = LogManager.GetLogger(typeof(PlaylistManager));
 
-        private static readonly List<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions; 
+        private static readonly List<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions;
 
-        private static readonly  Lazy<PlaylistManager> _lazyInstance =
+        private static readonly Lazy<PlaylistManager> _lazyInstance =
             new Lazy<PlaylistManager>(() => new PlaylistManager());
 
         public static PlaylistManager Instance => _lazyInstance.Value;
 
         private string _rootFolder;
-        private bool _isPlaying = false;
         private LinkedListNode<PlaylistItem> _currentItem = null;
 
         private MediaFoundationReader _mp3FileReader;
@@ -51,6 +50,9 @@ namespace GrandadAudioPlayer.Model.PlayList
             }
         }
 
+        public bool IsPlaying { get; private set; } = false;
+        public bool IsPaused { get; private set; } = false;
+
         public PlaylistItem CurrentItem
         {
             get => this._currentItem.Value;
@@ -66,10 +68,10 @@ namespace GrandadAudioPlayer.Model.PlayList
                     this._currentItem = this.Playlist.Find(newItem);
                     this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(newItem));
 
-                    if (this._isPlaying)
+                    if (this.IsPlaying)
                     {
                         this.Stop();
-                        this.PlayPause();
+                        this.Play();
                     }
                 }
             }
@@ -80,7 +82,7 @@ namespace GrandadAudioPlayer.Model.PlayList
         public event TrackChangedEventHandler OnTrackChanged;
 
         public void ReloadPlaylist()
-        { 
+        {
 
             logger.Debug("Reloading playlist");
             this.Playlist.Clear();
@@ -97,7 +99,7 @@ namespace GrandadAudioPlayer.Model.PlayList
             this._currentItem = this.Playlist.First;
             logger.Debug("Current item set to " + this._currentItem?.Value.Name);
 
-            
+
             this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
 
         }
@@ -114,39 +116,39 @@ namespace GrandadAudioPlayer.Model.PlayList
                 this._mp3FileReader.Dispose();
                 this._mp3FileReader = null;
             }
-            this._isPlaying = false;
-            logger.Debug("IsPlaying set to: " + this._isPlaying);
+            this.IsPlaying = false;
+            this.IsPaused = false;
+            logger.Debug("IsPlaying set to: " + this.IsPlaying);
         }
 
-        public void PlayPause()
+        public void Play()
         {
 
-            if (! _isPlaying)
+            if (this._waveOut == null)
             {
-                if (this._waveOut == null)
-                {
-                    this._initialisePlayer();
-                }
+                this._initialisePlayer();
+            }
 
-                this._waveOut.Play();
-                this._isPlaying = true;
-            }
-            else
-            {
-                if (this._waveOut != null)
-                {
-                    this._waveOut.Pause();
-                }
-            }
+            this._waveOut.Play();
+            this.IsPlaying = true;
+            this.IsPaused = false;
+
+        }
+
+        public void Pause()
+        {
+            _waveOut?.Pause();
+            this.IsPaused = true;
         }
 
         public void NextTrack()
         {
             // We keep track if it was playing ready for later
-            var wasPlaying = this._isPlaying;
+            var wasPlaying = this.IsPlaying;
+            var wasPaused = this.IsPaused;
 
             // We now stop if it is playing
-            if (this._isPlaying)
+            if (this.IsPlaying)
             {
                 this.Stop();
             }
@@ -170,7 +172,12 @@ namespace GrandadAudioPlayer.Model.PlayList
             // If it was playing originally then we play again
             if (wasPlaying)
             {
-                this.PlayPause();
+                this.Play();
+
+                if (wasPaused)
+                {
+                    this.Pause();
+                }
             }
         }
 
@@ -178,10 +185,11 @@ namespace GrandadAudioPlayer.Model.PlayList
         {
 
             // We keep track if it was playing ready for later
-            var wasPlaying = this._isPlaying;
+            var wasPlaying = this.IsPlaying;
+            var wasPaused = this.IsPaused;
 
             // We now stop if it is playing
-            if (this._isPlaying)
+            if (this.IsPlaying)
             {
                 this.Stop();
             }
@@ -191,7 +199,7 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             if (previous == null)
             {
-                
+
                 _currentItem = Playlist.Last;
             }
             else
@@ -205,7 +213,12 @@ namespace GrandadAudioPlayer.Model.PlayList
             // If it was plahing originally then we play again
             if (wasPlaying)
             {
-                this.PlayPause();
+                this.Play();
+
+                if (wasPaused)
+                {
+                    this.Pause();
+                }
             }
         }
 
@@ -220,8 +233,8 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         private void OnPlaybackStopped(object obj, StoppedEventArgs args)
         {
-            
-            if (this._isPlaying)
+
+            if (this.IsPlaying)
             {
                 this.NextTrack();
             }

@@ -18,10 +18,11 @@ namespace GrandadAudioPlayer.ViewModel
 
         public ObservableCollection<PlaylistItem> Playlist { get; set; }
 
-        public ICommand PlayPauseCommand { get; private set; }
+        public ICommand PlayCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
         public ICommand NextCommand { get; private set; }
         public ICommand PreviousCommand { get; private set; }
+        public ICommand PauseCommand { get; private set; }
 
         private PlaylistItem _currentItem = null;
         public PlaylistItem CurrentItem
@@ -35,15 +36,19 @@ namespace GrandadAudioPlayer.ViewModel
             }
         }
 
+        public bool PlayButtonEnabled => !this._playlistManager.IsPlaying || this._playlistManager.IsPaused;
+        public bool PauseButtonEnabled => !this._playlistManager.IsPaused;
+
 
 
         public PlaylistViewModel()
         {
             Messenger.Default.Register<NotificationMessage<PlaylistMessage>>(this, PlaylistUpdate );
-            this.PlayPauseCommand = new RelayCommand(PlayPauseMethod);
+            this.PlayCommand = new RelayCommand(PlayMethod, CanPlayMethod);
             this.StopCommand = new RelayCommand(StopMethod);
             this.NextCommand = new RelayCommand(NextMethod);
             this.PreviousCommand = new RelayCommand(PreviousMethod);
+            this.PauseCommand = new RelayCommand(PauseMethod, CanPauseMethod);
 
             this._playlistManager.OnTrackChanged += this.OnTrackUpdated;
 
@@ -63,9 +68,24 @@ namespace GrandadAudioPlayer.ViewModel
             RaisePropertyChanged("Playlist");
         }
 
-        public void PlayPauseMethod()
+        public void PlayMethod()
         {
-            this._playlistManager.PlayPause();
+            this._playlistManager.Play();
+        }
+
+        public bool CanPlayMethod()
+        {
+            return !this._playlistManager.IsPlaying || this._playlistManager.IsPaused;
+        }
+
+        public void PauseMethod()
+        {
+            this._playlistManager.Pause();
+        }
+
+        public bool CanPauseMethod()
+        {
+            return this._playlistManager.IsPlaying && !this._playlistManager.IsPaused;
         }
 
         public void StopMethod()

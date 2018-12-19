@@ -5,14 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrandadAudioPlayerAdmin"
         mc:Ignorable="d"
-        Title="Grandad Audio Player Administration" Height="146.795" Width="925" ResizeMode="NoResize"
+        Title="Grandad Audio Player Administration" Height="206.614" Width="925" ResizeMode="NoResize"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid HorizontalAlignment="Left" Margin="0,0,0,0.5" Width="919">
+    <Grid HorizontalAlignment="Left" Margin="0,0,0,-4" Width="919" Height="182" VerticalAlignment="Top">
         <Label Content="Music Directory:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox Height="23" Margin="139,14,11,0" TextWrapping="Wrap" Text="{Binding FolderPath}" VerticalAlignment="Top" FontSize="16"/>
-        <Button Command="{Binding LoadConfigurationCommand}" Content="Load Configuration" Margin="573,82,0,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
-        <Button Command="{Binding SaveConfigurationCommand}" Content="Save Configuration" Margin="748,82,11,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
-        <Button Command="{Binding OpenFileDialogCommand}" Content="Open File Dialog" Margin="748,46,0,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <TextBox Height="25" Margin="9,41,176,0" TextWrapping="Wrap" Text="{Binding FolderPath}" VerticalAlignment="Top" FontSize="16"/>
+        <Button Command="{Binding LoadConfigurationCommand}" Content="Load Configuration" Margin="573,140,0,16" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <Button Command="{Binding SaveConfigurationCommand}" Content="Save Configuration" Margin="748,140,0,16" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <Button Command="{Binding OpenFileDialogCommand}" Content="Open File Dialog" Margin="748,41,0,0" VerticalAlignment="Top" FontSize="16" HorizontalAlignment="Left" Width="160"/>
+        <Label Content="Allowed Extensions - Comma Seperated (no spaces)" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox Height="26" Margin="10,102,10,0" TextWrapping="Wrap" Text="{Binding AllowedExtensions}" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="{Binding FeedbackMessage}" HorizontalAlignment="Left" Margin="10,136,0,10" FontSize="16" Width="550"/>
 
     </Grid>
 </Window>

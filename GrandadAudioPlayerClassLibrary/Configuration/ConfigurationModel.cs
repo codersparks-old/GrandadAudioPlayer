@@ -10,6 +10,6 @@ namespace GrandadAudioPlayerClassLibrary.Configuration
     public class ConfigurationModel : ObservableObject
     {
         public string FolderPath { get; set; } = @"C:\music\";
-        public List<string> AllowedExtensions { get; set; } = new List<string>(new string[] {".mp3"});
+        public List<string> AllowedExtensions { get; private set; } = new List<string>();
     }
 }

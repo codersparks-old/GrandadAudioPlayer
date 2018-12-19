@@ -13,7 +13,8 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="Back" Margin="5" Command="{Binding PreviousCommand}" Width="65" Height="20"></Button>
-                <Button Content="Play/Pause" Margin="5" Command="{Binding PlayPauseCommand}" Width="65" Height="20"></Button>
+                <Button Content="Play" Margin="5" Command="{Binding PlayCommand}" Width="65" Height="20"></Button>
+                <Button Content="Pause" Margin="5" Command="{Binding PauseCommand}" Width="65" Height="20"></Button>
                 <Button Content="Stop" Margin="5" Command="{Binding StopCommand}" Width="65" Height="20"></Button>
                 <Button Content="Forward" Margin="5" Command="{Binding NextCommand}" Width="65" Height="20"></Button>
             </StackPanel>

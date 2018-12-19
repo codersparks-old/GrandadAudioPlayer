@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -56,13 +59,54 @@ namespace GrandadAudioPlayerAdmin.ViewModel
             }
         }
 
+        public string AllowedExtensions
+        {
+            get
+            {
+                return string.Join(",", _configuration.AllowedExtensions);
+            }
+            set
+            {
+                if (value == null || value.Length == 0)
+                {
+                    _configuration.AllowedExtensions.Clear();
+                    _configuration.AllowedExtensions.Add(".mp3");
+                }
+                else
+                {
+                    _configuration.AllowedExtensions.Clear();
+                    _configuration.AllowedExtensions.AddRange(value.Split(','));
+                }
+
+                RaisePropertyChanged("AllowedExtenstions");
+            }
+        }
+
         public ICommand LoadConfigurationCommand { get; private set; }
         public ICommand SaveConfigurationCommand { get; private set; }
         public ICommand OpenFileDialogCommand { get; private set; }
 
+        public string FeedbackMessage { get; set; }
+
         public void SaveConfigurationMethod()
         {
             ConfigurationManager.Instance.SaveConfiguration(this._configuration);
+            this.FeedbackMessage = "Configuration saved!";
+            RaisePropertyChanged("FeedbackMessage");
+
+            var t = new Timer();
+
+            t.Interval = 5000;
+
+            t.Elapsed += (s, e) =>
+            {
+                this.FeedbackMessage = "";
+                RaisePropertyChanged("FeedbackMessage");
+                t.Stop();
+            };
+
+            t.Start();
+
         }
 
         public void LoadConfigurationMethod()
