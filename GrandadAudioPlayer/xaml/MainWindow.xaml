@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:GrandadAudioPlayer"
         xmlns:xaml="clr-namespace:GrandadAudioPlayer.xaml"
         mc:Ignorable="d"
@@ -17,13 +18,13 @@
             <xaml:InformationView Grid.Column="0"></xaml:InformationView>
             <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
         </Grid>
-        
+
         <Grid Width="auto" Height="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Border BorderBrush="Black" BorderThickness="1" Margin="5,5,5,5">
+            <material:Card Padding="5,32" Margin="16">
                 <Grid Grid.Column="0" Margin="0,0,1,0" HorizontalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -32,17 +33,17 @@
                     <Label Content="Choose what to play:" FontSize="28"></Label>
                     <xaml:FolderView Grid.Row="1"></xaml:FolderView>
                 </Grid>
-            </Border>
-            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5,5,5,5">
+            </material:Card>
+            <material:Card Padding="32" Margin="16" Grid.Column="1">
                 <Grid Margin="0,0,1,0" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Content="Playlist:" FontSize="28"></Label>
+                    <Label Content="Selected Playlist:" FontSize="28"></Label>
                     <xaml:PlaylistView Grid.Row="1" HorizontalAlignment="Stretch"></xaml:PlaylistView>
                 </Grid>
-            </Border>
+            </material:Card>
         </Grid>
 
     </DockPanel>
