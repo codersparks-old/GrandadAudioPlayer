@@ -1,13 +1,9 @@
-﻿
-
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.PlayList;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace GrandadAudioPlayer.ViewModel
 {
@@ -36,8 +32,11 @@ namespace GrandadAudioPlayer.ViewModel
             }
         }
 
-        public bool PlayButtonEnabled => !this._playlistManager.IsPlaying || this._playlistManager.IsPaused;
-        public bool PauseButtonEnabled => !this._playlistManager.IsPaused;
+        public bool PlayButtonEnabled => this._currentItem != null && (!this._playlistManager.IsPlaying || this._playlistManager.IsPaused);
+        public bool PauseButtonEnabled => this._currentItem != null && !this._playlistManager.IsPaused;
+        public bool StopButtonEnabled => this._currentItem != null && this._playlistManager.IsPlaying;
+        public bool NextButtonEnabled => this._currentItem != null;
+        public bool PreviousButtonEnabled => this._currentItem != null;
 
 
 
@@ -45,9 +44,9 @@ namespace GrandadAudioPlayer.ViewModel
         {
             Messenger.Default.Register<NotificationMessage<PlaylistMessage>>(this, PlaylistUpdate );
             this.PlayCommand = new RelayCommand(PlayMethod, CanPlayMethod);
-            this.StopCommand = new RelayCommand(StopMethod);
-            this.NextCommand = new RelayCommand(NextMethod);
-            this.PreviousCommand = new RelayCommand(PreviousMethod);
+            this.StopCommand = new RelayCommand(StopMethod, CanStopMethod);
+            this.NextCommand = new RelayCommand(NextMethod, CanNextMethod);
+            this.PreviousCommand = new RelayCommand(PreviousMethod, CanPreviousMethod);
             this.PauseCommand = new RelayCommand(PauseMethod, CanPauseMethod);
 
             this._playlistManager.OnTrackChanged += this.OnTrackUpdated;
@@ -75,7 +74,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public bool CanPlayMethod()
         {
-            return !this._playlistManager.IsPlaying || this._playlistManager.IsPaused;
+            return this._currentItem != null && (!this._playlistManager.IsPlaying || this._playlistManager.IsPaused);
         }
 
         public void PauseMethod()
@@ -85,7 +84,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public bool CanPauseMethod()
         {
-            return this._playlistManager.IsPlaying && !this._playlistManager.IsPaused;
+            return this._currentItem != null && (this._playlistManager.IsPlaying && !this._playlistManager.IsPaused);
         }
 
         public void StopMethod()
@@ -93,14 +92,29 @@ namespace GrandadAudioPlayer.ViewModel
             this._playlistManager.Stop();
         }
 
+        public bool CanStopMethod()
+        {
+            return this._currentItem != null && this._playlistManager.IsPlaying;
+        }
+
         public void NextMethod()
         {
             this._playlistManager.NextTrack();
         }
 
+        public bool CanNextMethod()
+        {
+            return this._currentItem != null;
+        }
+
         public void PreviousMethod()
         {
             this._playlistManager.PreviousTrack();
+        }
+
+        public bool CanPreviousMethod()
+        {
+            return this._currentItem != null;
         }
     }
 

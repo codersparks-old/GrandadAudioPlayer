@@ -55,9 +55,12 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public PlaylistItem CurrentItem
         {
-            get => this._currentItem.Value;
+            get => this._currentItem?.Value;
             set
             {
+
+                if (value == null) return;
+
                 var newItem = value;
 
                 logger.Debug("Updating current item..." + newItem.Path);
@@ -89,6 +92,8 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             var files = FolderUtils.GetFilesUnderFolder(this._rootFolder);
 
+            if (files.Count == 0) return;
+
             foreach (var f in files)
             {
                 if (!AllowedExtensions.Contains(Path.GetExtension(f.Path))) continue;
@@ -107,6 +112,9 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public void Stop()
         {
+
+            if (_currentItem == null) return;
+
             logger.Info("Stopping playback...");
             if (_waveOut != null)
             {
@@ -123,6 +131,7 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public void Play()
         {
+            if (_currentItem == null) return;
 
             if (this._waveOut == null)
             {
@@ -137,12 +146,16 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public void Pause()
         {
+            if (_currentItem == null) return;
+
             _waveOut?.Pause();
             this.IsPaused = true;
         }
 
         public void NextTrack()
         {
+            if( _currentItem == null) return;
+            
             // We keep track if it was playing ready for later
             var wasPlaying = this.IsPlaying;
             var wasPaused = this.IsPaused;
@@ -156,33 +169,25 @@ namespace GrandadAudioPlayer.Model.PlayList
             // Move to the next track (or first if at the end)
             var next = _currentItem.Next;
 
-            if (next == null)
-            {
-                // We have to get first and then call next as it points to before 
-                // the start of the collection
-                _currentItem = Playlist.First;
-            }
-            else
-            {
-                _currentItem = next;
-            }
+            _currentItem = next ?? Playlist.First;
 
             this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
 
             // If it was playing originally then we play again
-            if (wasPlaying)
-            {
-                this.Play();
+            if (!wasPlaying) return;
 
-                if (wasPaused)
-                {
-                    this.Pause();
-                }
+            this.Play();
+
+            if (wasPaused)
+            {
+                this.Pause();
             }
         }
 
         public void PreviousTrack()
         {
+
+            if(_currentItem == null) return;
 
             // We keep track if it was playing ready for later
             var wasPlaying = this.IsPlaying;
@@ -197,28 +202,19 @@ namespace GrandadAudioPlayer.Model.PlayList
             // Move to the previous track (or last if at the end)
             var previous = _currentItem.Previous;
 
-            if (previous == null)
-            {
-
-                _currentItem = Playlist.Last;
-            }
-            else
-            {
-                _currentItem = previous;
-            }
+            _currentItem = previous ?? Playlist.Last;
 
             this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
 
 
             // If it was plahing originally then we play again
-            if (wasPlaying)
-            {
-                this.Play();
+            if (!wasPlaying) return;
 
-                if (wasPaused)
-                {
-                    this.Pause();
-                }
+            this.Play();
+
+            if (wasPaused)
+            {
+                this.Pause();
             }
         }
 

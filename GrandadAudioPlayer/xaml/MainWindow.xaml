@@ -22,8 +22,12 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <xaml:InformationView Grid.Column="0"></xaml:InformationView>
-            <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
+            <material:Card Grid.Column="0" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
+                <xaml:InformationView />
+            </material:Card>
+            <material:Card Grid.Column="1" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
+                <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
+            </material:Card>
         </Grid>
 
         <Grid Width="auto" Height="auto">
