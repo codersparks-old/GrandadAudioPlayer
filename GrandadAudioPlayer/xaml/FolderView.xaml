@@ -17,7 +17,7 @@
                     <TextBlock Text="{Binding Name}" Padding="0,5" Style="{DynamicResource MaterialDesignHeadlineTextBlock}"></TextBlock>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type folderView:FolderItemFile}">
-                    <TextBlock Text="{Binding Name}" Padding="0,5"></TextBlock>
+                    <TextBlock Text="{Binding Name}" Padding="0,5" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"></TextBlock>
                 </DataTemplate>
             </TreeView.Resources>
 

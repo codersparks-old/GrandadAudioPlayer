@@ -1,12 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
-using GrandadAudioPlayer.Model.PlayList;
-
-namespace GrandadAudioPlayer.Model.FolderView
+﻿namespace GrandadAudioPlayer.Model.FolderView
 {
-    public abstract class FolderItemBase : ViewModelBase
+    public abstract class FolderItemBase 
     {
-        public static FolderItemBase SelectedItem { get; set; } = null;
 
         public string Name { get; }
         public string Path { get; }

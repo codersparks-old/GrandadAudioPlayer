@@ -2,7 +2,6 @@
 using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayerClassLibrary.Configuration;
 using System.Collections.ObjectModel;
-using CommonServiceLocator;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.FolderView;
 using GrandadAudioPlayer.Model.PlayList;

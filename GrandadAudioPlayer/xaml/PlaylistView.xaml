@@ -14,14 +14,13 @@
         <ListView ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentItem, Mode=TwoWay}" SelectionMode="Single">
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type playList:PlaylistItem}">
-                    <TextBlock Padding="0,5" Text="{Binding Name}" Style="{DynamicResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                    <TextBlock Padding="0,5" Text="{Binding DisplayName}" Style="{DynamicResource MaterialDesignHeadlineTextBlock}"></TextBlock>
                 </DataTemplate>
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="listViewItemBehaviour:ListViewItemBehaviour.IsBroughtIntoViewWhenSelected"
                             Value="True" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected}" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
