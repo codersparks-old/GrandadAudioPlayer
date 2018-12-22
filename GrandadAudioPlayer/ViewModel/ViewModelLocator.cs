@@ -45,6 +45,8 @@ namespace GrandadAudioPlayer.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<FolderViewModel>();
             SimpleIoc.Default.Register<PlaylistViewModel>();
+            SimpleIoc.Default.Register<DialogsViewModel>();
+            SimpleIoc.Default.Register<AdminViewModel>();
         }
 
         public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
@@ -52,6 +54,10 @@ namespace GrandadAudioPlayer.ViewModel
         public FolderViewModel FolderViewModel => ServiceLocator.Current.GetInstance<FolderViewModel>();
 
         public PlaylistViewModel PlaylistViewModel => ServiceLocator.Current.GetInstance<PlaylistViewModel>();
+
+        public DialogsViewModel DialogsViewModel => ServiceLocator.Current.GetInstance<DialogsViewModel>();
+
+        public AdminViewModel AdminViewModel => ServiceLocator.Current.GetInstance<AdminViewModel>();
 
         public static void Cleanup()
         {

@@ -1,10 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GrandadAudioPlayer.Utils;
-using GrandadAudioPlayerClassLibrary.Configuration;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.FolderView;
 using GrandadAudioPlayer.Model.PlayList;
+using GrandadAudioPlayer.Utils.Configuration;
 
 namespace GrandadAudioPlayer.ViewModel
 {
@@ -31,12 +31,22 @@ namespace GrandadAudioPlayer.ViewModel
 
         public FolderViewModel()
         {
-            this.RootFolder = new ObservableCollection<FolderItemBase>(
-                FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
-
+            this.ReloadFolderStructure();
+            Messenger.Default.Register < NotificationMessage<FolderMessage>>(this,  RecieveFolderMessage);
         }
 
-        public ObservableCollection<FolderItemBase> RootFolder { get; }
+        public void ReloadFolderStructure()
+        {
+            this.RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+            RaisePropertyChanged("RootFolder");
+        }
+
+        private void RecieveFolderMessage(NotificationMessage<FolderMessage> message)
+        {
+            this.ReloadFolderStructure();
+        }
+
+        public ObservableCollection<FolderItemBase> RootFolder { get; private set; }
 
     }
 }

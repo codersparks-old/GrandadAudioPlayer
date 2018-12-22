@@ -2,14 +2,14 @@
 using System;
 using System.IO;
 
-namespace GrandadAudioPlayerClassLibrary.Configuration
+namespace GrandadAudioPlayer.Utils.Configuration
 {
     public sealed class ConfigurationManager
     {
-        private static readonly Lazy<ConfigurationManager> _lazyInstance =
+        private static readonly Lazy<ConfigurationManager> LazyInstance =
             new Lazy<ConfigurationManager>(() => new ConfigurationManager());
 
-        public static ConfigurationManager Instance => _lazyInstance.Value;
+        public static ConfigurationManager Instance => LazyInstance.Value;
 
         private ConfigurationModel _configurationModel;
         private readonly string _configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/gap";

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using GrandadAudioPlayer.Model.FolderView;
 using GrandadAudioPlayer.Utils;
-using GrandadAudioPlayerClassLibrary.Configuration;
+using GrandadAudioPlayer.Utils.Configuration;
 using log4net;
 using NAudio.Wave;
 
@@ -26,7 +24,7 @@ namespace GrandadAudioPlayer.Model.PlayList
     {
         private static ILog logger = LogManager.GetLogger(typeof(PlaylistManager));
 
-        private static readonly List<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions;
+        private static readonly HashSet<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions;
 
         private static readonly Lazy<PlaylistManager> _lazyInstance =
             new Lazy<PlaylistManager>(() => new PlaylistManager());

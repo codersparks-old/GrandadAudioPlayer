@@ -15,51 +15,56 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{StaticResource MaterialDesignFont}"
-        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
-    <DockPanel>
-        <Grid Width="auto" Height="Auto" DockPanel.Dock="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <material:Card Grid.Column="0" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
-                <xaml:InformationView />
-            </material:Card>
-            <material:Card Grid.Column="1" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
-                <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
-            </material:Card>
-        </Grid>
+        DataContext="{Binding DialogsViewModel, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenAdminDialogCommand}" Modifiers="Alt+Control+Shift" Key="F1"></KeyBinding>
+    </Window.InputBindings>
+    <material:DialogHost Identifier="RootDialog">
+        <DockPanel>
+            <Grid Width="auto" Height="Auto" DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <material:Card Grid.Column="0" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
+                    <xaml:InformationView />
+                </material:Card>
+                <material:Card Grid.Column="1" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
+                    <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
+                </material:Card>
+            </Grid>
 
-        <Grid Width="auto" Height="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <material:Card Padding="5,10" Margin="10" VerticalAlignment="Stretch">
-                <Grid Grid.Column="0" Margin="0,0,1,0" HorizontalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <material:ColorZone Mode="PrimaryMid" Padding="10">
-                        <TextBlock Text="Choose what to play:" Style="{DynamicResource MaterialDesignTitleTextBlock}" />
-                    </material:ColorZone>
-                    <xaml:FolderView Grid.Row="1"></xaml:FolderView>
-                </Grid>
-            </material:Card>
-            <material:Card Padding="5,10" Margin="10" Grid.Column="1" VerticalAlignment="Stretch">
-                <Grid Margin="0,0,1,0" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <material:ColorZone Mode="PrimaryMid" Padding="10">
-                        <TextBlock Text="Selected Playlist:" Style="{DynamicResource MaterialDesignTitleTextBlock}" />
-                    </material:ColorZone>
-                    <xaml:PlaylistView Grid.Row="1" HorizontalAlignment="Stretch"></xaml:PlaylistView>
-                </Grid>
-            </material:Card>
-        </Grid>
+            <Grid Width="auto" Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <material:Card Padding="5,10" Margin="10" VerticalAlignment="Stretch">
+                    <Grid Grid.Column="0" Margin="0,0,1,0" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <material:ColorZone Mode="PrimaryMid" Padding="10">
+                            <TextBlock Text="Choose what to play:" Style="{DynamicResource MaterialDesignTitleTextBlock}" />
+                        </material:ColorZone>
+                        <xaml:FolderView Grid.Row="1"></xaml:FolderView>
+                    </Grid>
+                </material:Card>
+                <material:Card Padding="5,10" Margin="10" Grid.Column="1" VerticalAlignment="Stretch">
+                    <Grid Margin="0,0,1,0" DataContext="{Binding PlaylistViewModel, Source={StaticResource Locator}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <material:ColorZone Mode="PrimaryMid" Padding="10">
+                            <TextBlock Text="Selected Playlist:" Style="{DynamicResource MaterialDesignTitleTextBlock}" />
+                        </material:ColorZone>
+                        <xaml:PlaylistView Grid.Row="1" HorizontalAlignment="Stretch"></xaml:PlaylistView>
+                    </Grid>
+                </material:Card>
+            </Grid>
 
-    </DockPanel>
+        </DockPanel>
+    </material:DialogHost>
 </Window>

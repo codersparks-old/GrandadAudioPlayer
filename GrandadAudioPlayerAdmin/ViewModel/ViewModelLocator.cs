@@ -42,14 +42,14 @@ namespace GrandadAudioPlayerAdmin.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<AdminViewModel>();
         }
 
-        public MainViewModel Main
+        public AdminViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<AdminViewModel>();
             }
         }
         
