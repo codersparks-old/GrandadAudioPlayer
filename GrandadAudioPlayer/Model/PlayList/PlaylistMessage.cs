@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GrandadAudioPlayer.Model.PlayList
+﻿namespace GrandadAudioPlayer.Model.PlayList
 {
     public class PlaylistMessage
     {

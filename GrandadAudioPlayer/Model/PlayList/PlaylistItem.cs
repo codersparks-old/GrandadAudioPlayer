@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using TagLib;
+﻿using TagLib;
 
 namespace GrandadAudioPlayer.Model.PlayList
 {
