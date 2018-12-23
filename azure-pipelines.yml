@@ -37,6 +37,8 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- powershell: tree
+
 - task: GithubRelease@0
   inputs:
     gitHubConnection: codersparkspat
