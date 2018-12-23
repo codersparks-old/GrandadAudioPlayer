@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿// ReSharper disable InheritdocConsiderUsage
 
 namespace GrandadAudioPlayer.xaml
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    // ReSharper disable once UnusedMember.Global
+    public partial class MainWindow
     {
         public MainWindow()
         {

@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿// ReSharper disable InheritdocConsiderUsage
+using System.Windows;
 using GrandadAudioPlayer.Model.FolderView;
 using GrandadAudioPlayer.ViewModel;
 
@@ -8,7 +8,7 @@ namespace GrandadAudioPlayer.xaml
     /// <summary>
     /// Interaction logic for FolderView.xaml
     /// </summary>
-    public partial class FolderView : UserControl
+    public partial class FolderView
     {
         public FolderView()
         {

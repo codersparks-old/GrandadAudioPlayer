@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrandadAudioPlayer", "GrandadAudioPlayer\GrandadAudioPlayer.csproj", "{A386F910-DB3B-466F-999E-17E53CB4E55A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{48B0CACD-1B55-4A6A-8FAB-8650798D81D1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48B0CACD-1B55-4A6A-8FAB-8650798D81D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48B0CACD-1B55-4A6A-8FAB-8650798D81D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48B0CACD-1B55-4A6A-8FAB-8650798D81D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48B0CACD-1B55-4A6A-8FAB-8650798D81D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

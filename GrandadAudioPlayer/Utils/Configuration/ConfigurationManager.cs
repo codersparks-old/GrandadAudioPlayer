@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace GrandadAudioPlayer.Utils.Configuration
 {
@@ -13,33 +13,33 @@ namespace GrandadAudioPlayer.Utils.Configuration
 
         private ConfigurationModel _configurationModel;
         private readonly string _configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/gap";
-        private readonly string _configFile = "config.json";
+        private const string ConfigFile = "config.json";
 
 
         public ConfigurationModel Configuration
         {
             get {
-                this.LoadConfiguration();
+                LoadConfiguration();
                 return _configurationModel;
             }
         }
 
         private ConfigurationManager()
         {
-            this.LoadConfiguration();
+            LoadConfiguration();
         }
 
         public void LoadConfiguration()
         {
-            if (File.Exists(Path.Combine(_configFilePath, _configFile)))
+            if (File.Exists(Path.Combine(_configFilePath, ConfigFile)))
             {
                 _configurationModel =
-                    JsonConvert.DeserializeObject<ConfigurationModel>(File.ReadAllText(Path.Combine(_configFilePath, _configFile)));
+                    JsonConvert.DeserializeObject<ConfigurationModel>(File.ReadAllText(Path.Combine(_configFilePath, ConfigFile)));
             }
             else
             {
                 _configurationModel = new ConfigurationModel();
-                this.SaveConfiguration(_configurationModel);
+                SaveConfiguration(_configurationModel);
             }
         }
 
@@ -52,7 +52,7 @@ namespace GrandadAudioPlayer.Utils.Configuration
             {
                 Directory.CreateDirectory(_configFilePath);
             }
-            File.WriteAllText(Path.Combine(_configFilePath, _configFile), JsonConvert.SerializeObject(_configurationModel,Formatting.Indented));
+            File.WriteAllText(Path.Combine(_configFilePath, ConfigFile), JsonConvert.SerializeObject(_configurationModel,Formatting.Indented));
         }
     }
 }

@@ -5,30 +5,30 @@ namespace GrandadAudioPlayer.Model.PlayList
     public class PlaylistItem
     {
 
-        public string Name { get; private set; }
-        public string Path { get; private set; }
+        public string Name { get; }
+        public string Path { get; }
 
         public string DisplayName
         {
             get
             {
-                if (Id3Tags?.Title == null || Id3Tags.Title.Length < 1) return this.Name;
+                if (Id3Tags?.Title == null || Id3Tags.Title.Length < 1) return Name;
 
                 return Id3Tags.Title;
             }
         }
-        public TagLib.Properties Id3Properties { get; private set; }
-        public Tag Id3Tags { get; private set; }
+        public TagLib.Properties Id3Properties { get; }
+        public Tag Id3Tags { get; }
 
         public PlaylistItem(string path)
         {
-            this.Path = path;
-            this.Name = System.IO.Path.GetFileName(path);
+            Path = path;
+            Name = System.IO.Path.GetFileName(path);
 
             using (var f = File.Create(path))
             {
-                this.Id3Properties = f.Properties;
-                this.Id3Tags = f.Tag;
+                Id3Properties = f.Properties;
+                Id3Tags = f.Tag;
             }
         }
     }

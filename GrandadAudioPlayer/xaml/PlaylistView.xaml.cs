@@ -1,11 +1,12 @@
-﻿using System.Windows.Controls;
+﻿
+// ReSharper disable InheritdocConsiderUsage
 
 namespace GrandadAudioPlayer.xaml
 {
     /// <summary>
     /// Interaction logic for PlaylistView.xaml
     /// </summary>
-    public partial class PlaylistView : UserControl
+    public partial class PlaylistView
     {
         public PlaylistView()
         {

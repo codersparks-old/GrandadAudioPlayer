@@ -8,14 +8,14 @@
 
         protected FolderItemBase(string path)
         {
-            this.Path = path;
-            this.Name = System.IO.Path.GetFileName(path);
+            Path = path;
+            Name = System.IO.Path.GetFileName(path);
 
         }
 
         public override string ToString()
         {
-            return this.GetType().Name + ": " + Name;
+            return GetType().Name + ": " + Name;
         }
     }
 }

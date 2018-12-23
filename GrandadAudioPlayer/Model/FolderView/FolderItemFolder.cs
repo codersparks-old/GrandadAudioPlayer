@@ -13,12 +13,12 @@ namespace GrandadAudioPlayer.Model.FolderView
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder(base.ToString());
+            var builder = new StringBuilder(base.ToString());
 
             builder.Append("Children=[");
-            foreach (var item in this.Children)
+            foreach (var item in Children)
             {
-                builder.Append(item.ToString());
+                builder.Append(item);
                 builder.Append(',');
             }
 

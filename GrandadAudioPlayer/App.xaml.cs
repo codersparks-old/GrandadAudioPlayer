@@ -3,17 +3,18 @@ using log4net;
 
 namespace GrandadAudioPlayer
 {
+    /// <inheritdoc />
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
-        private ILog log = LogManager.GetLogger(typeof(App));
+        private readonly ILog _log = LogManager.GetLogger(typeof(App));
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            log.Debug("Initialising...");
+            _log.Debug("Initialising...");
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System.Windows.Controls;
+﻿
+// ReSharper disable InheritdocConsiderUsage
 
 namespace GrandadAudioPlayer.xaml
 {
     /// <summary>
     /// Interaction logic for AdminDialog.xaml
     /// </summary>
-    public partial class AdminDialog : UserControl
+    public partial class AdminDialog
     {
         public AdminDialog()
         {

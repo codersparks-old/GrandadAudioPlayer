@@ -5,9 +5,12 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GrandadAudioPlayer.Utils.Configuration;
 using Microsoft.WindowsAPICodePack.Dialogs;
+// ReSharper disable RedundantArgumentDefaultValue
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace GrandadAudioPlayer.ViewModel
 {
+    /// <inheritdoc/>
     /// <summary>
     /// This class contains properties that the main View can data bind to.
     /// <para>
@@ -25,8 +28,9 @@ namespace GrandadAudioPlayer.ViewModel
     {
 
         private ConfigurationModel _configuration;
+        /// <inheritdoc />
         /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
+        /// Initialises a new instance of the MainViewModel class.
         /// </summary>
         public AdminViewModel()
         {
@@ -38,7 +42,7 @@ namespace GrandadAudioPlayer.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
-            this.LoadConfigurationMethod();
+            LoadConfigurationMethod();
 
             LoadConfigurationCommand = new RelayCommand(LoadConfigurationMethod);
             SaveConfigurationCommand = new RelayCommand(SaveConfigurationMethod);
@@ -66,6 +70,7 @@ namespace GrandadAudioPlayer.ViewModel
                 {
                     _configuration.AllowedExtensions.Clear();
                     _configuration.AllowedExtensions.Add(".mp3");
+                    _configuration.AllowedExtensions.Add(".m4a");
                 }
                 else
                 {
@@ -77,29 +82,28 @@ namespace GrandadAudioPlayer.ViewModel
                     }
                 }
 
-                RaisePropertyChanged("AllowedExtenstions");
+                RaisePropertyChanged("AllowedExtensions");
             }
         }
 
-        public ICommand LoadConfigurationCommand { get; private set; }
-        public ICommand SaveConfigurationCommand { get; private set; }
-        public ICommand OpenFileDialogCommand { get; private set; }
+        public ICommand LoadConfigurationCommand { get; }
+        public ICommand SaveConfigurationCommand { get; }
+        public ICommand OpenFileDialogCommand { get; }
 
         public string FeedbackMessage { get; set; }
 
         public void SaveConfigurationMethod()
         {
-            ConfigurationManager.Instance.SaveConfiguration(this._configuration);
-            this.FeedbackMessage = "Configuration saved!";
+            ConfigurationManager.Instance.SaveConfiguration(_configuration);
+            FeedbackMessage = "Configuration saved!";
             RaisePropertyChanged("FeedbackMessage");
 
-            var t = new Timer();
+            var t = new Timer {Interval = 5000};
 
-            t.Interval = 5000;
 
             t.Elapsed += (s, e) =>
             {
-                this.FeedbackMessage = "";
+                FeedbackMessage = "";
                 RaisePropertyChanged("FeedbackMessage");
                 t.Stop();
             };
@@ -110,8 +114,8 @@ namespace GrandadAudioPlayer.ViewModel
 
         public void LoadConfigurationMethod()
         {
-            this._configuration = ConfigurationManager.Instance.Configuration;
-            this.FolderPath = this._configuration.FolderPath;
+            _configuration = ConfigurationManager.Instance.Configuration;
+            FolderPath = _configuration.FolderPath;
         }
 
         private void OpenFileDialogMethod()

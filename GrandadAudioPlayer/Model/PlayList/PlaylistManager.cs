@@ -15,45 +15,45 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public PlaylistEventArgs(PlaylistItem playlistItem)
         {
-            this.PlaylistItem = playlistItem;
+            PlaylistItem = playlistItem;
         }
 
-        public PlaylistItem PlaylistItem { get; private set; }
+        public PlaylistItem PlaylistItem { get; }
     }
     public sealed class PlaylistManager : IDisposable
     {
-        private static ILog logger = LogManager.GetLogger(typeof(PlaylistManager));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(PlaylistManager));
 
         private static readonly HashSet<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions;
 
-        private static readonly Lazy<PlaylistManager> _lazyInstance =
+        private static readonly Lazy<PlaylistManager> LazyInstance =
             new Lazy<PlaylistManager>(() => new PlaylistManager());
 
-        public static PlaylistManager Instance => _lazyInstance.Value;
+        public static PlaylistManager Instance => LazyInstance.Value;
 
         private string _rootFolder;
-        private LinkedListNode<PlaylistItem> _currentItem = null;
+        private LinkedListNode<PlaylistItem> _currentItem;
 
         private MediaFoundationReader _mp3FileReader;
-        private WaveOut _waveOut = null;
+        private WaveOut _waveOut;
 
         public string RootFolder
         {
             get => _rootFolder;
             set
             {
-                if (this._rootFolder == value) return;
-                this._rootFolder = value;
-                this.ReloadPlaylist();
+                if (_rootFolder == value) return;
+                _rootFolder = value;
+                ReloadPlaylist();
             }
         }
 
-        public bool IsPlaying { get; private set; } = false;
-        public bool IsPaused { get; private set; } = false;
+        public bool IsPlaying { get; private set; }
+        public bool IsPaused { get; private set; }
 
         public PlaylistItem CurrentItem
         {
-            get => this._currentItem?.Value;
+            get => _currentItem?.Value;
             set
             {
 
@@ -61,18 +61,18 @@ namespace GrandadAudioPlayer.Model.PlayList
 
                 var newItem = value;
 
-                logger.Debug("Updating current item..." + newItem.Path);
+                Logger.Debug("Updating current item..." + newItem.Path);
 
                 if (_currentItem.Value != newItem)
                 {
-                    logger.Debug("New value != currentItem value");
-                    this._currentItem = this.Playlist.Find(newItem);
-                    this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(newItem));
+                    Logger.Debug("New value != currentItem value");
+                    _currentItem = Playlist.Find(newItem);
+                    OnTrackChanged?.Invoke(this, new PlaylistEventArgs(newItem));
 
-                    if (this.IsPlaying)
+                    if (IsPlaying)
                     {
-                        this.Stop();
-                        this.Play();
+                        Stop();
+                        Play();
                     }
                 }
             }
@@ -85,10 +85,10 @@ namespace GrandadAudioPlayer.Model.PlayList
         public void ReloadPlaylist()
         {
 
-            logger.Debug("Reloading playlist");
-            this.Playlist.Clear();
+            Logger.Debug("Reloading playlist");
+            Playlist.Clear();
 
-            var files = FolderUtils.GetFilesUnderFolder(this._rootFolder);
+            var files = FolderUtils.GetFilesUnderFolder(_rootFolder);
 
             if (files.Count == 0) return;
 
@@ -96,14 +96,14 @@ namespace GrandadAudioPlayer.Model.PlayList
             {
                 if (!AllowedExtensions.Contains(Path.GetExtension(f.Path))) continue;
                 var playlistItem = new PlaylistItem(f.Path);
-                this.Playlist.AddLast(playlistItem);
+                Playlist.AddLast(playlistItem);
             }
 
-            this._currentItem = this.Playlist.First;
-            logger.Debug("Current item set to " + this._currentItem?.Value.Name);
+            _currentItem = Playlist.First;
+            Logger.Debug("Current item set to " + _currentItem?.Value.Name);
 
 
-            this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
+            OnTrackChanged?.Invoke(this, new PlaylistEventArgs(CurrentItem));
 
         }
 
@@ -113,32 +113,32 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             if (_currentItem == null) return;
 
-            logger.Info("Stopping playback...");
+            Logger.Info("Stopping playback...");
             if (_waveOut != null)
             {
-                logger.Debug("Disposing of wave out and mp3FileReader");
-                this._waveOut.Dispose();
-                this._waveOut = null;
-                this._mp3FileReader.Dispose();
-                this._mp3FileReader = null;
+                Logger.Debug("Disposing of wave out and mp3FileReader");
+                _waveOut.Dispose();
+                _waveOut = null;
+                _mp3FileReader.Dispose();
+                _mp3FileReader = null;
             }
-            this.IsPlaying = false;
-            this.IsPaused = false;
-            logger.Debug("IsPlaying set to: " + this.IsPlaying);
+            IsPlaying = false;
+            IsPaused = false;
+            Logger.Debug("IsPlaying set to: " + IsPlaying);
         }
 
         public void Play()
         {
             if (_currentItem == null) return;
 
-            if (this._waveOut == null)
+            if (_waveOut == null)
             {
-                this._initialisePlayer();
+                _initialisePlayer();
             }
 
-            this._waveOut.Play();
-            this.IsPlaying = true;
-            this.IsPaused = false;
+            _waveOut.Play();
+            IsPlaying = true;
+            IsPaused = false;
 
         }
 
@@ -147,7 +147,7 @@ namespace GrandadAudioPlayer.Model.PlayList
             if (_currentItem == null) return;
 
             _waveOut?.Pause();
-            this.IsPaused = true;
+            IsPaused = true;
         }
 
         public void NextTrack()
@@ -155,13 +155,13 @@ namespace GrandadAudioPlayer.Model.PlayList
             if( _currentItem == null) return;
             
             // We keep track if it was playing ready for later
-            var wasPlaying = this.IsPlaying;
-            var wasPaused = this.IsPaused;
+            var wasPlaying = IsPlaying;
+            var wasPaused = IsPaused;
 
             // We now stop if it is playing
-            if (this.IsPlaying)
+            if (IsPlaying)
             {
-                this.Stop();
+                Stop();
             }
 
             // Move to the next track (or first if at the end)
@@ -169,16 +169,16 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             _currentItem = next ?? Playlist.First;
 
-            this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
+            OnTrackChanged?.Invoke(this, new PlaylistEventArgs(CurrentItem));
 
             // If it was playing originally then we play again
             if (!wasPlaying) return;
 
-            this.Play();
+            Play();
 
             if (wasPaused)
             {
-                this.Pause();
+                Pause();
             }
         }
 
@@ -188,13 +188,13 @@ namespace GrandadAudioPlayer.Model.PlayList
             if(_currentItem == null) return;
 
             // We keep track if it was playing ready for later
-            var wasPlaying = this.IsPlaying;
-            var wasPaused = this.IsPaused;
+            var wasPlaying = IsPlaying;
+            var wasPaused = IsPaused;
 
             // We now stop if it is playing
-            if (this.IsPlaying)
+            if (IsPlaying)
             {
-                this.Stop();
+                Stop();
             }
 
             // Move to the previous track (or last if at the end)
@@ -202,35 +202,35 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             _currentItem = previous ?? Playlist.Last;
 
-            this.OnTrackChanged?.Invoke(this, new PlaylistEventArgs(this.CurrentItem));
+            OnTrackChanged?.Invoke(this, new PlaylistEventArgs(CurrentItem));
 
 
-            // If it was plahing originally then we play again
+            // If it was playing originally then we play again
             if (!wasPlaying) return;
 
-            this.Play();
+            Play();
 
             if (wasPaused)
             {
-                this.Pause();
+                Pause();
             }
         }
 
         private void _initialisePlayer()
         {
-            logger.Debug("Initialising player with file: " + this.CurrentItem.Path);
-            this._mp3FileReader = new MediaFoundationReader(this.CurrentItem.Path);
-            this._waveOut = new WaveOut();
-            this._waveOut.PlaybackStopped += this.OnPlaybackStopped;
-            this._waveOut.Init(this._mp3FileReader);
+            Logger.Debug("Initialising player with file: " + CurrentItem.Path);
+            _mp3FileReader = new MediaFoundationReader(CurrentItem.Path);
+            _waveOut = new WaveOut();
+            _waveOut.PlaybackStopped += OnPlaybackStopped;
+            _waveOut.Init(_mp3FileReader);
         }
 
         private void OnPlaybackStopped(object obj, StoppedEventArgs args)
         {
 
-            if (this.IsPlaying)
+            if (IsPlaying)
             {
-                this.NextTrack();
+                NextTrack();
             }
         }
 

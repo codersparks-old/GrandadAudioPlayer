@@ -8,6 +8,7 @@ using MaterialDesignThemes.Wpf;
 
 namespace GrandadAudioPlayer.ViewModel
 {
+    /// <inheritdoc />
     public class DialogsViewModel : ViewModelBase
     {
         public DialogsViewModel()
@@ -21,8 +22,8 @@ namespace GrandadAudioPlayer.ViewModel
         {
             var view = new AdminDialog();
 
-            var result = await DialogHost.Show(view, "RootDialog");
-            Messenger.Default.Send<NotificationMessage<FolderMessage>>(new NotificationMessage<FolderMessage>(new FolderMessage(), "Root Folder Updated"));
+            await DialogHost.Show(view, "RootDialog");
+            Messenger.Default.Send(new NotificationMessage<FolderMessage>(new FolderMessage(), "Root Folder Updated"));
         }
     }
 }

@@ -3,11 +3,11 @@
     public class PlaylistMessage
     {
 
-        public string Path { get; private set; }
+        public string Path { get; }
 
         public PlaylistMessage(string path)
         {
-            this.Path = path;
+            Path = path;
         }
         
     }

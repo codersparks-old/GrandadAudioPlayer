@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:GrandadAudioPlayer"
         xmlns:xaml="clr-namespace:GrandadAudioPlayer.xaml"
         mc:Ignorable="d"
         Title="MainWindow" Height="726.282" Width="1212.179" WindowState="Maximized"
@@ -30,7 +29,7 @@
                     <xaml:InformationView />
                 </material:Card>
                 <material:Card Grid.Column="1" Padding="5,10" Margin="10" VerticalAlignment="Stretch">
-                    <xaml:ControlsView Grid.Column="1"></xaml:ControlsView>
+                    <xaml:ControlsView></xaml:ControlsView>
                 </material:Card>
             </Grid>
 
@@ -40,7 +39,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <material:Card Padding="5,10" Margin="10" VerticalAlignment="Stretch">
-                    <Grid Grid.Column="0" Margin="0,0,1,0" HorizontalAlignment="Stretch">
+                    <Grid Margin="0,0,1,0" HorizontalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>

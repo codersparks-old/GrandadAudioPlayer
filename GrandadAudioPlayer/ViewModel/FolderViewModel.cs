@@ -1,17 +1,19 @@
-﻿using GalaSoft.MvvmLight;
-using GrandadAudioPlayer.Utils;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.FolderView;
 using GrandadAudioPlayer.Model.PlayList;
+using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayer.Utils.Configuration;
+// ReSharper disable RedundantArgumentDefaultValue
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace GrandadAudioPlayer.ViewModel
 {
     public class FolderViewModel : ViewModelBase
     {
 
-        private FolderItemBase _selectedItem = null;
+        private FolderItemBase _selectedItem;
         public FolderItemBase SelectedItem
         {
             get => _selectedItem;
@@ -19,31 +21,31 @@ namespace GrandadAudioPlayer.ViewModel
             {
                 if (_selectedItem == value) return;
 
-                this._selectedItem = value;
+                _selectedItem = value;
                 RaisePropertyChanged("SelectedItem");
 
                 if (_selectedItem == null) return;
 
                 var messageBody = new PlaylistMessage(_selectedItem.Path);
-                Messenger.Default.Send<NotificationMessage<PlaylistMessage>>(new NotificationMessage<PlaylistMessage>(messageBody, "Playlist Updated"));
+                Messenger.Default.Send(new NotificationMessage<PlaylistMessage>(messageBody, "Playlist Updated"));
             }
         } 
 
         public FolderViewModel()
         {
-            this.ReloadFolderStructure();
-            Messenger.Default.Register < NotificationMessage<FolderMessage>>(this,  RecieveFolderMessage);
+            ReloadFolderStructure();
+            Messenger.Default.Register < NotificationMessage<FolderMessage>>(this,  ReceiveFolderMessage);
         }
 
         public void ReloadFolderStructure()
         {
-            this.RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+            RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
             RaisePropertyChanged("RootFolder");
         }
 
-        private void RecieveFolderMessage(NotificationMessage<FolderMessage> message)
+        private void ReceiveFolderMessage(NotificationMessage<FolderMessage> message)
         {
-            this.ReloadFolderStructure();
+            ReloadFolderStructure();
         }
 
         public ObservableCollection<FolderItemBase> RootFolder { get; private set; }

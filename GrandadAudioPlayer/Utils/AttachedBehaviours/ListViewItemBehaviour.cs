@@ -1,17 +1,11 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace GrandadAudioPlayer.Utils.AttachedBehaviours
 {
-    class ListViewItemBehaviour
+    public class ListViewItemBehaviour
     {
         #region IsBroughtIntoViewWhenSelected
-
-        public static bool GetIsBroughtIntoViewWhenSelected(ListViewItem listViewItem)
-        {
-            return (bool)listViewItem.GetValue(IsBroughtIntoViewWhenSelectedProperty);
-        }
 
         public static void SetIsBroughtIntoViewWhenSelected(
             ListViewItem listViewItem, bool value)
@@ -47,7 +41,7 @@ namespace GrandadAudioPlayer.Utils.AttachedBehaviours
             // Only react to the Selected event raised by the ListViewItem
             // whose IsSelected property was modified. Ignore all ancestors
             // who are merely reporting that a descendant's Selected fired.
-            if (!Object.ReferenceEquals(sender, e.OriginalSource))
+            if (!ReferenceEquals(sender, e.OriginalSource))
                 return;
 
             if (e.OriginalSource is ListViewItem item)

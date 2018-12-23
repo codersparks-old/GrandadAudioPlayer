@@ -62,20 +62,20 @@ namespace GrandadAudioPlayer.Utils
                         directoryContents.Add(folderItemFolder);
                     }
                 }
-                catch (UnauthorizedAccessException e)
+                catch (UnauthorizedAccessException)
                 {
-
+                   
                 }
 
                 try
                 {
                     directoryContents.AddRange(
                         (from f in Directory.GetFiles(directory)
-                         let info = new FileInfo(f)
-                         where !info.Attributes.HasFlag(FileAttributes.Hidden)
-                         select new FolderItemFile(f)).Cast<FolderItemBase>());
+                            let info = new FileInfo(f)
+                            where !info.Attributes.HasFlag(FileAttributes.Hidden)
+                            select new FolderItemFile(f)));
                 }
-                catch (UnauthorizedAccessException e)
+                catch (UnauthorizedAccessException)
                 {
 
                 }
