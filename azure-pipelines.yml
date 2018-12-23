@@ -35,6 +35,6 @@ steps:
 
 - task: GithubRelease@0
   inputs:
-    githubconnection: codersparks
+    gitHubConnection: codersparkspat
     repositoryName: codersparks/GrandadAudioPlayer
     title: $(Build.DefinitionName)
