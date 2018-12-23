@@ -53,3 +53,4 @@ steps:
     title: $(Build.DefinitionName)
     tagSource: manual
     tag: $(Build.BuildNumber)
+    assets: 'GrandadAudioPlayer\bin\Release\app.publish\*'
