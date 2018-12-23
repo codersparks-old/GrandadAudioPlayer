@@ -191,6 +191,7 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+!GrandadAudioPlayer/GrandadAudioPlayer_TemporaryKey.pfx
 *.publishsettings
 node_modules/
 orleans.codegen.cs
