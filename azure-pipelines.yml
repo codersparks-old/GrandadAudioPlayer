@@ -31,3 +31,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: GithubRelease@0
+  inputs:
+	githubconnection: codersparks
+	repositoryName: GrandadAudioPlayer
+	title: $(Build.DefinitionName)
