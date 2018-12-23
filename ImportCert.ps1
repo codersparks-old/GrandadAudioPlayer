@@ -1,6 +1,8 @@
 $pfxpath = 'GrandadAudioPlayer\GrandadAudioPlayer_TemporaryKey.pfx'
 $password = 'letmein'
 
+dir
+
 Add-Type -AssemblyName System.Security
 $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
 $cert.Import($pfxpath, $password, [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]"PersistKeySet")
