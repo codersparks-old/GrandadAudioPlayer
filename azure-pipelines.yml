@@ -38,5 +38,5 @@ steps:
     gitHubConnection: codersparkspat
     repositoryName: codersparks/GrandadAudioPlayer
     title: $(Build.DefinitionName)
-	tagSource: manual
-	tagSource: $(Build.BuildId)
+    tagSource: manual
+    tag: $(Build.BuildId)
