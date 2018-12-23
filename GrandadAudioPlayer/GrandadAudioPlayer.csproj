@@ -114,6 +114,11 @@
     <Compile Include="Model\FolderView\FolderMessage.cs" />
     <Compile Include="Model\PlayList\PlaylistItem.cs" />
     <Compile Include="Model\PlayList\PlaylistManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AttachedBehaviours\ListViewItemBehaviour.cs" />
     <Compile Include="Utils\Configuration\ConfigurationManager.cs" />
     <Compile Include="Utils\Configuration\ConfigurationModel.cs" />
@@ -188,6 +193,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Content Include="Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

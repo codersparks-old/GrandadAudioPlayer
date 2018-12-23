@@ -104,7 +104,6 @@
     </xsd:element>
   </xsd:schema>
   <resheader name="resmimetype">
-    <!-- ReSharper disable once MarkupTextTypo -->
     <value>text/microsoft-resx</value>
   </resheader>
   <resheader name="version">
