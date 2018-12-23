@@ -39,4 +39,4 @@ steps:
     repositoryName: codersparks/GrandadAudioPlayer
     title: $(Build.DefinitionName)
     tagSource: manual
-    tag: $(Build.BuildId)
+    tag: $(Build.BuildNumber)
