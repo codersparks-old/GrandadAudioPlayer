@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using log4net;
-using Squirrel;
 
 namespace GrandadAudioPlayer
 {
@@ -12,15 +11,10 @@ namespace GrandadAudioPlayer
     {
         private readonly ILog _log = LogManager.GetLogger(typeof(App));
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             _log.Debug("Initialising...");
-
-            using (var updateManager = new UpdateManager(@"c:\SquirrelReleases\"))
-            {
-                await updateManager.UpdateApp();
-            }
         }
     }
 }
