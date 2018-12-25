@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using AudioSwitcher.AudioApi.CoreAudio;
 using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayer.Utils.Configuration;
 using log4net;
@@ -36,6 +37,9 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         private MediaFoundationReader _mp3FileReader;
         private WaveOut _waveOut;
+        private float _volume = 0.5f;
+
+        private CoreAudioDevice _defaultAudioDevice = new CoreAudioController().DefaultPlaybackDevice;
 
         public string RootFolder
         {
@@ -78,7 +82,14 @@ namespace GrandadAudioPlayer.Model.PlayList
             }
         }
 
+
         public LinkedList<PlaylistItem> Playlist { get; } = new LinkedList<PlaylistItem>();
+
+        public int Volume
+        {
+            get => (int)_defaultAudioDevice.Volume;
+            set => _defaultAudioDevice.Volume = value;
+        }
 
         public event TrackChangedEventHandler OnTrackChanged;
 
@@ -222,6 +233,7 @@ namespace GrandadAudioPlayer.Model.PlayList
             _mp3FileReader = new MediaFoundationReader(CurrentItem.Path);
             _waveOut = new WaveOut();
             _waveOut.PlaybackStopped += OnPlaybackStopped;
+            _waveOut.Volume = _volume;
             _waveOut.Init(_mp3FileReader);
         }
 

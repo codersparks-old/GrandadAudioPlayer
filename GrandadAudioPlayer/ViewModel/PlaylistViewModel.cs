@@ -32,6 +32,15 @@ namespace GrandadAudioPlayer.ViewModel
             }
         }
 
+        public int Volume
+        {
+            get => _playlistManager.Volume;
+            set
+            {
+                if (_playlistManager != null) _playlistManager.Volume = value;
+            }
+        }
+
 
         public PlaylistViewModel()
         {
