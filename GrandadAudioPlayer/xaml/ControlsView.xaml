@@ -8,45 +8,35 @@
              d:DesignHeight="450" d:DesignWidth="800" DataContext="{Binding PlaylistViewModel ,Source={StaticResource Locator}}">
     <Grid HorizontalAlignment="Center" Margin="5">
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Command="{Binding PreviousCommand}" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="5">
-                <Button.ToolTip>
-                    <ToolTip Placement="Top">
-                        <TextBlock Text="Previous" Style="{DynamicResource MaterialDesignDisplay1TextBlock}"></TextBlock>
-                    </ToolTip>
-                </Button.ToolTip>
-                <material:PackIcon Kind="SkipPrevious" Width="32" Height="32"></material:PackIcon>
+            <Button Height="45" Command="{Binding PreviousCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="5">
+                    <material:PackIcon Kind="SkipPrevious" Width="32" Height="32"></material:PackIcon>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Previous</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Command="{Binding PlayCommand}" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="5">
-                <Button.ToolTip>
-                    <ToolTip Placement="Top">
-                        <TextBlock Text="Play" Style="{DynamicResource MaterialDesignDisplay1TextBlock}"></TextBlock>
-                    </ToolTip>
-                </Button.ToolTip>
-                <material:PackIcon Kind="Play" Width="32" Height="32"></material:PackIcon>
+            <Button Height="45" Command="{Binding PlayCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                    <material:PackIcon Kind="Play" Width="32" Height="32"></material:PackIcon>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Play</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Command="{Binding PauseCommand}" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="5">
-                <Button.ToolTip>
-                    <ToolTip Placement="Top">
-                        <TextBlock Text="Pause" Style="{DynamicResource MaterialDesignDisplay1TextBlock}"></TextBlock>
-                    </ToolTip>
-                </Button.ToolTip>
-                <material:PackIcon Kind="Pause" Width="32" Height="32"></material:PackIcon>
+            <Button Height="45"  Command="{Binding PauseCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                    <material:PackIcon Kind="Pause" Width="32" Height="32"></material:PackIcon>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Pause</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Command="{Binding StopCommand}" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="5">
-                <Button.ToolTip>
-                    <ToolTip Placement="Top">
-                        <TextBlock Text="Stop" Style="{DynamicResource MaterialDesignDisplay1TextBlock}"></TextBlock>
-                    </ToolTip>
-                </Button.ToolTip>
-                <material:PackIcon Kind="Stop" Width="32" Height="32"></material:PackIcon>
+            <Button Height="45"  Command="{Binding StopCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                    <material:PackIcon Kind="Stop" Width="32" Height="32"></material:PackIcon>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Stop</TextBlock>
+                </StackPanel>
             </Button>
-            <Button Command="{Binding NextCommand}" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="5">
-                <Button.ToolTip>
-                    <ToolTip Placement="Top">
-                        <TextBlock Text="Next" Style="{DynamicResource MaterialDesignDisplay1TextBlock}"></TextBlock>
-                    </ToolTip>
-                </Button.ToolTip>
-                <material:PackIcon Kind="SkipForward" Width="32" Height="32"></material:PackIcon>
+            <Button Height="45"  Command="{Binding NextCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                    <material:PackIcon Kind="SkipNext" Width="32" Height="32"></material:PackIcon>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Next</TextBlock>
+                </StackPanel>
             </Button>
         </StackPanel>
     </Grid>

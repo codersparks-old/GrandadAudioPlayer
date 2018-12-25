@@ -40,6 +40,11 @@ namespace GrandadAudioPlayer.ViewModel
         public void ReloadFolderStructure()
         {
             RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+            if (RootFolder.Count > 0)
+            {
+                this.SelectedItem = RootFolder[0];
+            }
+
             RaisePropertyChanged("RootFolder");
         }
 
