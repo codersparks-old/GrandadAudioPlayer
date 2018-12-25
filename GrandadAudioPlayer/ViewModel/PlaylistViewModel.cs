@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -11,6 +12,8 @@ namespace GrandadAudioPlayer.ViewModel
     {
 
         private readonly PlaylistManager _playlistManager = PlaylistManager.Instance;
+
+        private Timer _positionUpdateTimer = null;
 
         public ObservableCollection<PlaylistItem> Playlist { get; set; }
 
@@ -38,6 +41,30 @@ namespace GrandadAudioPlayer.ViewModel
             set
             {
                 if (_playlistManager != null) _playlistManager.Volume = value;
+            }
+        }
+
+        private string _position;
+
+        public string Position
+        {
+            get => _position;
+            private set
+            {
+                _position = value;
+                RaisePropertyChanged("Position");
+            }
+        }
+
+        private double _positionPercentage;
+
+        public double PositionPercentage
+        {
+            get => _positionPercentage;
+            private set
+            {
+                _positionPercentage = value;
+                RaisePropertyChanged("PositionPercentage");
             }
         }
 
@@ -72,6 +99,7 @@ namespace GrandadAudioPlayer.ViewModel
         public void PlayMethod()
         {
             _playlistManager.Play();
+            _startPositionTimer();
         }
 
         public bool CanPlayMethod()
@@ -82,6 +110,7 @@ namespace GrandadAudioPlayer.ViewModel
         public void PauseMethod()
         {
             _playlistManager.Pause();
+            _stopPositionTimer();
         }
 
         public bool CanPauseMethod()
@@ -92,6 +121,7 @@ namespace GrandadAudioPlayer.ViewModel
         public void StopMethod()
         {
             _playlistManager.Stop();
+            _stopPositionTimer();
         }
 
         public bool CanStopMethod()
@@ -117,6 +147,27 @@ namespace GrandadAudioPlayer.ViewModel
         public bool CanPreviousMethod()
         {
             return _currentItem != null;
+        }
+
+        private void _startPositionTimer()
+        {
+            _positionUpdateTimer = new Timer {Interval = 100};
+            _positionUpdateTimer.Elapsed += new ElapsedEventHandler(_updatePosition);
+
+            _positionUpdateTimer.Start();
+
+        }
+
+        private void _stopPositionTimer()
+        {
+            _positionUpdateTimer.Stop();
+            _positionUpdateTimer = null;
+        }
+
+        private void _updatePosition(object sender, ElapsedEventArgs e)
+        {
+            Position = _playlistManager.CurrentPosition;
+            PositionPercentage = _playlistManager.CurrentPositionPercentage;
         }
     }
 

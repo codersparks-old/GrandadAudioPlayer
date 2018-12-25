@@ -85,6 +85,26 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public LinkedList<PlaylistItem> Playlist { get; } = new LinkedList<PlaylistItem>();
 
+        public string CurrentPosition => _mp3FileReader != null ? _mp3FileReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString();
+
+        public double CurrentPositionPercentage
+        {
+            get
+            {
+                if (_waveOut != null && _mp3FileReader != null)
+                {
+                    long position = _waveOut.GetPosition();
+                    long length = _mp3FileReader.Length;
+                    double positionPercentage =  (double)_waveOut.GetPosition() / _mp3FileReader.Length * 100;
+                    return positionPercentage;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
         public int Volume
         {
             get => (int)_defaultAudioDevice.Volume;
