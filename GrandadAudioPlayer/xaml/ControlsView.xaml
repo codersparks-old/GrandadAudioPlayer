@@ -15,31 +15,31 @@
             <Button Height="45" Command="{Binding PreviousCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="5">
                     <material:PackIcon Kind="SkipPrevious" Width="32" Height="32"></material:PackIcon>
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Previous</TextBlock>
+                    <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Previous</TextBlock>
                 </StackPanel>
             </Button>
             <Button Height="45" Command="{Binding PlayCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
                     <material:PackIcon Kind="Play" Width="32" Height="32"></material:PackIcon>
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Play</TextBlock>
+                    <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Play</TextBlock>
                 </StackPanel>
             </Button>
             <Button Height="45"  Command="{Binding PauseCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
                     <material:PackIcon Kind="Pause" Width="32" Height="32"></material:PackIcon>
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Pause</TextBlock>
+                    <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Pause</TextBlock>
                 </StackPanel>
             </Button>
             <Button Height="45"  Command="{Binding StopCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
                     <material:PackIcon Kind="Stop" Width="32" Height="32"></material:PackIcon>
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Stop</TextBlock>
+                    <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Stop</TextBlock>
                 </StackPanel>
             </Button>
             <Button Height="45"  Command="{Binding NextCommand}" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
                     <material:PackIcon Kind="SkipNext" Width="32" Height="32"></material:PackIcon>
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}">Next</TextBlock>
+                    <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Next</TextBlock>
                 </StackPanel>
             </Button>
         </StackPanel>

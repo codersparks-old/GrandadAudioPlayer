@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Margin="5" Text="Position:" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"/>
-            <ProgressBar Grid.Column="1" Value="{Binding PositionPercentage, Mode=OneWay}" Height="10" />
+            <ProgressBar Grid.Column="1" Value="{Binding PositionPercentage, Mode=OneWay}" Height="15" />
             <TextBlock Grid.Column="2" Margin="5" Style="{DynamicResource MaterialDesignSubheadingTextBlock}" Text="{Binding Position}" />
         </Grid>
     </Grid>
