@@ -33,7 +33,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- powershell: tree
+- powershell: tree	
 
 - task: GithubRelease@0
   inputs:
