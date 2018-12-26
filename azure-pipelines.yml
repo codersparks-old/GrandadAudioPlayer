@@ -53,7 +53,7 @@ steps:
 - powershell: nuget.exe pack GrandadAudioPlayer.nuspec
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
-- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --releasify .\GrandadAudioPlayer.$(version).nupkg
+- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
 - powershell: Start-Sleep -s 30
