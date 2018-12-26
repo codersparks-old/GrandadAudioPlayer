@@ -20,6 +20,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -41,5 +42,16 @@
         <Button Grid.Row="3" Grid.Column="1" Command="{Binding LoadConfigurationCommand}" Content="Load Configuration" Width="160"/>
         <Button Grid.Row="3" Grid.Column="2" Command="{Binding SaveConfigurationCommand}" Content="Save Configuration" Width="160"/>
         <Button Grid.Row="4" Grid.Column="2" Command="{x:Static material:DialogHost.CloseDialogCommand}" Content="Close Admin Window" Margin="0,10,0,0"></Button>
-     </Grid>
+        <TextBlock 
+            Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+            HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
+            Padding="0,5,0,0">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Current Version: {0} Build Tag: {1}">
+                    <Binding Path="Version"></Binding>
+                    <Binding Path="BuildTag"></Binding>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </Grid>
 </UserControl>

@@ -1,8 +1,11 @@
+using System;
 using System.IO;
+using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GrandadAudioPlayer.Model.Attributes;
 using GrandadAudioPlayer.Utils.Configuration;
 using Microsoft.WindowsAPICodePack.Dialogs;
 // ReSharper disable RedundantArgumentDefaultValue
@@ -26,6 +29,40 @@ namespace GrandadAudioPlayer.ViewModel
     public class AdminViewModel
         : ViewModelBase
     {
+
+        public static string Version => ((AssemblyFileVersionAttribute)Attribute.GetCustomAttribute(
+                Assembly.GetExecutingAssembly(),
+                typeof(AssemblyFileVersionAttribute), false)
+            ).Version;
+
+        public static string BuildTag
+        {
+            get
+            {
+                string buildTag = null;
+                Type propertyType = null;
+
+                Assembly assembly = Assembly.GetEntryAssembly();
+
+                if (assembly != null)
+                {
+                    propertyType = assembly.EntryPoint.ReflectedType;
+                }
+
+                if (propertyType != null)
+                {
+                    object[] objects =
+                        propertyType.Module.Assembly.GetCustomAttributes(typeof(BuildTagAttribute), false);
+
+                    if (objects != null && objects.Length > 0)
+                    {
+                        buildTag = ((BuildTagAttribute) objects[0]).BuildTag;
+                    } 
+                }
+
+                return buildTag;
+            }
+        }
 
         private ConfigurationModel _configuration;
         /// <inheritdoc />
