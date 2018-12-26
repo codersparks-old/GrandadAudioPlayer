@@ -5,7 +5,6 @@
 
 trigger:
 - master
-- feature/7
 
 pool:
   vmImage: 'VS2017-Win2016'
@@ -21,35 +20,35 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-	restoreSolution: '$(solution)'
+    restoreSolution: '$(solution)'
 
 powershell: |
-	$major = "1"
-	$minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
-	$build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
-	$version = $major + "." + $minor + "." + $build
-	Write-Output "Setting to version: $version"
-	Write-Host "##vso[task.setvariable variable=version]$version"
+    $major = "1"
+    $minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
+    $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
+    $version = $major + "." + $minor + "." + $build
+    Write-Output "Setting to version: $version"
+    Write-Host "##vso[task.setvariable variable=version]$version"
 
 powershell: |
-	(Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
-	Write-Output "Modified AssemblyInfo.cs:"
-	Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs)
-	(Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec).Replace('$VERSION$', $env:VERSION) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec
-	Write-Output "Modified NuSpec File:"
-	Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec)
+    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
+    Write-Output "Modified AssemblyInfo.cs:"
+    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs)
+    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec).Replace('$VERSION$', $env:VERSION) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec
+    Write-Output "Modified NuSpec File:"
+    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec)
 
 
 - task: VSBuild@1
   inputs:
-	solution: '$(solution)'
-	platform: '$(buildPlatform)'
-	configuration: '$(buildConfiguration)'
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
   inputs:
-	platform: '$(buildPlatform)'
-	configuration: '$(buildConfiguration)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - powershell: nuget.exe pack GrandadAudioPlayer.nuspec
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
@@ -59,11 +58,11 @@ powershell: |
 
 - task: GithubRelease@0
   inputs:
-	gitHubConnection: codersparkspat
-	repositoryName: codersparks/GrandadAudioPlayer
-	title: $(Build.DefinitionName)
-	tagSource: manual
-	tag: $(Build.BuildNumber)
-	assets: 'GrandadAudioPlayer\bin\Release\app.publish\*'
+    gitHubConnection: codersparkspat
+    repositoryName: codersparks/GrandadAudioPlayer
+    title: $(Build.DefinitionName)
+    tagSource: manual
+    tag: $(Build.BuildNumber)
+    assets: 'GrandadAudioPlayer\bin\Release\app.publish\*'
 
 - powershell: tree /F
