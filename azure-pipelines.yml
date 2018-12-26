@@ -68,7 +68,7 @@ steps:
     tagSource: manual
     tag: $(Build.BuildNumber)
     assets: |
-	  GrandadAudioPlayer\bin\Release\app.publish\*
+      GrandadAudioPlayer\bin\Release\app.publish\*
       GrandadAudioPlayer\*.nupkg
 
 - powershell: tree /F
