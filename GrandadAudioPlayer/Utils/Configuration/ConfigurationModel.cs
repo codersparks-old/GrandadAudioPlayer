@@ -7,6 +7,7 @@ namespace GrandadAudioPlayer.Utils.Configuration
     public class ConfigurationModel : ObservableObject
     {
         public string FolderPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+        public string SquirrelSourcesPath { get; set; } = @"C:\GrandadAudioPlayer\Releases";
         public HashSet<string> AllowedExtensions { get; }
 
         public ConfigurationModel()
