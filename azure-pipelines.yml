@@ -60,6 +60,7 @@ steps:
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)\GrandadAudioPlayer\Releases\'
     includeRootFolder: false
+	archiveFile: $(Build.SourcesDirectory)\GrandadAudioPlayer.zip
 
 
 - task: GithubRelease@0
