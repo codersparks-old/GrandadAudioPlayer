@@ -23,7 +23,7 @@ namespace GrandadAudioPlayer
 
         private readonly ILog _log = LogManager.GetLogger(typeof(App));
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             _log.Debug("Initialising...");
