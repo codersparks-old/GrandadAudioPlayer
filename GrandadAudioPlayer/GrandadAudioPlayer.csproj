@@ -156,8 +156,12 @@
       <HintPath>..\packages\squirrel.windows.1.9.0\lib\Net45\Squirrel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -190,6 +194,12 @@
     <Compile Include="Utils\AttachedBehaviours\ListViewItemBehaviour.cs" />
     <Compile Include="Utils\Configuration\ConfigurationManager.cs" />
     <Compile Include="Utils\Configuration\ConfigurationModel.cs" />
+    <Compile Include="Utils\Github\GithubAsset.cs" />
+    <Compile Include="Utils\Github\GithubFacade.cs" />
+    <Compile Include="Utils\Github\GithubFailureException.cs" />
+    <Compile Include="Utils\Github\GithubRelease.cs" />
+    <Compile Include="Utils\Github\GithubUser.cs" />
+    <Compile Include="Utils\Updater\GrandadAudioPlayerUpdater.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\DialogsViewModel.cs" />
     <Compile Include="xaml\AdminDialog.xaml.cs">
@@ -288,6 +298,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
