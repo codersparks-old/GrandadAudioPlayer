@@ -56,6 +56,11 @@ steps:
 - powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe -r .\Squirrel --releasify .\GrandadAudioPlayer.$(version).nupkg
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SorcesDirectory)\GrandadAudioPlayer\Releases\*'
+    includeRootFolder: false
+
 #- task: GithubRelease@0
 #  inputs:
 #    gitHubConnection: codersparkspat
