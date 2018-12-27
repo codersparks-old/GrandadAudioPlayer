@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
@@ -14,9 +15,12 @@ namespace GrandadAudioPlayer.ViewModel
         public DialogsViewModel()
         {
             OpenAdminDialogCommand = new RelayCommand(OpenAdminDialogMethod);
+
+            PowerCommand = new RelayCommand(PowerMethod);
         }
 
         public ICommand OpenAdminDialogCommand { get; set; }
+        public ICommand PowerCommand { get; }
 
         public async void OpenAdminDialogMethod()
         {
@@ -24,6 +28,11 @@ namespace GrandadAudioPlayer.ViewModel
 
             await DialogHost.Show(view, "RootDialog");
             Messenger.Default.Send(new NotificationMessage<FolderMessage>(new FolderMessage(), "Root Folder Updated"));
+        }
+
+        public void PowerMethod()
+        {
+            Process.Start("shutdown.exe", "-s -t 00");
         }
     }
 }

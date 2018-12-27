@@ -20,6 +20,14 @@
     </Window.InputBindings>
     <material:DialogHost Identifier="RootDialog">
         <DockPanel>
+            <Grid Width="auto" Height="Auto" DockPanel.Dock="Top" HorizontalAlignment="Right">
+                <Button Height="45" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Command="{Binding PowerCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <material:PackIcon Kind="Power" Width="32" Height="32"></material:PackIcon>
+                        <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Turn Off</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
             <Grid Width="auto" Height="Auto" DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
