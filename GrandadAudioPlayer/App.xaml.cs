@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using GrandadAudioPlayer.Utils.Logging;
 using GrandadAudioPlayer.Utils.Updater;
 using log4net;
 using Quartz;
@@ -17,6 +18,9 @@ namespace GrandadAudioPlayer
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            GapLoggingManager.InitialiseLogging(System.Diagnostics.Debugger.IsAttached);
+
             _log.Debug("Initialising...");
 
             if (System.Diagnostics.Debugger.IsAttached)

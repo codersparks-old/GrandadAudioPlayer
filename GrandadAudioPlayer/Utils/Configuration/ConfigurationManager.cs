@@ -1,18 +1,28 @@
 ﻿using System;
 using System.IO;
+using log4net;
 using Newtonsoft.Json;
 
 namespace GrandadAudioPlayer.Utils.Configuration
 {
     public sealed class ConfigurationManager
     {
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigurationManager));
+
         private static readonly Lazy<ConfigurationManager> LazyInstance =
             new Lazy<ConfigurationManager>(() => new ConfigurationManager());
 
         public static ConfigurationManager Instance => LazyInstance.Value;
 
+        public static string BaseConfigDirectory { get; } = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "GrandadAudioPlayer");
+
+
+
         private ConfigurationModel _configurationModel;
-        private readonly string _configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/gap";
+        private readonly string _configFilePath = Path.Combine(BaseConfigDirectory, "config");
         private const string ConfigFile = "config.json";
 
 

@@ -53,6 +53,3 @@ using GrandadAudioPlayer.Model.Attributes;
 [assembly: AssemblyVersion("1.0.0")]
 [assembly: AssemblyFileVersion("1.0.0")]
 [assembly: BuildTag("devBuildTag")]
-
-// Logging configuration
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Log4Net.config", Watch = true)]

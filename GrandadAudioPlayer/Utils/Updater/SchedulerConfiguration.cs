@@ -41,10 +41,12 @@ namespace GrandadAudioPlayer.Utils.Updater
                     .WithIdentity("Updater Job", "Updater Group")
                     .Build();
 
+                var cronString = ConfigurationManager.Instance.Configuration.UpdateCheckCron;
+                _log.Debug($"Cron loaded from config {cronString}");
                 var updateTrigger = TriggerBuilder.Create()
                     .WithIdentity("Updater Trigger", "Updater Group")
                     .StartNow()
-                    .WithCronSchedule(ConfigurationManager.Instance.Configuration.UpdateCheckCron)
+                    .WithCronSchedule(cronString)
                     .ForJob(updateJob)
                     .Build();
 

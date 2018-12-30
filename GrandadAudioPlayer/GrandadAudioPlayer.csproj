@@ -205,6 +205,7 @@
     <Compile Include="Utils\Github\GithubFailureException.cs" />
     <Compile Include="Utils\Github\GithubRelease.cs" />
     <Compile Include="Utils\Github\GithubUser.cs" />
+    <Compile Include="Utils\Logging\GapLoggingManager.cs" />
     <Compile Include="Utils\Updater\GrandadAudioPlayerUpdater.cs" />
     <Compile Include="Utils\Updater\SchedulerConfiguration.cs" />
     <Compile Include="Utils\Updater\UpdaterJob.cs" />
