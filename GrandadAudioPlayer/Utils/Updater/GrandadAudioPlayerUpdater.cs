@@ -22,6 +22,8 @@ namespace GrandadAudioPlayer.Utils.Updater
 
         public static GrandadAudioPlayerUpdater Instance => LazyInstance.Value;
 
+        private string _dowloadedTag = null;
+
         public async void Update()
         {
 
@@ -32,9 +34,15 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                 var squirrelDir = ConfigurationManager.Instance.Configuration.SquirrelSourcesPath;
 
+                var github = GithubFacade.Instance;
+
                 _log.Debug("Attempting to download newer version if available");
-                if (GithubFacade.Instance.DownloadGrandadAudioPlayerZipIfNewer(AdminViewModel.BuildTag, out var zipFilePath))
+
+                if (github.DownloadGrandadAudioPlayerZipIfNewer(_dowloadedTag ?? AdminViewModel.BuildTag, out var zipFilePath))
                 {
+
+                    _log.Debug($"Downloaded Version: {github.LatestTag}");
+                    _dowloadedTag = github.LatestTag;
 
                     _log.Debug($"GrandadAudioPlayer.zip downloaded to: {zipFilePath}");
 
@@ -46,7 +54,6 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                     using (var mgr = new UpdateManager(ConfigurationManager.Instance.Configuration.SquirrelSourcesPath))
                     {
-
                         var currentVersion = mgr.CurrentlyInstalledVersion();
 
                         _log.Info($"Currently installed version {currentVersion}");

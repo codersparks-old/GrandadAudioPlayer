@@ -1,16 +1,7 @@
-﻿using System;
-using System.IO.Compression;
-using System.Threading.Tasks;
-using System.Windows;
-using GalaSoft.MvvmLight.Ioc;
-using GrandadAudioPlayer.Utils.Configuration;
-using GrandadAudioPlayer.Utils.Github;
+﻿using System.Windows;
 using GrandadAudioPlayer.Utils.Updater;
-using GrandadAudioPlayer.ViewModel;
 using log4net;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
-using SharpCompress.Archives.Zip;
-using Squirrel;
+using Quartz;
 
 namespace GrandadAudioPlayer
 {
@@ -36,8 +27,10 @@ namespace GrandadAudioPlayer
             {
                 _log.Debug("No debugger attached - using squirrel config");
                 _log.Debug("Checking for new version in new thread");
-                var updateTask = Task.Run(() => { GrandadAudioPlayerUpdater.Instance.Update(); });
+                SchedulerConfiguration.Instance.RunUpdateScheduler();
             }
         }
+
+        
     }
 }

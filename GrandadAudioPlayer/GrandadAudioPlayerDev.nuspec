@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>GrandadAudioPlayerDev</id>
+    <version>1.0.0</version>
+    <authors>CoderSparks</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>GrandadAudioPlayerDev</description>
+  </metadata>
+  <files>
+    <file src="bin\Release\*" target="lib\net45"></file>
+  </files>
+</package>

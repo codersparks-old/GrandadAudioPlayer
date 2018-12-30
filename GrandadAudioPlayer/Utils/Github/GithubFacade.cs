@@ -23,6 +23,8 @@ namespace GrandadAudioPlayer.Utils.Github
 
         public static GithubFacade Instance => LazyInstance.Value;
 
+        public string LatestTag { get; private set;  }
+
         private readonly RestClient _restClient;
 
         private GithubFacade()
@@ -40,7 +42,8 @@ namespace GrandadAudioPlayer.Utils.Github
             if (response.ResponseStatus == ResponseStatus.Completed && response.IsSuccessful)
             {
                 _log.Debug($"Get Latest Tag released: {response.Data.TagName}");
-                return response.Data.TagName;
+                LatestTag = response.Data.TagName;
+                return LatestTag;
             }
             else
             {
