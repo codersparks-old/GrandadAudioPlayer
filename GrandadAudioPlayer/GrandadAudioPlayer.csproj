@@ -282,9 +282,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Log4Net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="GrandadAudioPlayer.nuspec" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
