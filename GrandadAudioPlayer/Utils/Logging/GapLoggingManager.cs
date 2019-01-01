@@ -16,8 +16,18 @@ namespace GrandadAudioPlayer.Utils.Logging
 {
     public class GapLoggingManager
     {
-        private static readonly string _logDirectory = Path.Combine(ConfigurationManager.BaseConfigDirectory, "logs"); 
-        public static void InitialiseLogging(bool debug=false)
+        private readonly string _logDirectory;
+
+        private readonly ConfigurationManager _configurationManager;
+
+        public GapLoggingManager(ConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+            _logDirectory = Path.Combine(_configurationManager.BaseConfigDirectory, "logs");
+        }
+
+
+        public void InitialiseLogging(bool debug=false)
         {
             var hierarchy = (Hierarchy) LogManager.GetRepository();
 
@@ -44,7 +54,7 @@ namespace GrandadAudioPlayer.Utils.Logging
                 hierarchy.Root.AddAppender(consoleAppender);
             }
 
-            hierarchy.Root.Level = _parseLogLevel(ConfigurationManager.Instance.Configuration.LogLevel);
+            hierarchy.Root.Level = _parseLogLevel(_configurationManager.Configuration.LogLevel);
             hierarchy.Configured = true;
 
 

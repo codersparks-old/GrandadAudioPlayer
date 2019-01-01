@@ -14,16 +14,18 @@ namespace GrandadAudioPlayer.Utils.Updater
 {
     public class SchedulerConfiguration
     {
-        private static readonly Lazy<SchedulerConfiguration> LazyInstance =
-            new Lazy<SchedulerConfiguration>(() => new SchedulerConfiguration());
-
-        public static SchedulerConfiguration Instance => LazyInstance.Value;
+//        private static readonly Lazy<SchedulerConfiguration> LazyInstance =
+//            new Lazy<SchedulerConfiguration>(() => new SchedulerConfiguration());
+//
+//        public static SchedulerConfiguration Instance => LazyInstance.Value;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(SchedulerConfiguration));
 
-        private SchedulerConfiguration()
-        {
+        private readonly ConfigurationManager _configurationManager;
 
+        private SchedulerConfiguration(ConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
         }
 
         public IScheduler Scheduler { get; private set; } = null;
@@ -41,7 +43,7 @@ namespace GrandadAudioPlayer.Utils.Updater
                     .WithIdentity("Updater Job", "Updater Group")
                     .Build();
 
-                var cronString = ConfigurationManager.Instance.Configuration.UpdateCheckCron;
+                var cronString = _configurationManager.Configuration.UpdateCheckCron;
                 _log.Debug($"Cron loaded from config {cronString}");
                 var updateTrigger = TriggerBuilder.Create()
                     .WithIdentity("Updater Trigger", "Updater Group")

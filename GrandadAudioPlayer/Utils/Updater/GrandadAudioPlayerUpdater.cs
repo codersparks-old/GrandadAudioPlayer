@@ -17,22 +17,29 @@ namespace GrandadAudioPlayer.Utils.Updater
     {
         private readonly ILog _log = LogManager.GetLogger(typeof(GrandadAudioPlayerUpdater));
 
-        private static readonly Lazy<GrandadAudioPlayerUpdater> LazyInstance =
-            new Lazy<GrandadAudioPlayerUpdater>(() => new GrandadAudioPlayerUpdater());
+//        private static readonly Lazy<GrandadAudioPlayerUpdater> LazyInstance =
+//            new Lazy<GrandadAudioPlayerUpdater>(() => new GrandadAudioPlayerUpdater());
+//
+//        public static GrandadAudioPlayerUpdater Instance => LazyInstance.Value;
 
-        public static GrandadAudioPlayerUpdater Instance => LazyInstance.Value;
+        private readonly ConfigurationManager _configurationManager;
+
+        public GrandadAudioPlayerUpdater(ConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
 
         private string _dowloadedTag = null;
 
         public async void Update()
         {
 
-            System.IO.Directory.CreateDirectory(ConfigurationManager.Instance.Configuration.SquirrelSourcesPath);
+            System.IO.Directory.CreateDirectory(_configurationManager.Configuration.SquirrelSourcesPath);
 
             try
             {
 
-                var squirrelDir = ConfigurationManager.Instance.Configuration.SquirrelSourcesPath;
+                var squirrelDir = _configurationManager.Configuration.SquirrelSourcesPath;
 
                 var github = GithubFacade.Instance;
 
@@ -52,7 +59,7 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                     ZipFile.ExtractToDirectory(zipFilePath, squirrelDir);
 
-                    using (var mgr = new UpdateManager(ConfigurationManager.Instance.Configuration.SquirrelSourcesPath))
+                    using (var mgr = new UpdateManager(_configurationManager.Configuration.SquirrelSourcesPath))
                     {
                         var currentVersion = mgr.CurrentlyInstalledVersion();
 

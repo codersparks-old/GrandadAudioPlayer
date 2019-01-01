@@ -1,8 +1,10 @@
 ﻿using System.Windows;
+using GrandadAudioPlayer.Utils.container;
 using GrandadAudioPlayer.Utils.Logging;
 using GrandadAudioPlayer.Utils.Updater;
 using log4net;
 using Quartz;
+using Unity;
 
 namespace GrandadAudioPlayer
 {
@@ -19,7 +21,8 @@ namespace GrandadAudioPlayer
         {
             base.OnStartup(e);
 
-            GapLoggingManager.InitialiseLogging(System.Diagnostics.Debugger.IsAttached);
+            GapLoggingManager loggingManager = ContainerHolder.Container.Resolve<GapLoggingManager>();
+            loggingManager.InitialiseLogging(System.Diagnostics.Debugger.IsAttached);
 
             _log.Debug("Initialising...");
 

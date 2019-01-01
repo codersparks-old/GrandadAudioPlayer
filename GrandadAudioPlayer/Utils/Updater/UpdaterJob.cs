@@ -18,6 +18,7 @@ namespace GrandadAudioPlayer.Utils.Updater
         {
             _log.Info("Starting check for update job...");
 
+            // TODO: Need to implement job factory to handle this https://stackoverflow.com/a/31892357 
             return Task.Run(() => GrandadAudioPlayerUpdater.Instance.Update());
         }
     }

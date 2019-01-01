@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using AudioSwitcher.AudioApi.CoreAudio;
+﻿using AudioSwitcher.AudioApi.CoreAudio;
 using GrandadAudioPlayer.Utils;
 using GrandadAudioPlayer.Utils.Configuration;
 using log4net;
 using NAudio.Wave;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace GrandadAudioPlayer.Model.PlayList
 {
@@ -13,7 +13,6 @@ namespace GrandadAudioPlayer.Model.PlayList
 
     public class PlaylistEventArgs : EventArgs
     {
-
         public PlaylistEventArgs(PlaylistItem playlistItem)
         {
             PlaylistItem = playlistItem;
@@ -21,25 +20,36 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public PlaylistItem PlaylistItem { get; }
     }
+
     public sealed class PlaylistManager : IDisposable
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PlaylistManager));
 
-        private static readonly HashSet<string> AllowedExtensions = ConfigurationManager.Instance.Configuration.AllowedExtensions;
+        //        private static readonly Lazy<PlaylistManager> LazyInstance =
 
-        private static readonly Lazy<PlaylistManager> LazyInstance =
-            new Lazy<PlaylistManager>(() => new PlaylistManager());
+        //            new Lazy<PlaylistManager>(() => new PlaylistManager());
 
-        public static PlaylistManager Instance => LazyInstance.Value;
+        //
 
+        //        public static PlaylistManager Instance => LazyInstance.Value;
         private string _rootFolder;
+
         private LinkedListNode<PlaylistItem> _currentItem;
 
+        private readonly ConfigurationManager _configurationManager;
+
         private MediaFoundationReader _mp3FileReader;
+
         private WaveOut _waveOut;
+
         private float _volume = 0.5f;
 
-        private CoreAudioDevice _defaultAudioDevice = new CoreAudioController().DefaultPlaybackDevice;
+        private readonly CoreAudioDevice _defaultAudioDevice = new CoreAudioController().DefaultPlaybackDevice;
+
+        public PlaylistManager(ConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
 
         public string RootFolder
         {
@@ -53,6 +63,7 @@ namespace GrandadAudioPlayer.Model.PlayList
         }
 
         public bool IsPlaying { get; private set; }
+
         public bool IsPaused { get; private set; }
 
         public PlaylistItem CurrentItem
@@ -82,7 +93,6 @@ namespace GrandadAudioPlayer.Model.PlayList
             }
         }
 
-
         public LinkedList<PlaylistItem> Playlist { get; } = new LinkedList<PlaylistItem>();
 
         public string CurrentPosition => _mp3FileReader != null ? _mp3FileReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString();
@@ -95,7 +105,7 @@ namespace GrandadAudioPlayer.Model.PlayList
                 {
                     long position = _waveOut.GetPosition();
                     long length = _mp3FileReader.Length;
-                    double positionPercentage =  (double)_waveOut.GetPosition() / _mp3FileReader.Length * 100;
+                    double positionPercentage = (double)_waveOut.GetPosition() / _mp3FileReader.Length * 100;
                     return positionPercentage;
                 }
                 else
@@ -105,11 +115,7 @@ namespace GrandadAudioPlayer.Model.PlayList
             }
         }
 
-        public int Volume
-        {
-            get => (int)_defaultAudioDevice.Volume;
-            set => _defaultAudioDevice.Volume = value;
-        }
+        public int Volume { get => (int)_defaultAudioDevice.Volume; set => _defaultAudioDevice.Volume = value; }
 
         public event TrackChangedEventHandler OnTrackChanged;
 
@@ -125,7 +131,7 @@ namespace GrandadAudioPlayer.Model.PlayList
 
             foreach (var f in files)
             {
-                if (!AllowedExtensions.Contains(Path.GetExtension(f.Path))) continue;
+                if (!_configurationManager.Configuration.AllowedExtensions.Contains(Path.GetExtension(f.Path))) continue;
                 var playlistItem = new PlaylistItem(f.Path);
                 Playlist.AddLast(playlistItem);
             }
@@ -135,9 +141,7 @@ namespace GrandadAudioPlayer.Model.PlayList
 
 
             OnTrackChanged?.Invoke(this, new PlaylistEventArgs(CurrentItem));
-
         }
-
 
         public void Stop()
         {
@@ -170,7 +174,6 @@ namespace GrandadAudioPlayer.Model.PlayList
             _waveOut.Play();
             IsPlaying = true;
             IsPaused = false;
-
         }
 
         public void Pause()
@@ -183,8 +186,8 @@ namespace GrandadAudioPlayer.Model.PlayList
 
         public void NextTrack()
         {
-            if( _currentItem == null) return;
-            
+            if (_currentItem == null) return;
+
             // We keep track if it was playing ready for later
             var wasPlaying = IsPlaying;
             var wasPaused = IsPaused;
@@ -216,7 +219,7 @@ namespace GrandadAudioPlayer.Model.PlayList
         public void PreviousTrack()
         {
 
-            if(_currentItem == null) return;
+            if (_currentItem == null) return;
 
             // We keep track if it was playing ready for later
             var wasPlaying = IsPlaying;
@@ -265,7 +268,6 @@ namespace GrandadAudioPlayer.Model.PlayList
                 NextTrack();
             }
         }
-
 
         public void Dispose()
         {

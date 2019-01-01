@@ -30,6 +30,7 @@ namespace GrandadAudioPlayer.ViewModel
         : ViewModelBase
     {
 
+        private readonly ConfigurationManager _configurationManager;
         public static string Version => ((AssemblyFileVersionAttribute)Attribute.GetCustomAttribute(
                 Assembly.GetExecutingAssembly(),
                 typeof(AssemblyFileVersionAttribute), false)
@@ -69,8 +70,9 @@ namespace GrandadAudioPlayer.ViewModel
         /// <summary>
         /// Initialises a new instance of the MainViewModel class.
         /// </summary>
-        public AdminViewModel()
+        public AdminViewModel(ConfigurationManager configurationManager)
         {
+            _configurationManager = configurationManager;
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.
@@ -131,7 +133,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public void SaveConfigurationMethod()
         {
-            ConfigurationManager.Instance.SaveConfiguration(_configuration);
+            _configurationManager.SaveConfiguration(_configuration);
             FeedbackMessage = "Configuration saved!";
             RaisePropertyChanged("FeedbackMessage");
 
@@ -151,7 +153,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public void LoadConfigurationMethod()
         {
-            _configuration = ConfigurationManager.Instance.Configuration;
+            _configuration = _configurationManager.Configuration;
             FolderPath = _configuration.FolderPath;
         }
 

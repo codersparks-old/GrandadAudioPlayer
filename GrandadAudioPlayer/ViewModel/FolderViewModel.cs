@@ -13,6 +13,8 @@ namespace GrandadAudioPlayer.ViewModel
     public class FolderViewModel : ViewModelBase
     {
 
+        private readonly ConfigurationManager _configurationManager;
+
         private FolderItemBase _selectedItem;
         public FolderItemBase SelectedItem
         {
@@ -31,15 +33,16 @@ namespace GrandadAudioPlayer.ViewModel
             }
         } 
 
-        public FolderViewModel()
+        public FolderViewModel(ConfigurationManager configurationManager)
         {
+            _configurationManager = configurationManager;
             ReloadFolderStructure();
             Messenger.Default.Register < NotificationMessage<FolderMessage>>(this,  ReceiveFolderMessage);
         }
 
         public void ReloadFolderStructure()
         {
-            RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(ConfigurationManager.Instance.Configuration.FolderPath));
+            RootFolder = new ObservableCollection<FolderItemBase>(FolderUtils.GetTreeStructure(_configurationManager.Configuration.FolderPath));
             if (RootFolder.Count > 0)
             {
                 this.SelectedItem = RootFolder[0];

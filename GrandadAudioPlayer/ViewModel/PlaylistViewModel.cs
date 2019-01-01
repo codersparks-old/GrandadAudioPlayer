@@ -11,7 +11,7 @@ namespace GrandadAudioPlayer.ViewModel
     public class PlaylistViewModel : ViewModelBase
     {
 
-        private readonly PlaylistManager _playlistManager = PlaylistManager.Instance;
+        private readonly PlaylistManager _playlistManager;
 
         private Timer _positionUpdateTimer = null;
 
@@ -69,8 +69,9 @@ namespace GrandadAudioPlayer.ViewModel
         }
 
 
-        public PlaylistViewModel()
+        public PlaylistViewModel(PlaylistManager playlistManager)
         {
+            _playlistManager = playlistManager;
             Messenger.Default.Register<NotificationMessage<PlaylistMessage>>(this, PlaylistUpdate );
             PlayCommand = new RelayCommand(PlayMethod, CanPlayMethod);
             StopCommand = new RelayCommand(StopMethod, CanStopMethod);
