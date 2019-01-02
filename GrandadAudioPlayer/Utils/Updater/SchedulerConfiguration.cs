@@ -4,55 +4,51 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GrandadAudioPlayer.Utils.Configuration;
 using log4net;
 using Quartz;
 using Quartz.Impl;
+using Quartz.Impl.Triggers;
+using Unity;
 
 namespace GrandadAudioPlayer.Utils.Updater
 {
     public class SchedulerConfiguration
     {
-//        private static readonly Lazy<SchedulerConfiguration> LazyInstance =
-//            new Lazy<SchedulerConfiguration>(() => new SchedulerConfiguration());
-//
-//        public static SchedulerConfiguration Instance => LazyInstance.Value;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(SchedulerConfiguration));
 
         private readonly ConfigurationManager _configurationManager;
+        private readonly IUnityContainer _container;
 
-        private SchedulerConfiguration(ConfigurationManager configurationManager)
+        private SchedulerConfiguration(ConfigurationManager configurationManager, IUnityContainer container)
         {
             _configurationManager = configurationManager;
+            _container = container;
         }
-
-        public IScheduler Scheduler { get; private set; } = null;
+       
 
         public async void RunUpdateScheduler()
         {
             try
             {
+                _log.Debug("Resolving IScheduler instance from container");
+                var schedulerFactory = _container.Resolve<ISchedulerFactory>();
 
-                if (Scheduler == null) await _initialize();
-
-                await Scheduler.Start();
-
-                var updateJob = JobBuilder.Create<UpdaterJob>()
-                    .WithIdentity("Updater Job", "Updater Group")
-                    .Build();
+                var scheduler = await schedulerFactory.GetScheduler(CancellationToken.None);
 
                 var cronString = _configurationManager.Configuration.UpdateCheckCron;
-                _log.Debug($"Cron loaded from config {cronString}");
-                var updateTrigger = TriggerBuilder.Create()
-                    .WithIdentity("Updater Trigger", "Updater Group")
-                    .StartNow()
-                    .WithCronSchedule(cronString)
-                    .ForJob(updateJob)
-                    .Build();
+                _log.Info($"Scheduling job with cron {cronString}");
 
-                await Scheduler.ScheduleJob(updateJob, updateTrigger);
+                await scheduler.ScheduleJob(
+                    new JobDetailImpl("Updater Job", typeof(UpdaterJob)),
+                    new CronTriggerImpl("Updater trigger", "Updater Group", cronString)
+                );
+
+                _log.Debug("Staring scheduler");
+                await scheduler.Start();
 
                 _log.Debug("Scheduler started");
             }
@@ -62,15 +58,5 @@ namespace GrandadAudioPlayer.Utils.Updater
             }
         }
 
-        public async Task _initialize()
-        {
-            NameValueCollection props = new NameValueCollection
-            {
-                {"quartz.serializer.type", "binary"}
-            };
-
-            StdSchedulerFactory factory = new StdSchedulerFactory(props);
-            Scheduler = await factory.GetScheduler();
-        }
     }
 }

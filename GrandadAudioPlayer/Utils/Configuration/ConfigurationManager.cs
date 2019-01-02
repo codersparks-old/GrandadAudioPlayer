@@ -10,15 +10,6 @@ namespace GrandadAudioPlayer.Utils.Configuration
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigurationManager));
 
-//        private static readonly Lazy<ConfigurationManager> LazyInstance =
-//            new Lazy<ConfigurationManager>(() => new ConfigurationManager());
-//
-//        public static ConfigurationManager Instance => LazyInstance.Value;
-
-        public string BaseConfigDirectory { get; } = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "GrandadAudioPlayer");
-
         private ConfigurationModel _configurationModel;
         private readonly string _configFilePath;
         private const string ConfigFile = "config.json";
@@ -34,7 +25,7 @@ namespace GrandadAudioPlayer.Utils.Configuration
 
         public ConfigurationManager()
         {
-            _configFilePath = Path.Combine(BaseConfigDirectory, "config");
+            _configFilePath = Path.Combine(ConfigurationModel.BaseConfigDirectory, "config");
             LoadConfiguration();
         }
 
@@ -47,7 +38,7 @@ namespace GrandadAudioPlayer.Utils.Configuration
             }
             else
             {
-                _configurationModel = new ConfigurationModel(BaseConfigDirectory);
+                _configurationModel = new ConfigurationModel();
                 SaveConfiguration(_configurationModel);
             }
         }

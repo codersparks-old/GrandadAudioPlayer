@@ -5,12 +5,14 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using GrandadAudioPlayer.Model.PlayList;
+using log4net;
 
 namespace GrandadAudioPlayer.ViewModel
 {
     public class PlaylistViewModel : ViewModelBase
     {
 
+        private static readonly ILog Log = LogManager.GetLogger(typeof(PlaylistViewModel));
         private readonly PlaylistManager _playlistManager;
 
         private Timer _positionUpdateTimer = null;
@@ -71,6 +73,7 @@ namespace GrandadAudioPlayer.ViewModel
 
         public PlaylistViewModel(PlaylistManager playlistManager)
         {
+            Log.Debug("Playlist manager: " + playlistManager.GetHashCode());
             _playlistManager = playlistManager;
             Messenger.Default.Register<NotificationMessage<PlaylistMessage>>(this, PlaylistUpdate );
             PlayCommand = new RelayCommand(PlayMethod, CanPlayMethod);
@@ -153,7 +156,7 @@ namespace GrandadAudioPlayer.ViewModel
         private void _startPositionTimer()
         {
             _positionUpdateTimer = new Timer {Interval = 100};
-            _positionUpdateTimer.Elapsed += new ElapsedEventHandler(_updatePosition);
+            _positionUpdateTimer.Elapsed += _updatePosition;
 
             _positionUpdateTimer.Start();
 
@@ -169,6 +172,7 @@ namespace GrandadAudioPlayer.ViewModel
         {
             Position = _playlistManager.CurrentPosition;
             PositionPercentage = _playlistManager.CurrentPositionPercentage;
+            Log.Debug($"Update position called: {Position}");
         }
     }
 

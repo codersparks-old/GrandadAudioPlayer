@@ -14,6 +14,7 @@
 
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
+using GrandadAudioPlayer.Utils.container;
 
 namespace GrandadAudioPlayer.ViewModel
 {
@@ -28,24 +29,8 @@ namespace GrandadAudioPlayer.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<FolderViewModel>();
-            SimpleIoc.Default.Register<PlaylistViewModel>();
-            SimpleIoc.Default.Register<DialogsViewModel>();
-            SimpleIoc.Default.Register<AdminViewModel>();
+            var unityContainer = ContainerHolder.Container;
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(unityContainer));
         }
 
         public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();

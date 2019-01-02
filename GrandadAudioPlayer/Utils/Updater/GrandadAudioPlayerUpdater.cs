@@ -17,19 +17,16 @@ namespace GrandadAudioPlayer.Utils.Updater
     {
         private readonly ILog _log = LogManager.GetLogger(typeof(GrandadAudioPlayerUpdater));
 
-//        private static readonly Lazy<GrandadAudioPlayerUpdater> LazyInstance =
-//            new Lazy<GrandadAudioPlayerUpdater>(() => new GrandadAudioPlayerUpdater());
-//
-//        public static GrandadAudioPlayerUpdater Instance => LazyInstance.Value;
-
         private readonly ConfigurationManager _configurationManager;
+        private readonly GithubFacade _githubFacade;
 
-        public GrandadAudioPlayerUpdater(ConfigurationManager configurationManager)
+        public GrandadAudioPlayerUpdater(ConfigurationManager configurationManager, GithubFacade githubFacade)
         {
             _configurationManager = configurationManager;
+            _githubFacade = githubFacade;
         }
 
-        private string _dowloadedTag = null;
+        private string _downloadedTag = null;
 
         public async void Update()
         {
@@ -41,15 +38,13 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                 var squirrelDir = _configurationManager.Configuration.SquirrelSourcesPath;
 
-                var github = GithubFacade.Instance;
-
                 _log.Debug("Attempting to download newer version if available");
 
-                if (github.DownloadGrandadAudioPlayerZipIfNewer(_dowloadedTag ?? AdminViewModel.BuildTag, out var zipFilePath))
+                if (_githubFacade.DownloadGrandadAudioPlayerZipIfNewer(_downloadedTag ?? AdminViewModel.BuildTag, out var zipFilePath))
                 {
 
-                    _log.Debug($"Downloaded Version: {github.LatestTag}");
-                    _dowloadedTag = github.LatestTag;
+                    _log.Debug($"Downloaded Version: {_githubFacade.LatestTag}");
+                    _downloadedTag = _githubFacade.LatestTag;
 
                     _log.Debug($"GrandadAudioPlayer.zip downloaded to: {zipFilePath}");
 

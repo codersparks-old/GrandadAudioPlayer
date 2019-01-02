@@ -34,7 +34,7 @@ namespace GrandadAudioPlayer
             {
                 _log.Debug("No debugger attached - using squirrel config");
                 _log.Debug("Checking for new version in new thread");
-                SchedulerConfiguration.Instance.RunUpdateScheduler();
+                ContainerHolder.Container.Resolve<SchedulerConfiguration>().RunUpdateScheduler();
             }
         }
 

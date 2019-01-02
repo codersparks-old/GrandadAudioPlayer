@@ -23,7 +23,7 @@ namespace GrandadAudioPlayer.Utils.Logging
         public GapLoggingManager(ConfigurationManager configurationManager)
         {
             _configurationManager = configurationManager;
-            _logDirectory = Path.Combine(_configurationManager.BaseConfigDirectory, "logs");
+            _logDirectory = Path.Combine(ConfigurationModel.BaseConfigDirectory, "logs");
         }
 
 

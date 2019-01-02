@@ -5,8 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using GrandadAudioPlayer.Model.PlayList;
 using GrandadAudioPlayer.Utils.Configuration;
+using GrandadAudioPlayer.Utils.Github;
 using GrandadAudioPlayer.Utils.Logging;
+using GrandadAudioPlayer.Utils.Updater;
 using Unity;
+using Unity.Injection;
+using Unity.Lifetime;
+using Unity.Strategies;
 
 namespace GrandadAudioPlayer.Utils.container
 {
@@ -16,10 +21,15 @@ namespace GrandadAudioPlayer.Utils.container
             new Lazy<UnityContainer>(() =>
             {
                 var container = new UnityContainer();
-
-                container.RegisterSingleton<ConfigurationManager>();
-                container.RegisterSingleton<PlaylistManager>();
-                container.RegisterSingleton<GapLoggingManager>();
+                container.AddNewExtension<Quartz.Unity.QuartzUnityExtension>();
+                
+                container.RegisterType<ConfigurationManager>(new SingletonLifetimeManager());
+                container.RegisterType<PlaylistManager>(new SingletonLifetimeManager());
+                container.RegisterType<GapLoggingManager>(new SingletonLifetimeManager());
+                container.RegisterType<UpdaterJob>();
+                container.RegisterType<GithubFacade>();
+                container.RegisterType<SchedulerConfiguration>(new SingletonLifetimeManager());
+                container.RegisterType<GrandadAudioPlayerUpdater>(new SingletonLifetimeManager());
                 return container;
             });
 

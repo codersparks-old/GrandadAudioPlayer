@@ -18,10 +18,10 @@ namespace GrandadAudioPlayer.Utils.Github
 
         private static readonly string Token = "c74f44cf42cf91d4621a6d12e5d1d99a0aaa6a05";
 
-        private static readonly  Lazy<GithubFacade> LazyInstance =
-            new Lazy<GithubFacade>(() => new GithubFacade());
-
-        public static GithubFacade Instance => LazyInstance.Value;
+//        private static readonly  Lazy<GithubFacade> LazyInstance =
+//            new Lazy<GithubFacade>(() => new GithubFacade());
+//
+//        public static GithubFacade Instance => LazyInstance.Value;
 
         public string LatestTag { get; private set;  }
 
