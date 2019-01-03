@@ -6,8 +6,3 @@ The solution is built using Azure Pipelines [Project](https://dev.azure.com/code
 
 ### Badges
 [![Build Status](https://dev.azure.com/codersparks/GrandadAudioPlayer/_apis/build/status/codersparks.GrandadAudioPlayer?branchName=master)](https://dev.azure.com/codersparks/GrandadAudioPlayer/_build/latest?definitionId=1?branchName=master)
-## Updating
-The product uses squirrel.windows to perform auto updates
-
-## Currently known bugs
-Issue [https://github.com/codersparks/GrandadAudioPlayer/issues/1] - Does not auto scroll when looping
