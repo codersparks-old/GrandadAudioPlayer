@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GrandadAudioPlayer.Views;
+using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -7,20 +8,28 @@ namespace GrandadAudioPlayer.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private readonly IRegionManager _regionManager;
+        private readonly AdminView _adminView;
 
-        public DelegateCommand<string> NavigateCommand { get; set; }
+        public static string PlaylistContentRegion = "Player.Content";
+        public static string TitleContentRegion = "Player.Title";
+        public static string PlayerControlsContentRegion = "Player.Controls";
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public DelegateCommand OpenAdminDialogCommand { get; }
+
+        public MainWindowViewModel(IRegionManager regionManager, AdminView adminView)
         {
-            _regionManager = regionManager;
+            _adminView = adminView;
+            regionManager.RegisterViewWithRegion(TitleContentRegion, typeof(TitleView));
+            regionManager.RegisterViewWithRegion(PlaylistContentRegion, typeof(PlaylistView));
 
-            NavigateCommand = new DelegateCommand<string>(Navigate);
+            OpenAdminDialogCommand = new DelegateCommand(OpenAdminDialogMethod);
+
         }
 
-        private void Navigate(string uri)
+        public async void OpenAdminDialogMethod()
         {
-            _regionManager.RequestNavigate("ContentRegion", uri);
+            await DialogHost.Show(_adminView, "AdminDialog");
         }
+
     }
 }

@@ -3,11 +3,11 @@
 namespace GrandadAudioPlayer.Views
 {
     /// <summary>
-    /// Interaction logic for AdminView.xaml
+    /// Interaction logic for TitleView.xaml
     /// </summary>
-    public partial class AdminView : UserControl
+    public partial class TitleView : UserControl
     {
-        public AdminView()
+        public TitleView()
         {
             InitializeComponent();
         }

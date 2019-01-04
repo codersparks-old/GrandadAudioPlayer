@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GrandadAudioPlayer.utils.configuration;
 using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.ViewModels
@@ -10,6 +6,17 @@ namespace GrandadAudioPlayer.ViewModels
     public class AdminViewModel : BindableBase
     {
 
-        public string LabelContent => "Admin View";
+        private readonly ConfigurationManager _configurationManager;
+
+        public string FolderPath
+        {
+            get => _configurationManager.Configuration.FolderPath;
+            set => _configurationManager.Configuration.FolderPath = value;
+        }
+
+        public AdminViewModel(ConfigurationManager configurationManager)
+        {
+            _configurationManager = configurationManager;
+        }
     }
 }

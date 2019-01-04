@@ -1,26 +1,36 @@
 ﻿<Window x:Class="GrandadAudioPlayer.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:GrandadAudioPlayer.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        xmlns:local="clr-namespace:GrandadAudioPlayer"
-        xmlns:views="clr-namespace:GrandadAudioPlayer.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="MainWindow" Height="450" Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        >
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenAdminDialogCommand}" Modifiers="Alt+Control+Shift" Key="F1"></KeyBinding>
+    </Window.InputBindings>
+    <md:DialogHost Identifier="AdminDialog">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Player View" Margin="5" Command="{Binding NavigateCommand}" CommandParameter="PlayerView"/>
-            <Button Content="Admin View" Margin="5" Command="{Binding NavigateCommand}" CommandParameter="AdminView"/>
-        </StackPanel>
-        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" >
-        </ContentControl>
+            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static vm:MainWindowViewModel.TitleContentRegion}" />
+            <ContentControl Grid.Row="2" prism:RegionManager.RegionName="{x:Static vm:MainWindowViewModel.PlaylistContentRegion}" />
+            <TextBlock Grid.Row="3" Text="Testing block"></TextBlock>
 
-    </Grid>
+        </Grid>
+    </md:DialogHost>
 </Window>
