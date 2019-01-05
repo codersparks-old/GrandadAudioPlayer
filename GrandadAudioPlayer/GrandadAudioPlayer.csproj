@@ -89,6 +89,9 @@
     <Reference Include="Quartz.Unity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5e6e0db19dcea0c2, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.Unity.3.0.0\lib\net452\Quartz.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.6.3.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.3\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SharpCompress, Version=0.17.1.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpCompress.0.17.1\lib\net45\SharpCompress.dll</HintPath>
     </Reference>
@@ -105,7 +108,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -152,8 +157,16 @@
     <Compile Include="Attributes\BuildTagAttribute.cs" />
     <Compile Include="Utils\Configuration\Configuration.cs" />
     <Compile Include="Utils\Configuration\ConfigurationManager.cs" />
+    <Compile Include="Utils\Github\GithubAsset.cs" />
+    <Compile Include="Utils\Github\GithubFacade.cs" />
+    <Compile Include="Utils\Github\GithubFailureException.cs" />
+    <Compile Include="Utils\Github\GithubRelease.cs" />
+    <Compile Include="Utils\Github\GithubUser.cs" />
     <Compile Include="Utils\Logging\Log4NetFacade.cs" />
     <Compile Include="Utils\Playlist\PlaylistManager.cs" />
+    <Compile Include="Utils\Updater\SchedulerConfiguration.cs" />
+    <Compile Include="Utils\Updater\Updater.cs" />
+    <Compile Include="Utils\Updater\UpdaterJob.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\TitleViewModel.cs" />

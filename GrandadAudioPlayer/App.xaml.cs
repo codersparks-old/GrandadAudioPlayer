@@ -3,6 +3,7 @@ using CommonServiceLocator;
 using GrandadAudioPlayer.Utils.Configuration;
 using GrandadAudioPlayer.Utils.Logging;
 using GrandadAudioPlayer.Utils.Playlist;
+using GrandadAudioPlayer.Utils.Updater;
 using GrandadAudioPlayer.Views;
 using log4net;
 using log4net.Config;
@@ -26,11 +27,15 @@ namespace GrandadAudioPlayer
             containerRegistry.RegisterSingleton<PlaylistManager>();
             containerRegistry.RegisterSingleton<ConfigurationManager>();
             containerRegistry.RegisterSingleton<ILoggerFacade, Log4NetFacade>();
+            containerRegistry.RegisterSingleton<SchedulerConfiguration>();
+            containerRegistry.Register<Updater>();
             containerRegistry.GetContainer().AddExtension(new QuartzUnityExtension());
         }
 
         protected override Window CreateShell()
         {
+            var schedulerConfiguration = ServiceLocator.Current.GetInstance<SchedulerConfiguration>();
+            schedulerConfiguration.RunUpdateScheduler();
             return ServiceLocator.Current.GetInstance<MainWindow>();
         }
     }
