@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using GrandadAudioPlayer.utils.configuration;
-using GrandadAudioPlayer.utils.logging;
-using GrandadAudioPlayer.utils.playlist;
+using GrandadAudioPlayer.Utils.Configuration;
+using GrandadAudioPlayer.Utils.Logging;
+using GrandadAudioPlayer.Utils.Playlist;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using GrandadAudioPlayer.Views;

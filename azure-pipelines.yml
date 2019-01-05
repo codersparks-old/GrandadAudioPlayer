@@ -71,7 +71,7 @@ steps:
 #    assets: |
 #      GrandadAudioPlayer.zip
 #      GrandadAudioPlayer\*.nupkg
-#  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/master'))
+#  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - powershell: tree /F
   condition: always()

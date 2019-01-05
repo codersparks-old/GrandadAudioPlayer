@@ -94,11 +94,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attributes\BuildTagAttribute.cs" />
     <Compile Include="BootStrapper.cs" />
-    <Compile Include="utils\configuration\Configuration.cs" />
-    <Compile Include="utils\configuration\ConfigurationManager.cs" />
-    <Compile Include="utils\logging\Log4NetFacade.cs" />
-    <Compile Include="utils\playlist\PlaylistManager.cs" />
+    <Compile Include="Utils\Configuration\Configuration.cs" />
+    <Compile Include="Utils\Configuration\ConfigurationManager.cs" />
+    <Compile Include="Utils\Logging\Log4NetFacade.cs" />
+    <Compile Include="Utils\Playlist\PlaylistManager.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\TitleViewModel.cs" />
@@ -159,6 +160,7 @@
     <Content Include="Log4Net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="GrandadAudioPlayer.nuspec" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

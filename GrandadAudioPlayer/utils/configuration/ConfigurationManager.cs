@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace GrandadAudioPlayer.utils.configuration
+namespace GrandadAudioPlayer.Utils.Configuration
 {
     public class ConfigurationManager
     {
