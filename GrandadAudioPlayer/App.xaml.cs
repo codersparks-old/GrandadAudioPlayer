@@ -8,6 +8,8 @@ using log4net;
 using log4net.Config;
 using Prism.Ioc;
 using Prism.Logging;
+using Prism.Unity;
+using Quartz.Unity;
 
 namespace GrandadAudioPlayer
 {
@@ -24,6 +26,7 @@ namespace GrandadAudioPlayer
             containerRegistry.RegisterSingleton<PlaylistManager>();
             containerRegistry.RegisterSingleton<ConfigurationManager>();
             containerRegistry.RegisterSingleton<ILoggerFacade, Log4NetFacade>();
+            containerRegistry.GetContainer().AddExtension(new QuartzUnityExtension());
         }
 
         protected override Window CreateShell()
