@@ -19,21 +19,21 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-#- powershell: |
-#    $major = "1"
-#    $minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
-#    $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
-#    $version = $major + "." + $minor + "." + $build
-#    Write-Output "Setting to version: $version"
-#    Write-Host "##vso[task.setvariable variable=version]$version"
+- powershell: |
+    $major = "2"
+    $minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
+    $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
+    $version = $major + "." + $minor + "." + $build
+    Write-Output "Setting to version: $version"
+    Write-Host "##vso[task.setvariable variable=version]$version"
 
-#- powershell: |
-#    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
-#    Write-Output "Modified AssemblyInfo.cs:"
-#    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs)
-#    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec).Replace('$VERSION$', $env:VERSION) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec
-#    Write-Output "Modified NuSpec File:"
-#    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec)
+- powershell: |
+    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
+    Write-Output "Modified AssemblyInfo.cs:"
+    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs)
+    (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec).Replace('$VERSION$', $env:VERSION) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec
+    Write-Output "Modified NuSpec File:"
+    Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec)
 
 
 - task: VSBuild@1
@@ -47,31 +47,31 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-#- powershell: nuget.exe pack GrandadAudioPlayer.nuspec
-#  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
+- powershell: nuget.exe pack GrandadAudioPlayer.nuspec
+  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
-#- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
-#  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
+- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
+  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
-#- powershell: Start-Sleep -s 30
+- powershell: Start-Sleep -s 30
 
-#- task: ArchiveFiles@2
-#  inputs:
-#    rootFolderOrFile: '$(Build.SourcesDirectory)\GrandadAudioPlayer\Releases\'
-#    includeRootFolder: false
-#    archiveFile: GrandadAudioPlayer.zip
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)\GrandadAudioPlayer\Releases\'
+    includeRootFolder: false
+    archiveFile: GrandadAudioPlayer.zip
 
-#- task: GithubRelease@0
-#  inputs:
-#    gitHubConnection: codersparkspat
-#    repositoryName: codersparks/GrandadAudioPlayer
-#    title: $(Build.DefinitionName)
-#    tagSource: manual
-#    tag: $(Build.BuildNumber)
-#    assets: |
-#      GrandadAudioPlayer.zip
-#      GrandadAudioPlayer\*.nupkg
-#  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
+- task: GithubRelease@0
+  inputs:
+    gitHubConnection: codersparkspat
+    repositoryName: codersparks/GrandadAudioPlayer
+    title: $(Build.DefinitionName)
+    tagSource: manual
+    tag: $(Build.BuildNumber)
+    assets: |
+      GrandadAudioPlayer.zip
+      GrandadAudioPlayer\*.nupkg
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - powershell: tree /F
   condition: always()
