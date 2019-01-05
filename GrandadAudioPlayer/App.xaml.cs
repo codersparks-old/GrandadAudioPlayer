@@ -1,5 +1,16 @@
 ﻿using System.Windows;
+using CommonServiceLocator;
+using GrandadAudioPlayer.Utils.Configuration;
+using GrandadAudioPlayer.Utils.Logging;
+using GrandadAudioPlayer.Utils.Playlist;
+using GrandadAudioPlayer.Utils.Updater;
+using GrandadAudioPlayer.Views;
 using log4net;
+using log4net.Config;
+using Prism.Ioc;
+using Prism.Logging;
+using Prism.Unity;
+using Quartz.Unity;
 
 namespace GrandadAudioPlayer
 {
@@ -11,14 +22,21 @@ namespace GrandadAudioPlayer
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(App));
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            base.OnStartup(e);
+            containerRegistry.RegisterSingleton<PlaylistManager>();
+            containerRegistry.RegisterSingleton<ConfigurationManager>();
+            containerRegistry.RegisterSingleton<ILoggerFacade, Log4NetFacade>();
+            containerRegistry.RegisterSingleton<SchedulerConfiguration>();
+            containerRegistry.Register<Updater>();
+            containerRegistry.GetContainer().AddExtension(new QuartzUnityExtension());
+        }
 
-            Logger.Info(">>>>>>>>>>>>>>>>> Application Launched <<<<<<<<<<<<<<<<<<<<<");
-
-            BootStrapper bs = new BootStrapper();
-            bs.Run();
+        protected override Window CreateShell()
+        {
+            var schedulerConfiguration = ServiceLocator.Current.GetInstance<SchedulerConfiguration>();
+            schedulerConfiguration.RunUpdateScheduler();
+            return ServiceLocator.Current.GetInstance<MainWindow>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GrandadAudioPlayer.utils.playlist
+namespace GrandadAudioPlayer.Utils.Playlist
 {
     public class PlaylistManager
     {

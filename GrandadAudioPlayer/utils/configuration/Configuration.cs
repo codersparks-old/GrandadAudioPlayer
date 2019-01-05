@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GrandadAudioPlayer.utils.configuration
+namespace GrandadAudioPlayer.Utils.Configuration
 {
     public class Configuration
     {

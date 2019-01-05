@@ -2,7 +2,7 @@
 using log4net;
 using Prism.Logging;
 
-namespace GrandadAudioPlayer.utils.logging
+namespace GrandadAudioPlayer.Utils.Logging
 {
     public class Log4NetFacade : ILoggerFacade
     {

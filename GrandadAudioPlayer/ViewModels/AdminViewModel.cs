@@ -1,4 +1,4 @@
-﻿using GrandadAudioPlayer.utils.configuration;
+﻿using GrandadAudioPlayer.Utils.Configuration;
 using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.ViewModels

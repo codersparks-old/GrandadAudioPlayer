@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using GrandadAudioPlayer.Attributes;
 using Newtonsoft.Json;
 
-namespace GrandadAudioPlayer.utils.configuration
+namespace GrandadAudioPlayer.Utils.Configuration
 {
     public class ConfigurationManager
     {
@@ -20,6 +22,34 @@ namespace GrandadAudioPlayer.utils.configuration
         public string LogDirectory => Path.Combine(AppDirectory, LogDirectoryName);
 
         public Configuration Configuration { get; private set;  }
+
+        public string BuildTag
+        {
+            get
+            {
+                string buildTag = null;
+                Type propertyType = null;
+
+                var assembly = Assembly.GetEntryAssembly();
+
+                if (assembly != null)
+                {
+                    propertyType = assembly.EntryPoint.ReflectedType;
+                }
+
+                if (propertyType == null) return null;
+
+                var objects =
+                    propertyType.Module.Assembly.GetCustomAttributes(typeof(BuildTagAttribute), false);
+
+                if (objects.Length > 0)
+                {
+                    buildTag = ((BuildTagAttribute)objects[0]).BuildTag;
+                }
+
+                return buildTag;
+            }
+        }
 
 
         public ConfigurationManager()
