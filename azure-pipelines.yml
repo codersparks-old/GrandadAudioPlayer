@@ -14,12 +14,10 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
-  displayName: "Install Nuget"
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-  displayName: "Install project dependencies"
 
 - powershell: |
     $major = "2"
@@ -28,8 +26,6 @@ steps:
     $version = $major + "." + $minor + "." + $build
     Write-Output "Setting to version: $version"
     Write-Host "##vso[task.setvariable variable=version]$version"
-    Write-Host "##vso[task.setvariable variable=SQUIRREL_TEMP]$env:BUILD_SOURCESDIRECTORY\SquirrelTemp"
-  displayName: "Generate version and build number and set as variable"
 
 - powershell: |
     (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
@@ -38,7 +34,6 @@ steps:
     (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec).Replace('$VERSION$', $env:VERSION) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec
     Write-Output "Modified NuSpec File:"
     Write-Output (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\GrandadAudioPlayer.nuspec)
-  displayName: "Parsed config files and replaced version/build numbers"
 
 
 - task: VSBuild@1
@@ -46,31 +41,19 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-  displayName: "Build the solution"
 
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-  displayName: "Run any unit tests"
 
 - powershell: nuget.exe pack GrandadAudioPlayer.nuspec
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
-  displayName: "Create the nupkg for the Squirrelisation process"
 
-- powershell: |
-    Write-Output "Attempting to build squirrel release from nupkg file: .\GrandadAudioPlayer.$(version).nupkg"
-    $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta -r ..\Releases --releasify .\GrandadAudioPlayer.$(version).nupkg
-    tree /f
+- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
-  displayName: "Build squirrel packages"
 
-- powershell: Start-Sleep -s 300
-  displayName: "Sleep to allow the squirrel process to complete"
-
-- powershell: tree /F
-  condition: always()
-  displayName: "Run tree to show folder structure"
+- powershell: Start-Sleep -s 30
 
 - task: ArchiveFiles@2
   inputs:
@@ -88,9 +71,7 @@ steps:
     assets: |
       GrandadAudioPlayer.zip
       GrandadAudioPlayer\*.nupkg
-  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
-  displayName: "Create a release in github"
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/master'))
 
 - powershell: tree /F
   condition: always()
-  displayName: "Run tree to show folder structure"
