@@ -61,7 +61,7 @@ steps:
     Write-Output "Attempting to build squirrel release from nupkg file: .\GrandadAudioPlayer.$(version).nupkg"
     $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
     Write-Output "Diretory of $(Build.SourcesDirectory)\GrandadAudioPlayer\Releases"
-    Write-Output (dir .\Releases)
+    Write-Output (dir .\)
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
   displayName: "Build squirrel packages"
 
