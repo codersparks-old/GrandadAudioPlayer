@@ -11,3 +11,4 @@ The product uses squirrel.windows to perform auto updates
 
 ## Currently known bugs
 Issue [https://github.com/codersparks/GrandadAudioPlayer/issues/1] - Does not auto scroll when looping
+`
