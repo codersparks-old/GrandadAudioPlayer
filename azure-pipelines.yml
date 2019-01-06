@@ -28,6 +28,7 @@ steps:
     $version = $major + "." + $minor + "." + $build
     Write-Output "Setting to version: $version"
     Write-Host "##vso[task.setvariable variable=version]$version"
+	Write-Host "##vso[task.setvariable variable=SQUIRREL_TEMP]$env:BUILD_SOURCESDIRECTORY\SquirrelTemp"
   displayName: "Generate version and build number and set as variable"
 
 - powershell: |
