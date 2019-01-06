@@ -65,7 +65,7 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
   displayName: "Build squirrel packages"
 
-- powershell: Start-Sleep -s 60
+- powershell: Start-Sleep -s 300
   displayName: "Sleep to allow the squirrel process to complete"
 
 - powershell: tree /F
