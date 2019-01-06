@@ -60,13 +60,16 @@ steps:
 - powershell: |
     Write-Output "Attempting to build squirrel release from nupkg file: .\GrandadAudioPlayer.$(version).nupkg"
     $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
-    Write-Output "Diretory of $(Build.SourcesDirectory)\GrandadAudioPlayer\Releases"
     tree /f
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
   displayName: "Build squirrel packages"
 
 - powershell: Start-Sleep -s 60
   displayName: "Sleep to allow the squirrel process to complete"
+
+- powershell: tree /F
+  condition: always()
+  displayName: "Run tree to show folder structure"
 
 - task: ArchiveFiles@2
   inputs:
