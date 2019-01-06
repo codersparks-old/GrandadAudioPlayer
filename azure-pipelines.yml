@@ -50,7 +50,11 @@ steps:
 - powershell: nuget.exe pack GrandadAudioPlayer.nuspec
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
-- powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
+- powershell: |
+	Write-Output "Attempting to build squirrel release from nupkg file: .\GrandadAudioPlayer.$(version).nupkg"
+	$(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
+	Write-Output "Diretory of $(Build.SourcesDirectory)\GrandadAudioPlayer\Releases"
+	Write-Output (dir $(Build.SourcesDirectory)\GrandadAudioPlayer\Releases)
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
 
 - powershell: Start-Sleep -s 30
