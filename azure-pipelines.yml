@@ -60,9 +60,9 @@ steps:
 
 - powershell: |
     Write-Output "Attempting to build squirrel release from nupkg file: .\GrandadAudioPlayer.$(version).nupkg"
-    $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify .\GrandadAudioPlayer.$(version).nupkg
+    $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta -r ..\Releases --releasify .\GrandadAudioPlayer.$(version).nupkg
     tree /f
-  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
+  workingDirectory: $(Build.SourcesDirectory)
   displayName: "Build squirrel packages"
 
 - powershell: Start-Sleep -s 60
