@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrandadAudioPlayer", "GrandadAudioPlayer\GrandadAudioPlayer.csproj", "{1699E327-DC9D-43FA-A53C-DD5784C68CA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrandadAudioPlayer", "GrandadAudioPlayer\GrandadAudioPlayer.csproj", "{A386F910-DB3B-466F-999E-17E53CB4E55A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{30979801-F37C-4C61-A060-1C05C0429EC2}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		RunSquirrel.ps1 = RunSquirrel.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +17,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1699E327-DC9D-43FA-A53C-DD5784C68CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1699E327-DC9D-43FA-A53C-DD5784C68CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1699E327-DC9D-43FA-A53C-DD5784C68CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1699E327-DC9D-43FA-A53C-DD5784C68CA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A386F910-DB3B-466F-999E-17E53CB4E55A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {79475059-757C-4B3B-89BD-E6CF285C53D8}
+		SolutionGuid = {62BC157C-F29B-485E-8E90-DDA8241C5FBA}
 	EndGlobalSection
 EndGlobal
