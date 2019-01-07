@@ -63,7 +63,7 @@ steps:
     filePath: RunSquirrel.ps1
   displayName: "Generate Squirrel Files"
 
-- powershell: Start-Sleep -s 300
+- powershell: Start-Sleep -s 30
   displayName: "Sleep to allow the squirrel process to complete"
 
 - powershell: tree /F
