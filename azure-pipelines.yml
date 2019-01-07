@@ -56,7 +56,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Ouput "Command: ${env:BUILD_SOURCESDIRECTORY}\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify ${env:BUILD_SOURCESDIRECTORY}\GrandadAudioPlayer\GrandadAudioPlayer.${env:VERSION}.nupkg"
       ${env:BUILD_SOURCESDIRECTORY}\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify ${env:BUILD_SOURCESDIRECTORY}\GrandadAudioPlayer\GrandadAudioPlayer.${env:VERSION}.nupkg
     failOnStderr: true
     
