@@ -34,6 +34,10 @@ namespace GrandadAudioPlayer
 
         protected override Window CreateShell()
         {
+
+            var configManager = ServiceLocator.Current.GetInstance<ConfigurationManager>();
+
+            Logger.Info($">>>>>>>>>> Starting Grandad Audio Player. Version: {configManager.Version} Build: {configManager.BuildTag} <<<<<<<<<<");
             var schedulerConfiguration = ServiceLocator.Current.GetInstance<SchedulerConfiguration>();
             schedulerConfiguration.RunUpdateScheduler();
             return ServiceLocator.Current.GetInstance<MainWindow>();

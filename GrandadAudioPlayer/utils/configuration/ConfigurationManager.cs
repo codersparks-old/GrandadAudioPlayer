@@ -23,6 +23,8 @@ namespace GrandadAudioPlayer.Utils.Configuration
 
         public Configuration Configuration { get; private set;  }
 
+        public string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         public string BuildTag
         {
             get
