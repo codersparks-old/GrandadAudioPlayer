@@ -72,7 +72,7 @@ steps:
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)\GrandadAudioPlayer\Releases\'
+    rootFolderOrFile: '$(Build.SourcesDirectory)\Releases\'
     includeRootFolder: false
     archiveFile: GrandadAudioPlayer.zip
 
