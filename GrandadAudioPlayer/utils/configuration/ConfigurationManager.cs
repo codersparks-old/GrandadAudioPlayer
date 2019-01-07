@@ -17,9 +17,13 @@ namespace GrandadAudioPlayer.Utils.Configuration
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "GrandadAudioPlayer");
 
-        public string ConfigDirectory => Path.Combine(AppDirectory, ConfigurationDirectoryName);
+        public string DataDirectory => Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "GrandadAudioPlayerData");
+
+        public string ConfigDirectory => Path.Combine(DataDirectory, ConfigurationDirectoryName);
+        public string LogDirectory => Path.Combine(DataDirectory, LogDirectoryName);
         public string ReleasesDirectory => Path.Combine(AppDirectory, ReleasesDirectoryName);
-        public string LogDirectory => Path.Combine(AppDirectory, LogDirectoryName);
 
         public Configuration Configuration { get; private set;  }
 
