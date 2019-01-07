@@ -26,7 +26,7 @@ steps:
     $version = $major + "." + $minor + "." + $build
     Write-Output "Setting to version: $version"
     Write-Host "##vso[task.setvariable variable=version]$version"
-    Write-Host "##vso[task.setvariable variable=SQUIRREL_TEMP]$env:BUILD_SORCESDIRECTORY\temp\"
+    Write-Host "##vso[task.setvariable variable=SQUIRREL_TEMP]$env:BUILD_SOURCESDIRECTORY\temp\"
 
 - powershell: |
     gci env:* | sort-object name
