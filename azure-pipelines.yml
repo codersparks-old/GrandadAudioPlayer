@@ -54,10 +54,7 @@ steps:
 
 - task: PowerShell@2
   inputs:
-    targetType: 'inline'
-    script: |
-      ${env:BUILD_SOURCESDIRECTORY}\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify ${env:BUILD_SOURCESDIRECTORY}\GrandadAudioPlayer\GrandadAudioPlayer.${env:VERSION}.nupkg
-    failOnStderr: true
+    filePath: RunSquirrel.ps1
     
 # - powershell: $(Build.SourcesDirectory)\packages\squirrel.windows.1.9.0\tools\Squirrel.exe --nomsi --nodelta --releasify ..\GrandadAudioPlayer.$(version).nupkg
 #  workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
