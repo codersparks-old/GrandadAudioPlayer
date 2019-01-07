@@ -20,12 +20,14 @@ steps:
     restoreSolution: '$(solution)'
 
 - powershell: |
+    gci env:* | sort-object name
     $major = "1"
     $minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
     $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
     $version = $major + "." + $minor + "." + $build
     Write-Output "Setting to version: $version"
     Write-Host "##vso[task.setvariable variable=version]$version"
+	Write-Host "##vso[task.setvariable variable=SQUIRREL_TEMP]$env:BUILD_SORCESDIRECTORY\temp\"
 
 - powershell: |
     (Get-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs).Replace('1.0.0', $env:VERSION).Replace('devBuildTag', $env:BUILD_BUILDNUMBER) | Set-Content $env:BUILD_SOURCESDIRECTORY\GrandadAudioPlayer\Properties\AssemblyInfo.cs
