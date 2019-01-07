@@ -24,7 +24,7 @@ steps:
 - powershell: |
     $major = "2"
     $minor = $env:BUILD_BUILDNUMBER.Substring(2,4)
-    $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDID.PadLeft(3, '0')
+    $build = $env:BUILD_BUILDNUMBER.Substring(6,2) + $env:BUILD_BUILDNUMBER.Substring(9).PadLeft(3, '0')
     $version = $major + "." + $minor + "." + $build
     Write-Output "Setting to version: $version"
     Write-Host "##vso[task.setvariable variable=version]$version"
