@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1699E327-DC9D-43FA-A53C-DD5784C68CA8}</ProjectGuid>
+    <ProjectGuid>{A386F910-DB3B-466F-999E-17E53CB4E55A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>GrandadAudioPlayer</RootNamespace>
     <AssemblyName>GrandadAudioPlayer</AssemblyName>
@@ -228,7 +228,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="GrandadAudioPlayerDev.nuspec" />
-    <None Include="GrandadAudioPlayer.nuspec" />
+    <None Include="GrandadAudioPlayer.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
