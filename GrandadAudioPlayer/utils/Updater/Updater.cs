@@ -59,6 +59,8 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                         _log.Info($"Currently installed version {currentVersion}");
                         await mgr.UpdateApp();
+
+                        UpdateManager.RestartApp();
                     }
                 }
                 else
