@@ -12,7 +12,7 @@
         <Button Height="45" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5,10,10,5" Command="{Binding PowerCommand}">
             <StackPanel Orientation="Horizontal">
                 <md:PackIcon Kind="Power" Width="32" Height="32"></md:PackIcon>
-                <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Turn Off</TextBlock>
+                <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Turn Off !</TextBlock>
             </StackPanel>
         </Button>
     </Grid>
