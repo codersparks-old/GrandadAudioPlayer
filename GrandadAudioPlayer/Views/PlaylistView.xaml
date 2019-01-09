@@ -4,15 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:model="clr-namespace:GrandadAudioPlayer.Model"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Playlist View"></TextBlock>
-        <TextBlock Grid.Row="1" Text="{Binding PlaylistManagerIdentifier}"></TextBlock>
-    </Grid>
+    <md:Card Margin="5">
+        <Grid>
+            <ListView ItemsSource="{Binding PlaylistManager.Playlist}" SelectedItem="{Binding PlaylistManager.CurrentItem, Mode=TwoWay}" SelectionMode="Single">
+                <ListView.Resources>
+                    <DataTemplate DataType="{x:Type model:PlaylistItem}">
+                        <TextBlock Padding="0,5" Text="{Binding DisplayName}" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" />
+                    </DataTemplate>
+                </ListView.Resources>
+                <!-- TODO: Add bring into view code here -->
+            </ListView>
+        </Grid>
+    </md:Card>
 </UserControl>

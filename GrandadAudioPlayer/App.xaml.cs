@@ -28,6 +28,7 @@ namespace GrandadAudioPlayer
             containerRegistry.RegisterSingleton<ConfigurationManager>();
             containerRegistry.RegisterSingleton<ILoggerFacade, Log4NetFacade>();
             containerRegistry.RegisterSingleton<SchedulerConfiguration>();
+            containerRegistry.RegisterSingleton<PlaylistManager>();
             containerRegistry.Register<Updater>();
             containerRegistry.GetContainer().AddExtension(new QuartzUnityExtension());
         }
