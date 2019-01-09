@@ -4,15 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Title View"></TextBlock>
-        <TextBlock Grid.Row="1" Text="{Binding PlaylistManagerIdentifier}"></TextBlock>
+    <Grid HorizontalAlignment="Right">
+        <Button Height="45" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5,10,10,5" Command="{Binding PowerCommand}">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon Kind="Power" Width="32" Height="32"></md:PackIcon>
+                <TextBlock Padding="0,3,0,0" Style="{StaticResource MaterialDesignTitleTextBlock}">Turn Off</TextBlock>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>
