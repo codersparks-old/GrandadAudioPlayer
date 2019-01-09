@@ -41,7 +41,7 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                 if (github.DownloadGrandadAudioPlayerZipIfNewer(_dowloadedTag ?? _configurationManager.BuildTag, out var zipFilePath))
                 {
-
+                    _log.Info("Newer version found in GitHub releases...downloading");
                     _log.Debug($"Downloaded Version: {github.LatestTag}");
                     _dowloadedTag = github.LatestTag;
 
@@ -65,7 +65,7 @@ namespace GrandadAudioPlayer.Utils.Updater
                 }
                 else
                 {
-                    _log.Debug("No newer version found therefore not downloading");
+                    _log.Info("No newer version found therefore not downloading");
                 }
             }
             catch (Exception exception)

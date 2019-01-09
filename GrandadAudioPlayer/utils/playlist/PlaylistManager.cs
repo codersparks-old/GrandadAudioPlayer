@@ -42,6 +42,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             {
                 if (_rootFolder == value) return;
                 _rootFolder = value;
+                Logger.Debug($"Root folder set to {_rootFolder}");
                 ReloadPlaylist();
             }
         }
@@ -63,7 +64,6 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
                 if (_currentItem.Value == newItem) return;
 
-                Logger.Debug("New value != currentItem value");
                 _currentItem = _playlist.Find(newItem);
 
                 if (!IsPlaying) return;
@@ -114,7 +114,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
             _currentItem = _playlist.First;
             Playlist = new ObservableCollection<PlaylistItem>(_playlist);
-            Logger.Debug("Current item set to " + _currentItem?.Value.Name);
+            Logger.Debug($"Current item set to {_currentItem?.Value.Name}");
 
         }
 
@@ -140,6 +140,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public void Play()
         {
+            Logger.Debug("Play() called");
             if (_currentItem == null) return;
 
             if (_waveOut == null)
@@ -155,6 +156,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public void Pause()
         {
+            Logger.Debug("Pause() called");
             if (_currentItem == null) return;
 
             _waveOut?.Pause();
@@ -163,6 +165,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public void NextTrack()
         {
+            Logger.Debug("NextTrack() called");
             if (_currentItem == null) return;
 
             // We keep track if it was playing or paused ready for later
@@ -195,6 +198,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
         public void PreviousTrack()
         {
 
+            Logger.Debug("PreviousTrack() called");
             if (_currentItem == null) return;
 
             // We keep track if it was playing ready for later
