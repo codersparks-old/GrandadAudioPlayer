@@ -6,6 +6,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:model="clr-namespace:GrandadAudioPlayer.Model"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:attachedBehaviours="clr-namespace:GrandadAudioPlayer.Utils.AttachedBehaviours"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -17,7 +18,11 @@
                         <TextBlock Padding="0,5" Text="{Binding DisplayName}" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" />
                     </DataTemplate>
                 </ListView.Resources>
-                <!-- TODO: Add bring into view code here -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="attachedBehaviours:ListViewItemBehaviour.IsBroughtIntoViewWhenSelected" Value="True" />
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
     </md:Card>

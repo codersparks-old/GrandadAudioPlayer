@@ -94,7 +94,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public ObservableCollection<PlaylistItem> Playlist { get; private set; }
 
-        public string CurrentPosition => _mediaFoundationReader != null ? _mediaFoundationReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString();
+        public string CurrentPosition => _mediaFoundationReader != null ? _mediaFoundationReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString(@"mm\:ss");
 
         public double CurrentPositionPercentage
         {
@@ -117,7 +117,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
         public int Volume
         {
             get => (int)_defaultAudioDevice.Volume;
-            set => _defaultAudioDevice.Volume = value;
+            set { _defaultAudioDevice.Volume = value; RaisePropertyChanged("Volume"); }
         }
 
         public void ReloadPlaylist()

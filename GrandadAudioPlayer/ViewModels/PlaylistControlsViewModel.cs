@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using GrandadAudioPlayer.Utils.Playlist;
 using log4net;
 using Prism.Commands;
@@ -14,6 +15,9 @@ namespace GrandadAudioPlayer.ViewModels
     {
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PlaylistControlsViewModel));
+
+        private Timer _positionUpdateTimer;
+
         public PlaylistControlsViewModel(IPlaylistManager playlistManager)
         {
             PlaylistManager = playlistManager;
@@ -37,6 +41,8 @@ namespace GrandadAudioPlayer.ViewModels
 
             NextCommand = new DelegateCommand(NextMethod, CanNextMethod)
                 .ObservesProperty(() => PlaylistManager.CurrentItem);
+
+
         }
 
         public IPlaylistManager PlaylistManager { get; }
@@ -47,10 +53,24 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand StopCommand { get; }
         public DelegateCommand NextCommand { get; }
 
+        private string _position;
+        public string Position
+        {
+            get => _position;
+            private set => SetProperty(ref _position, value);
+        }
+
+        private double _positionPercentage;
+        public double PositionPercentage
+        {
+            get => _positionPercentage;
+            private set => SetProperty(ref _positionPercentage, value);
+        }
+
         public void PlayMethod()
         {
             PlaylistManager.Play();
-            //_startPositionTimer();
+            _startPositionTimer();
         }
 
         public bool CanPlayMethod()
@@ -65,8 +85,8 @@ namespace GrandadAudioPlayer.ViewModels
 
         public void PauseMethod()
         {
+            _stopPositionTimer();
             PlaylistManager.Pause();
-            //_stopPositionTimer();
         }
 
         public bool CanPauseMethod()
@@ -76,8 +96,8 @@ namespace GrandadAudioPlayer.ViewModels
 
         public void StopMethod()
         {
+            _stopPositionTimer();
             PlaylistManager.Stop();
-            //_stopPositionTimer();
         }
 
         public bool CanStopMethod()
@@ -87,7 +107,9 @@ namespace GrandadAudioPlayer.ViewModels
 
         public void NextMethod()
         {
+            _stopPositionTimer();
             PlaylistManager.NextTrack();
+            _startPositionTimer();
         }
 
         public bool CanNextMethod()
@@ -97,12 +119,36 @@ namespace GrandadAudioPlayer.ViewModels
 
         public void PreviousMethod()
         {
+            _stopPositionTimer();
             PlaylistManager.PreviousTrack();
+            _startPositionTimer();
         }
 
         public bool CanPreviousMethod()
         {
             return PlaylistManager.CurrentItem != null;
+        }
+
+        private void _startPositionTimer()
+        {
+            _positionUpdateTimer = new Timer { Interval = 100 };
+            _positionUpdateTimer.Elapsed += _updatePosition;
+
+            _positionUpdateTimer.Start();
+
+        }
+
+        private void _stopPositionTimer()
+        {
+            _positionUpdateTimer?.Stop();
+            _positionUpdateTimer = null;
+        }
+
+        private void _updatePosition(object sender, ElapsedEventArgs e)
+        {
+            Position = PlaylistManager.CurrentPosition;
+            PositionPercentage = PlaylistManager.CurrentPositionPercentage;
+            Logger.Debug($"Timer fired: Position: {Position}, PositionPercentage: {PositionPercentage}");
         }
 
     }
