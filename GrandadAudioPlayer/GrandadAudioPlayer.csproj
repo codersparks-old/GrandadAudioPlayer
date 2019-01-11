@@ -183,13 +183,18 @@
     <Compile Include="Utils\Github\GithubUser.cs" />
     <Compile Include="Utils\Logging\Log4NetFacade.cs" />
     <Compile Include="Utils\Playlist\FileUtils.cs" />
+    <Compile Include="Utils\Playlist\IPlaylistManager.cs" />
     <Compile Include="Utils\Playlist\PlaylistManager.cs" />
     <Compile Include="Utils\Updater\SchedulerConfiguration.cs" />
     <Compile Include="Utils\Updater\Updater.cs" />
     <Compile Include="Utils\Updater\UpdaterJob.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistControlsViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\TitleViewModel.cs" />
+    <Compile Include="Views\PlaylistControlsView.xaml.cs">
+      <DependentUpon>PlaylistControlsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +221,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PlaylistControlsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

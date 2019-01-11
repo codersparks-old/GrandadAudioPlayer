@@ -29,7 +29,7 @@
 
             <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static vm:MainWindowViewModel.TitleContentRegion}" />
             <ContentControl Grid.Row="2" prism:RegionManager.RegionName="{x:Static vm:MainWindowViewModel.PlaylistContentRegion}" />
-            <TextBlock Grid.Row="3" Text="Testing block"></TextBlock>
+            <ContentControl Grid.Row="3" prism:RegionManager.RegionName="{x:Static vm:MainWindowViewModel.PlayerControlsContentRegion}" />
 
         </Grid>
     </md:DialogHost>
