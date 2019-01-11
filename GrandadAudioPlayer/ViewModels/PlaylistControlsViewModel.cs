@@ -80,10 +80,6 @@ namespace GrandadAudioPlayer.ViewModels
         public bool CanPlayMethod()
         {
             var canPlay = PlaylistManager.CurrentItem != null && (!PlaylistManager.IsPlaying || PlaylistManager.IsPaused);
-            Logger.Debug($"Current Item != null {PlaylistManager.CurrentItem != null}");
-            Logger.Debug($"PlaylistManager.IsPause: {PlaylistManager.IsPaused}");
-            Logger.Debug($"PlaylistManager.IsPlaying: {PlaylistManager.IsPlaying}");
-            Logger.Debug($"Can Play {canPlay}");
             return canPlay;
         }
 
@@ -165,7 +161,6 @@ namespace GrandadAudioPlayer.ViewModels
         {
             Position = PlaylistManager.CurrentPosition;
             PositionPercentage = PlaylistManager.CurrentPositionPercentage;
-            Logger.Debug($"Timer fired: Position: {Position}, PositionPercentage: {PositionPercentage}");
         }
 
     }
