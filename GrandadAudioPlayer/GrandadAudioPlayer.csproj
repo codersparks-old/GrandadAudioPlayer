@@ -62,6 +62,12 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -174,6 +180,7 @@
     </ApplicationDefinition>
     <Compile Include="Attributes\BuildTagAttribute.cs" />
     <Compile Include="Model\PlaylistItem.cs" />
+    <Compile Include="Utils\AttachedBehaviours\ListViewItemBehaviour.cs" />
     <Compile Include="Utils\Configuration\Configuration.cs" />
     <Compile Include="Utils\Configuration\ConfigurationManager.cs" />
     <Compile Include="Utils\Github\GithubAsset.cs" />
@@ -183,13 +190,18 @@
     <Compile Include="Utils\Github\GithubUser.cs" />
     <Compile Include="Utils\Logging\Log4NetFacade.cs" />
     <Compile Include="Utils\Playlist\FileUtils.cs" />
+    <Compile Include="Utils\Playlist\IPlaylistManager.cs" />
     <Compile Include="Utils\Playlist\PlaylistManager.cs" />
     <Compile Include="Utils\Updater\SchedulerConfiguration.cs" />
     <Compile Include="Utils\Updater\Updater.cs" />
     <Compile Include="Utils\Updater\UpdaterJob.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\PlaylistControlsViewModel.cs" />
     <Compile Include="ViewModels\PlaylistViewModel.cs" />
     <Compile Include="ViewModels\TitleViewModel.cs" />
+    <Compile Include="Views\PlaylistControlsView.xaml.cs">
+      <DependentUpon>PlaylistControlsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlaylistView.xaml.cs">
       <DependentUpon>PlaylistView.xaml</DependentUpon>
     </Compile>
@@ -216,6 +228,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PlaylistControlsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlaylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

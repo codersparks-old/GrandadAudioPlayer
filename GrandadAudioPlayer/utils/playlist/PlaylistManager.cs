@@ -11,7 +11,7 @@ using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.Utils.Playlist
 {
-    public class PlaylistManager : BindableBase, IDisposable
+    public class PlaylistManager : BindableBase, IDisposable, IPlaylistManager
     {
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PlaylistManager));
@@ -47,12 +47,27 @@ namespace GrandadAudioPlayer.Utils.Playlist
             }
         }
 
-        public bool IsPlaying { get; private set; }
-        public bool IsPaused { get; private set; }
+        private bool _isPlaying = false;
+        public bool IsPlaying
+        {
+            get => _isPlaying;
+            private set
+            {
+                SetProperty(ref _isPlaying, value, "IsPlaying"); 
+                Logger.Debug($"_isPlaying: {_isPlaying}");
+            }
+        }
+
+        private bool _isPaused;
+        public bool IsPaused
+        {
+            get => _isPaused;
+            private set => SetProperty(ref _isPaused, value, "IsPaused");
+        }
 
         public PlaylistItem CurrentItem
         {
-            get => _currentItem?.Value;
+            get =>_currentItem?.Value;
             set
             {
 
@@ -64,7 +79,8 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
                 if (_currentItem.Value == newItem) return;
 
-                _currentItem = _playlist.Find(newItem);
+
+                SetProperty(ref _currentItem, _playlist.Find(newItem));
 
                 if (!IsPlaying) return;
 
@@ -78,7 +94,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public ObservableCollection<PlaylistItem> Playlist { get; private set; }
 
-        public string CurrentPosition => _mediaFoundationReader != null ? _mediaFoundationReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString();
+        public string CurrentPosition => _mediaFoundationReader != null ? _mediaFoundationReader.CurrentTime.ToString(@"mm\:ss") : TimeSpan.Zero.ToString(@"mm\:ss");
 
         public double CurrentPositionPercentage
         {
@@ -101,7 +117,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
         public int Volume
         {
             get => (int)_defaultAudioDevice.Volume;
-            set => _defaultAudioDevice.Volume = value;
+            set { _defaultAudioDevice.Volume = value; RaisePropertyChanged("Volume"); }
         }
 
         public void ReloadPlaylist()
@@ -113,6 +129,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             _playlist.AddRange(_fileUtils.GetPlaylistItemsUnderDirectory(_rootFolder, _configurationManager.Configuration.AllowedExtensions));
 
             _currentItem = _playlist.First;
+            RaisePropertyChanged("CurrentItem");
             Playlist = new ObservableCollection<PlaylistItem>(_playlist);
             Logger.Debug($"Current item set to {_currentItem?.Value.Name}");
 
@@ -183,6 +200,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             var next = _currentItem.Next;
 
             _currentItem = next ?? _playlist.First;
+            RaisePropertyChanged("CurrentItem");
 
             // If it was playing originally then we play again
             if (!wasPlaying) return;
@@ -216,7 +234,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             var previous = _currentItem.Previous;
 
             _currentItem = previous ?? _playlist.Last;
-
+            RaisePropertyChanged("CurrentItem");
 
             // If it was playing originally then we play again
             if (!wasPlaying) return;
@@ -254,5 +272,6 @@ namespace GrandadAudioPlayer.Utils.Playlist
             _mediaFoundationReader?.Dispose();
             _waveOut?.Dispose();
         }
+
     }
 }

@@ -24,11 +24,10 @@ namespace GrandadAudioPlayer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<PlaylistManager>();
             containerRegistry.RegisterSingleton<ConfigurationManager>();
             containerRegistry.RegisterSingleton<ILoggerFacade, Log4NetFacade>();
             containerRegistry.RegisterSingleton<SchedulerConfiguration>();
-            containerRegistry.RegisterSingleton<PlaylistManager>();
+            containerRegistry.RegisterSingleton<IPlaylistManager, PlaylistManager>();
             containerRegistry.Register<Updater>();
             containerRegistry.GetContainer().AddExtension(new QuartzUnityExtension());
         }

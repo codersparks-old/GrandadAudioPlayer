@@ -88,17 +88,17 @@ namespace GrandadAudioPlayer.Utils.Configuration
             else
             {
                 Configuration = new Configuration();
-                SaveConfiguration(Configuration);
+                SaveConfiguration();
             }
         }
 
-        public void SaveConfiguration(Configuration configuration)
+        public void SaveConfiguration()
         {
             if (!Directory.Exists(ConfigDirectory))
             {
                 Directory.CreateDirectory(ConfigDirectory);
             }
-            File.WriteAllText(Path.Combine(ConfigDirectory, ConfigFile), JsonConvert.SerializeObject(configuration, Formatting.Indented));
+            File.WriteAllText(Path.Combine(ConfigDirectory, ConfigFile), JsonConvert.SerializeObject(Configuration, Formatting.Indented));
 
         }
     }

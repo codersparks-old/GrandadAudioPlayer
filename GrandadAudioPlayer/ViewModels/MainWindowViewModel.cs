@@ -21,6 +21,7 @@ namespace GrandadAudioPlayer.ViewModels
             _adminView = adminView;
             regionManager.RegisterViewWithRegion(TitleContentRegion, typeof(TitleView));
             regionManager.RegisterViewWithRegion(PlaylistContentRegion, typeof(PlaylistView));
+            regionManager.RegisterViewWithRegion(PlayerControlsContentRegion, typeof(PlaylistControlsView));
 
             OpenAdminDialogCommand = new DelegateCommand(OpenAdminDialogMethod);
 
