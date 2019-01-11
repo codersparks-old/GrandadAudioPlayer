@@ -102,9 +102,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             {
                 if (_waveOut != null && _mediaFoundationReader != null)
                 {
-                    var position = _waveOut.GetPosition();
-                    var length = _mediaFoundationReader.Length;
-                    var positionPercentage = (double)_waveOut.GetPosition() / _mediaFoundationReader.Length * 100;
+                    var positionPercentage = (double)_mediaFoundationReader.Position / _mediaFoundationReader.Length * 100;
                     return positionPercentage;
                 }
                 else
