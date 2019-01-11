@@ -17,6 +17,10 @@
         >
     <Window.InputBindings>
         <KeyBinding Command="{Binding OpenAdminDialogCommand}" Modifiers="Alt+Control+Shift" Key="F1"></KeyBinding>
+        <KeyBinding Command="{Binding MediaKeyNextCommand}" Key="MediaNextTrack"></KeyBinding>
+        <KeyBinding Command="{Binding MediaKeyPreviousCommand}" Key="MediaPreviousTrack"></KeyBinding>
+        <KeyBinding Command="{Binding MediaKeyPlayPauseCommand}" Key="MediaPlayPause"></KeyBinding>
+        <KeyBinding Command="{Binding MediaKeyStopCommand}" Key="MediaStop"></KeyBinding>
     </Window.InputBindings>
     <md:DialogHost Identifier="AdminDialog">
         <Grid>

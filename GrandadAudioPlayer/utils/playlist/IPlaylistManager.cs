@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using GrandadAudioPlayer.Model;
 
 namespace GrandadAudioPlayer.Utils.Playlist

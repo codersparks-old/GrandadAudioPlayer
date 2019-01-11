@@ -42,6 +42,8 @@ namespace GrandadAudioPlayer.ViewModels
             NextCommand = new DelegateCommand(NextMethod, CanNextMethod)
                 .ObservesProperty(() => PlaylistManager.CurrentItem);
 
+            PlayPauseCommand = new DelegateCommand(PlayPauseMethod);
+
 
         }
 
@@ -52,6 +54,8 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand PauseCommand { get; }
         public DelegateCommand StopCommand { get; }
         public DelegateCommand NextCommand { get; }
+        // We need this one to handle the media keys
+        public DelegateCommand PlayPauseCommand { get; }
 
         private string _position;
         public string Position
@@ -92,6 +96,19 @@ namespace GrandadAudioPlayer.ViewModels
         public bool CanPauseMethod()
         {
             return PlaylistManager.CurrentItem != null && (PlaylistManager.IsPlaying && !PlaylistManager.IsPaused);
+        }
+
+        // We need this one to handle the media keys
+        public void PlayPauseMethod()
+        {
+            if (PlaylistManager.IsPaused || ! PlaylistManager.IsPlaying)
+            {
+                PlayMethod();
+            }
+            else
+            {
+                PauseMethod();
+            }
         }
 
         public void StopMethod()
