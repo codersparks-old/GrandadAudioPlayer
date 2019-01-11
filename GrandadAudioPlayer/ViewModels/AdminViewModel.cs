@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Timers;
 using GrandadAudioPlayer.Utils.Configuration;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Prism.Commands;
@@ -14,7 +15,7 @@ namespace GrandadAudioPlayer.ViewModels
         public string FolderPath
         {
             get => _configurationManager.Configuration.FolderPath;
-            set { _configurationManager.Configuration.FolderPath = value; RaisePropertyChanged("FolderPath");}
+            set { _configurationManager.Configuration.FolderPath = value; SaveConfiguration(); RaisePropertyChanged("FolderPath");}
         }
 
         public string AllowedExtensions
@@ -33,6 +34,13 @@ namespace GrandadAudioPlayer.ViewModels
             }
         }
 
+        private string _feedbackMessage;
+
+        public string FeedbackMessage
+        {
+            get => _feedbackMessage;
+            set => SetProperty(ref _feedbackMessage, value);
+        }
         public DelegateCommand SaveConfigurationCommand { get; }
         public DelegateCommand LoadConfigurationCommand { get; }
         public DelegateCommand OpenFileDialogCommand { get; }
@@ -49,6 +57,19 @@ namespace GrandadAudioPlayer.ViewModels
         private void SaveConfiguration()
         {
             _configurationManager.SaveConfiguration();
+
+            FeedbackMessage = "Configuration Saved!";
+            var t = new Timer { Interval = 5000 };
+
+
+            t.Elapsed += (s, e) =>
+            {
+                FeedbackMessage = "";
+                RaisePropertyChanged("FeedbackMessage");
+                t.Stop();
+            };
+
+            t.Start();
         }
 
         private void LoadConfiguration()
