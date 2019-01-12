@@ -54,7 +54,6 @@ namespace GrandadAudioPlayer.Utils.Playlist
             private set
             {
                 SetProperty(ref _isPlaying, value, "IsPlaying"); 
-                Logger.Debug($"_isPlaying: {_isPlaying}");
             }
         }
 
@@ -265,6 +264,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
 
         public void Dispose()
         {
+            Logger.Info("Disposing of MediaFoundationReader and WaveOut");
             _mediaFoundationReader?.Dispose();
             _waveOut?.Dispose();
         }

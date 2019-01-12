@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 using log4net;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -20,7 +21,8 @@ namespace GrandadAudioPlayer.ViewModels
         {
             if (Debugger.IsAttached)
             {
-                Logger.Warn("Detected debugger attached therefore disabling shutdown functionality");
+                Logger.Warn("Detected debugger attached therefore disabling shutdown functionality...Closing app instead");
+                Application.Current.MainWindow?.Close();
             }
             else
             {
