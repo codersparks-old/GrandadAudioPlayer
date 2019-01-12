@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using GrandadAudioPlayer.Attributes;
+using log4net.Config;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -55,4 +56,4 @@ using GrandadAudioPlayer.Attributes;
 [assembly: BuildTag("devBuildTag")]
 
 // Configure logging subsystem
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Log4Net.config", Watch = true)]
+[assembly: XmlConfigurator(ConfigFile = "Log4Net.config", Watch = true)]

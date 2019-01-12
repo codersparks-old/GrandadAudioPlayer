@@ -15,7 +15,7 @@ namespace GrandadAudioPlayer.ViewModels
         public string FolderPath
         {
             get => _configurationManager.Configuration.FolderPath;
-            set { _configurationManager.Configuration.FolderPath = value; SaveConfiguration(); RaisePropertyChanged("FolderPath");}
+            set { _configurationManager.Configuration.FolderPath = value; SaveConfiguration(); RaisePropertyChanged("FolderPath"); }
         }
 
         public string AllowedExtensions
@@ -31,6 +31,17 @@ namespace GrandadAudioPlayer.ViewModels
                 }
 
                 RaisePropertyChanged("AllowedExtensions");
+            }
+        }
+        
+        public bool ForceUpdate
+        {
+            get => _configurationManager.Configuration.AutoRestartOnUpdate;
+            set
+            {
+                _configurationManager.Configuration.AutoRestartOnUpdate = value;
+                SaveConfiguration();
+                RaisePropertyChanged("ForceUpdate");
             }
         }
 

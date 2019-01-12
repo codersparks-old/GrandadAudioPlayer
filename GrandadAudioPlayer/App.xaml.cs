@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using CommonServiceLocator;
 using GrandadAudioPlayer.Utils.Configuration;
 using GrandadAudioPlayer.Utils.Logging;
@@ -6,7 +7,6 @@ using GrandadAudioPlayer.Utils.Playlist;
 using GrandadAudioPlayer.Utils.Updater;
 using GrandadAudioPlayer.Views;
 using log4net;
-using log4net.Config;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Unity;
@@ -38,8 +38,18 @@ namespace GrandadAudioPlayer
             var configManager = ServiceLocator.Current.GetInstance<ConfigurationManager>();
 
             Logger.Info($">>>>>>>>>> Starting Grandad Audio Player. Version: {configManager.Version} Build: {configManager.BuildTag} <<<<<<<<<<");
-            var schedulerConfiguration = ServiceLocator.Current.GetInstance<SchedulerConfiguration>();
-            schedulerConfiguration.RunUpdateScheduler();
+
+            if (Debugger.IsAttached)
+            {
+                Logger.Info("Detected debugger attached therefore not configuring scheduler to run squirrel");
+            }
+            else
+            {
+                Logger.Info("No debugger detected therefore configuring scheduler to run squirrel");
+                var schedulerConfiguration = ServiceLocator.Current.GetInstance<SchedulerConfiguration>();
+                schedulerConfiguration.RunUpdateScheduler();
+            }
+
             return ServiceLocator.Current.GetInstance<MainWindow>();
         }
     }

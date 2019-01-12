@@ -47,7 +47,7 @@ namespace GrandadAudioPlayer.Utils.Playlist
             }
         }
 
-        private bool _isPlaying = false;
+        private bool _isPlaying;
         public bool IsPlaying
         {
             get => _isPlaying;
@@ -105,10 +105,8 @@ namespace GrandadAudioPlayer.Utils.Playlist
                     var positionPercentage = (double)_mediaFoundationReader.Position / _mediaFoundationReader.Length * 100;
                     return positionPercentage;
                 }
-                else
-                {
-                    return 0;
-                }
+
+                return 0;
             }
         }
 

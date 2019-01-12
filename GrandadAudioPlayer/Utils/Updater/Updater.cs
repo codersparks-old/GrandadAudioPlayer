@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GrandadAudioPlayer.Utils.Configuration;
 using GrandadAudioPlayer.Utils.Github;
-using GrandadAudioPlayer.ViewModels;
 using log4net;
 using Squirrel;
 
@@ -18,7 +13,7 @@ namespace GrandadAudioPlayer.Utils.Updater
         private readonly ConfigurationManager _configurationManager;
         private readonly ILog _log = LogManager.GetLogger(typeof(Updater));
 
-        private string _dowloadedTag = null;
+        private string _downloadedTag;
 
         public Updater(ConfigurationManager configurationManager)
         {
@@ -28,7 +23,7 @@ namespace GrandadAudioPlayer.Utils.Updater
         public async void Update()
         {
 
-            System.IO.Directory.CreateDirectory(_configurationManager.ReleasesDirectory);
+            Directory.CreateDirectory(_configurationManager.ReleasesDirectory);
 
             try
             {
@@ -39,11 +34,11 @@ namespace GrandadAudioPlayer.Utils.Updater
 
                 _log.Debug("Attempting to download newer version if available");
 
-                if (github.DownloadGrandadAudioPlayerZipIfNewer(_dowloadedTag ?? _configurationManager.BuildTag, out var zipFilePath))
+                if (github.DownloadGrandadAudioPlayerZipIfNewer(_downloadedTag ?? _configurationManager.BuildTag, out var zipFilePath))
                 {
                     _log.Info("Newer version found in GitHub releases...downloading");
                     _log.Debug($"Downloaded Version: {github.LatestTag}");
-                    _dowloadedTag = github.LatestTag;
+                    _downloadedTag = github.LatestTag;
 
                     _log.Debug($"GrandadAudioPlayer.zip downloaded to: {zipFilePath}");
 
@@ -60,7 +55,10 @@ namespace GrandadAudioPlayer.Utils.Updater
                         _log.Info($"Currently installed version {currentVersion}");
                         await mgr.UpdateApp();
 
-                        UpdateManager.RestartApp();
+                        if (_configurationManager.Configuration.AutoRestartOnUpdate)
+                        {
+                            UpdateManager.RestartApp();
+                        }
                     }
                 }
                 else
