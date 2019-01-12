@@ -1,4 +1,6 @@
-﻿using log4net;
+﻿using System.Diagnostics;
+using System.Windows;
+using log4net;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -17,9 +19,17 @@ namespace GrandadAudioPlayer.ViewModels
 
         public void PowerMethod()
         {
-            Logger.Info("User pressed 'Turn Off' button, shutting down computer");
-            // Process.Start("shutdown.exe", "-s -t 00");
-            Logger.Error("**************** Shutdown command has been disabled ****************");
+            if (Debugger.IsAttached)
+            {
+                Logger.Warn("Detected debugger attached therefore disabling shutdown functionality...Closing app instead");
+                Application.Current.MainWindow?.Close();
+            }
+            else
+            {
+                Logger.Info("User pressed 'Turn Off' button, shutting down computer");
+                Process.Start("shutdown.exe", "-s -t 00");
+            }
+
         }
     }
 }
