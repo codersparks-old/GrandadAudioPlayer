@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using log4net;
 using RestSharp;
 
@@ -42,17 +38,13 @@ namespace GrandadAudioPlayer.Utils.Github
                 LatestTag = response.Data.TagName;
                 return LatestTag;
             }
-            else
+
+            if (response.ResponseStatus != ResponseStatus.Completed)
             {
-                if (response.ResponseStatus != ResponseStatus.Completed)
-                {
-                    throw new GithubFailureException("Error when trying to connect to github", response.ErrorException);
-                }
-                else
-                {
-                    throw new GithubFailureException($"Status code: {response.StatusCode}, body: {response.Content}");
-                }
+                throw new GithubFailureException("Error when trying to connect to github", response.ErrorException);
             }
+
+            throw new GithubFailureException($"Status code: {response.StatusCode}, body: {response.Content}");
         }
 
         public bool DownloadGrandadAudioPlayerZipIfNewer(string currentTag, out string downloadedFilePath)
@@ -68,11 +60,9 @@ namespace GrandadAudioPlayer.Utils.Github
 
                 return true;
             }
-            else
-            {
-                downloadedFilePath = null;
-                return false;
-            }
+
+            downloadedFilePath = null;
+            return false;
         }
 
         public string DownloadGrandadAudioPlayerZip()
@@ -91,7 +81,7 @@ namespace GrandadAudioPlayer.Utils.Github
                 RestClient restClient = new RestClient("https://github.com");
                 RestRequest request = new RestRequest($"/codersparks/GrandadAudioPlayer/releases/download/{tag}/GrandadAudioPlayer.zip");
 
-                request.ResponseWriter = (responseStream) => responseStream.CopyTo(writer);
+                request.ResponseWriter = responseStream => responseStream.CopyTo(writer);
                 var response = restClient.DownloadData(request);
 
                 return filename;

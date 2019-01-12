@@ -1,11 +1,8 @@
-﻿using CommonServiceLocator;
+﻿using System.Threading;
 using GrandadAudioPlayer.Utils.Configuration;
 using log4net;
 using Quartz;
 using Quartz.Impl;
-using System.Collections.Specialized;
-using System.Threading;
-using System.Threading.Tasks;
 using Quartz.Impl.Triggers;
 
 namespace GrandadAudioPlayer.Utils.Updater

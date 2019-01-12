@@ -11,7 +11,7 @@ namespace GrandadAudioPlayer.Model
         public string DisplayName => string.IsNullOrEmpty(Id3Tags?.Title) ? Name : Id3Tags.Title;
 
         public TagLib.Properties Id3Properties { get; }
-        public TagLib.Tag Id3Tags { get;  }
+        public Tag Id3Tags { get;  }
 
         public PlaylistItem(string path)
         {

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using GrandadAudioPlayer.Utils.Playlist;
-using log4net;
+﻿using log4net;
 using Prism.Commands;
 using Prism.Mvvm;
 

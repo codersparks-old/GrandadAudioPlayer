@@ -1,5 +1,4 @@
 ﻿using GrandadAudioPlayer.Utils.Playlist;
-using log4net;
 using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.ViewModels

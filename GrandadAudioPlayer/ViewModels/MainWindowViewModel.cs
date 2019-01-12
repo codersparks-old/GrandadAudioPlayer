@@ -1,5 +1,6 @@
-﻿using System.Windows;
+﻿using System;
 using GrandadAudioPlayer.Views;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,6 +10,8 @@ namespace GrandadAudioPlayer.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(MainWindowViewModel));
         private readonly AdminView _adminView;
         private readonly PlaylistControlsViewModel _playlistControlsViewModel;
 
@@ -41,7 +44,14 @@ namespace GrandadAudioPlayer.ViewModels
 
         public async void OpenAdminDialogMethod()
         {
-            await DialogHost.Show(_adminView, "AdminDialog");
+            try
+            {
+                await DialogHost.Show(_adminView, "AdminDialog");
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.Error("Exception caught when opening dialog", e);
+            }
         }
 
         

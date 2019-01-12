@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GrandadAudioPlayer.Attributes
 {
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Assembly)]
     public class BuildTagAttribute : Attribute
     {
         public string BuildTag { get; }
 
         public BuildTagAttribute() : this(string.Empty) { }
 
-        public BuildTagAttribute(string buildTag) { this.BuildTag = buildTag; }
+        public BuildTagAttribute(string buildTag) { BuildTag = buildTag; }
     }
     
 }
