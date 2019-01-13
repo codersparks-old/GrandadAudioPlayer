@@ -192,6 +192,7 @@
     <Compile Include="Utils\Playlist\FileUtils.cs" />
     <Compile Include="Utils\Playlist\IPlaylistManager.cs" />
     <Compile Include="Utils\Playlist\PlaylistManager.cs" />
+    <Compile Include="Utils\Prism\ErrorCheckingBindableBase.cs" />
     <Compile Include="Utils\Updater\SchedulerConfiguration.cs" />
     <Compile Include="Utils\Updater\Updater.cs" />
     <Compile Include="Utils\Updater\UpdaterJob.cs" />

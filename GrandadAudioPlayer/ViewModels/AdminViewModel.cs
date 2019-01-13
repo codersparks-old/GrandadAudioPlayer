@@ -1,14 +1,23 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Timers;
 using GrandadAudioPlayer.Utils.Configuration;
+using GrandadAudioPlayer.Utils.Prism;
+using log4net;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.ViewModels
 {
-    public class AdminViewModel : BindableBase
+    public class AdminViewModel : ErrorCheckingBindableBase
     {
+
+        private static readonly string AllowedExtensionsRegexString = @"^\.[A-Za-z0-9]+(?:,\.[A-Za-z0-9]+)*$";
+        private static readonly Regex AllowedExtensionsRegex = new Regex(AllowedExtensionsRegexString, RegexOptions.Compiled);
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(AdminViewModel));
 
         private readonly ConfigurationManager _configurationManager;
 
@@ -67,6 +76,12 @@ namespace GrandadAudioPlayer.ViewModels
 
         private void SaveConfiguration()
         {
+            if (HasErrors)
+            {
+                Logger.Error("Cannot save configuration as there are errors");
+                return;
+            }
+
             _configurationManager.SaveConfiguration();
 
             FeedbackMessage = "Configuration Saved!";
@@ -104,5 +119,37 @@ namespace GrandadAudioPlayer.ViewModels
                 FolderPath = dialog.FileName;
             }
         }
+
+        protected override void LocalValidation(ref Dictionary<string, List<string>> propertyErrors)
+        {
+            _validateAllowedExtensions(ref propertyErrors);
+        }
+
+        private void _validateAllowedExtensions(ref Dictionary<string, List<string>> propertyErrors)
+        {
+
+            const string propertyName = "AllowedExtensions";
+            if (propertyErrors.TryGetValue(propertyName, out var allowedExtensionsErrorList) == false)
+            {
+                allowedExtensionsErrorList = new List<string>();
+            }
+            else
+            {
+                allowedExtensionsErrorList.Clear();
+            }
+
+            if (string.IsNullOrWhiteSpace(AllowedExtensions))
+            {
+                allowedExtensionsErrorList.Add("Allowed Extensions must not be empty");
+            }
+
+            if (!AllowedExtensionsRegex.IsMatch(AllowedExtensions))
+            {
+                allowedExtensionsErrorList.Add($"Allowed Extensions must be comma seperated list with no spaces (regex: {AllowedExtensionsRegexString} )");
+            }
+
+            propertyErrors[propertyName] = allowedExtensionsErrorList;
+        }
+
     }
 }
