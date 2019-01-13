@@ -57,24 +57,24 @@ steps:
 - powershell: nuget.exe pack GrandadAudioPlayer.nuspec
   workingDirectory: $(Build.SourcesDirectory)\GrandadAudioPlayer
   displayName: "Create the nupkg for the Squirrelisation process"
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - task: PowerShell@2
   inputs:
     filePath: RunSquirrel.ps1
   displayName: "Generate Squirrel Files"
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - powershell: Start-Sleep -s 30
   displayName: "Sleep to allow the squirrel process to complete"
-
-- powershell: tree /F
-  condition: always()
-  displayName: "Run tree to show folder structure"
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.SourcesDirectory)\Releases\'
     includeRootFolder: false
     archiveFile: GrandadAudioPlayer.zip
+  condition: and(succeeded(), eq(variables['build.SourceBranch'], 'refs/heads/release'))
 
 - task: GithubRelease@0
   inputs:

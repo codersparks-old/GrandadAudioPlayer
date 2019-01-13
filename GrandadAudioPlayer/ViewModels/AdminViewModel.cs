@@ -65,6 +65,8 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand LoadConfigurationCommand { get; }
         public DelegateCommand OpenFileDialogCommand { get; }
 
+        // TODO: Add way to close dialog through command (and therefore allow check of has errors)
+
         public AdminViewModel(ConfigurationManager configurationManager)
         {
             _configurationManager = configurationManager;
