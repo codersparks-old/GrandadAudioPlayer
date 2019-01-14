@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Timers;
+using GrandadAudioPlayer.Attributes;
 using GrandadAudioPlayer.Utils.Configuration;
 using GrandadAudioPlayer.Utils.Prism;
 using log4net;
@@ -19,6 +22,39 @@ namespace GrandadAudioPlayer.ViewModels
         private static readonly Regex AllowedExtensionsRegex = new Regex(AllowedExtensionsRegexString, RegexOptions.Compiled);
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(AdminViewModel));
+
+        public static string Version => ((AssemblyFileVersionAttribute)Attribute.GetCustomAttribute(
+                Assembly.GetExecutingAssembly(),
+                typeof(AssemblyFileVersionAttribute), false)
+            ).Version;
+
+        public static string BuildTag
+        {
+            get
+            {
+                string buildTag = null;
+                Type propertyType = null;
+
+                var assembly = Assembly.GetEntryAssembly();
+
+                if (assembly != null)
+                {
+                    propertyType = assembly.EntryPoint.ReflectedType;
+                }
+
+                if (propertyType == null) return buildTag;
+
+                var objects =
+                    propertyType.Module.Assembly.GetCustomAttributes(typeof(BuildTagAttribute), false);
+
+                if (objects.Length > 0)
+                {
+                    buildTag = ((BuildTagAttribute)objects[0]).BuildTag;
+                }
+
+                return buildTag;
+            }
+        }
 
         private readonly ConfigurationManager _configurationManager;
 
@@ -68,8 +104,7 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand LoadConfigurationCommand { get; }
         public DelegateCommand OpenFileDialogCommand { get; }
         public DelegateCommand CloseAdminViewCommand { get; }
-
-        // TODO: Add way to close dialog through command (and therefore allow check of has errors)
+        
 
         public AdminViewModel(ConfigurationManager configurationManager)
         {
