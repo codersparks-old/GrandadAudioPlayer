@@ -1,14 +1,24 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Timers;
 using GrandadAudioPlayer.Utils.Configuration;
+using GrandadAudioPlayer.Utils.Prism;
+using log4net;
+using MaterialDesignThemes.Wpf;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
 
 namespace GrandadAudioPlayer.ViewModels
 {
-    public class AdminViewModel : BindableBase
+    public class AdminViewModel : ErrorCheckingBindableBase
     {
+
+        private static readonly string AllowedExtensionsRegexString = @"^\.[A-Za-z0-9]+(?:,\.[A-Za-z0-9]+)*$";
+        private static readonly Regex AllowedExtensionsRegex = new Regex(AllowedExtensionsRegexString, RegexOptions.Compiled);
+
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(AdminViewModel));
 
         private readonly ConfigurationManager _configurationManager;
 
@@ -45,6 +55,8 @@ namespace GrandadAudioPlayer.ViewModels
             }
         }
 
+        public bool HasNoErrors => !HasErrors;
+
         private string _feedbackMessage;
 
         public string FeedbackMessage
@@ -55,6 +67,9 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand SaveConfigurationCommand { get; }
         public DelegateCommand LoadConfigurationCommand { get; }
         public DelegateCommand OpenFileDialogCommand { get; }
+        public DelegateCommand CloseAdminViewCommand { get; }
+
+        // TODO: Add way to close dialog through command (and therefore allow check of has errors)
 
         public AdminViewModel(ConfigurationManager configurationManager)
         {
@@ -63,10 +78,17 @@ namespace GrandadAudioPlayer.ViewModels
             SaveConfigurationCommand = new DelegateCommand(SaveConfiguration);
             LoadConfigurationCommand = new DelegateCommand(LoadConfiguration);
             OpenFileDialogCommand = new DelegateCommand(OpenFileDialogMethod);
+            CloseAdminViewCommand = new DelegateCommand(CloseAdminViewMethod, CanCloseAdminViewMethod).ObservesProperty(() => HasErrors);
         }
 
         private void SaveConfiguration()
         {
+            if (HasErrors)
+            {
+                Logger.Error("Cannot save configuration as there are errors");
+                return;
+            }
+
             _configurationManager.SaveConfiguration();
 
             FeedbackMessage = "Configuration Saved!";
@@ -104,5 +126,53 @@ namespace GrandadAudioPlayer.ViewModels
                 FolderPath = dialog.FileName;
             }
         }
+
+        protected override void LocalValidation(ref Dictionary<string, List<string>> propertyErrors)
+        {
+            _validateAllowedExtensions(ref propertyErrors);
+        }
+
+        private void _validateAllowedExtensions(ref Dictionary<string, List<string>> propertyErrors)
+        {
+
+            const string propertyName = "AllowedExtensions";
+            if (propertyErrors.TryGetValue(propertyName, out var allowedExtensionsErrorList) == false)
+            {
+                allowedExtensionsErrorList = new List<string>();
+            }
+            else
+            {
+                allowedExtensionsErrorList.Clear();
+            }
+
+            if (string.IsNullOrWhiteSpace(AllowedExtensions))
+            {
+                allowedExtensionsErrorList.Add("Allowed Extensions must not be empty");
+            }
+
+            if (!AllowedExtensionsRegex.IsMatch(AllowedExtensions))
+            {
+                allowedExtensionsErrorList.Add($"Allowed Extensions must be comma seperated list with no spaces (regex: {AllowedExtensionsRegexString} )");
+            }
+
+            propertyErrors[propertyName] = allowedExtensionsErrorList;
+        }
+
+        private void CloseAdminViewMethod()
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
+
+        }
+
+        private bool CanCloseAdminViewMethod()
+        {
+            if (!HasErrors) return true;
+
+
+            FeedbackMessage = "Cannot close dialog until errors are resolved";
+            return false;
+
+        }
+
     }
 }
