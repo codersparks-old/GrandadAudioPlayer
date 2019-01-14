@@ -5,6 +5,7 @@ using System.Timers;
 using GrandadAudioPlayer.Utils.Configuration;
 using GrandadAudioPlayer.Utils.Prism;
 using log4net;
+using MaterialDesignThemes.Wpf;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -54,6 +55,8 @@ namespace GrandadAudioPlayer.ViewModels
             }
         }
 
+        public bool HasNoErrors => !HasErrors;
+
         private string _feedbackMessage;
 
         public string FeedbackMessage
@@ -64,6 +67,7 @@ namespace GrandadAudioPlayer.ViewModels
         public DelegateCommand SaveConfigurationCommand { get; }
         public DelegateCommand LoadConfigurationCommand { get; }
         public DelegateCommand OpenFileDialogCommand { get; }
+        public DelegateCommand CloseAdminViewCommand { get; }
 
         // TODO: Add way to close dialog through command (and therefore allow check of has errors)
 
@@ -74,6 +78,7 @@ namespace GrandadAudioPlayer.ViewModels
             SaveConfigurationCommand = new DelegateCommand(SaveConfiguration);
             LoadConfigurationCommand = new DelegateCommand(LoadConfiguration);
             OpenFileDialogCommand = new DelegateCommand(OpenFileDialogMethod);
+            CloseAdminViewCommand = new DelegateCommand(CloseAdminViewMethod, CanCloseAdminViewMethod).ObservesProperty(() => HasErrors);
         }
 
         private void SaveConfiguration()
@@ -151,6 +156,22 @@ namespace GrandadAudioPlayer.ViewModels
             }
 
             propertyErrors[propertyName] = allowedExtensionsErrorList;
+        }
+
+        private void CloseAdminViewMethod()
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
+
+        }
+
+        private bool CanCloseAdminViewMethod()
+        {
+            if (!HasErrors) return true;
+
+
+            FeedbackMessage = "Cannot close dialog until errors are resolved";
+            return false;
+
         }
 
     }
