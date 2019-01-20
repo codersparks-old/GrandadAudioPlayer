@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:GrandadAudioPlayer.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" WindowStyle="None"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
